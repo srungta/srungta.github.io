@@ -147,12 +147,14 @@ img {
   -webkit-transition: height .5s ease-in-out;
   -moz-transition: height .5s ease-in-out;
   transition: height .5s ease-in-out;
+  border-radius: 50%;
 }
 .navbar-custom.top-nav-short .navbar-brand-logo {
   padding-top: 5px;
 }
 .navbar-custom.top-nav-short .navbar-brand-logo img {
   height: 40px;
+  border-radius: 50%;
 }
 
 @media only screen and (min-width: 768px) {

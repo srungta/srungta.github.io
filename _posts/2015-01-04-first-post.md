@@ -1,7 +1,9 @@
 ---
 layout: post
-title: First post!
-image: /img/hello_world.jpeg
+title: Apache Spark!
+subtitle: Setting up sandbox on window.
+tags: [sandbox, setup, analytics]
+bigimg: https://spark.apache.org/images/spark-logo-trademark.png
 ---
 
-This is my first post, how exciting!
+Still working on this.
