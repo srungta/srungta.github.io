@@ -1,0 +1,6 @@
+# ~/jekyll-site/Dockerfile
+FROM jekyll/jekyll:latest
+WORKDIR /app
+COPY . ./
+EXPOSE 4000
+CMD ["jekyll", "serve"]
