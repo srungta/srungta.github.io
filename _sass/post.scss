@@ -5,3 +5,21 @@
     border-radius: 0.2rem;
     color: white;
 }
+
+.p-tldr{
+    margin: 10px 0;
+}
+
+.p-hr{
+    margin: 5px 0;
+}
+
+.p-next{
+    @include relative-font-size(1.4);
+    margin: 10px 0;
+    float: right;
+}
+
+.p-previous{
+    margin: 10px 0;
+}
