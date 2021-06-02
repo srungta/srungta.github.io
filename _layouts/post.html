@@ -35,7 +35,7 @@ layout: default
 
       {%- if page.tags -%}
       • {% for tag in page.tags %}
-      <span class="p-tag">{{tag}}</span>
+      <a href="/tags/{{tag}}"><span class="p-tag">{{tag}}</span></a>
       {% endfor %}
       {%- endif -%}
     </p>
