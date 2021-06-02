@@ -1,0 +1,12 @@
+{
+    "code": {
+        "scope": "markdown",
+        "prefix": "code",
+        "body": [
+            "{% highlight $1 %}",
+            "$2",
+            "{% endhighlight %}"
+        ],
+        "description": "Add a Jekyll style code snippet"
+    }
+}
