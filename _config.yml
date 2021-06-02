@@ -57,3 +57,10 @@ google_analytics: UA-198222762-1
 exclude:
   - DockerFile
   - build.ps1
+
+defaults:
+  - scope:
+      type: tags  # select all tag pages
+    values:
+      layout: tag_page
+      permalink: tags/:tag/

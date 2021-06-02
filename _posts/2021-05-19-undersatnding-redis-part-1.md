@@ -4,7 +4,7 @@ layout: post
 title: Understanding Redis - Part 1
 subtitle: Introduction to Redis
 tldr: Introduces redis as a distributed key value store using analogies.
-permalink: /redis/understanding-redis-part-1
+permalink: /blog/redis/understanding-redis-part-1
 author: srungta
 tags: 
 - Redis
