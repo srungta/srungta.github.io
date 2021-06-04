@@ -1,10 +1,10 @@
 ---
 layout: post
 
-title: Understanding Redis - Part 2
-subtitle: Running Redis locally using Docker
+title: Understanding Redis - Part 3
+subtitle: Jaadu 👻
 tldr: Run a standalone redis instance using Docker.
-permalink: /blog/redis/understanding-redis-part-2
+permalink: /blog/redis/understanding-redis-part-3
 author: srungta
 tags: 
 - Redis
@@ -13,7 +13,7 @@ tags:
 
 series: 
   name:  Understanding Redis
-  index: 2
+  index: 3
 ---
 
 In this part, we will try to run a redis standalone instance on your local machine.

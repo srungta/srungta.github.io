@@ -19,33 +19,33 @@ series:
 Redis is a caching software. What this means is that it helps you keep values in main memory instead of disk, so that you can access them quickly.
 
 For example, when you write a program like 
-{% highlight cpp %}
+{%- highlight cpp -%}
 ...
 public static void main(){
     int key = "value";
     cout << key;
 }
-{% endhighlight %}
+{%- endhighlight -%}
 
 you are keeping the value of the variable `key` in memory and later using it, in this case for printing on the standard output.
 If you have a large number of such `key`s, you might use a dictionary or hashmap like structure.
 
-{% highlight cpp %}
+{%- highlight cpp -%}
 #include <map>
 std::map<char, char> my_map = {
     { 'key1', '1' },
     { 'key2', '2' },
     { 'key3', '3' }
 };
-{% endhighlight %}
+{%- endhighlight -%}
 
 and later to get the value of `key1`, you may do something like
-{% highlight cpp %}
+{%- highlight cpp -%}
 ...
 if(my_map.find("key1") != my_map.end())
         std::cout<<"word 'key1' found"<<std::endl;
 ...
-{% endhighlight %}
+{%- endhighlight -%}
 
 However you will realise that this type of in memory key management is limited to a single program.
 
