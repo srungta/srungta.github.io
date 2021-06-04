@@ -1,8 +1,0 @@
----
-layout: default
----
-Posts about {{page.tag}}
-{% for post in page.linked_docs %}
-<h2><a title="{{ post.title }}" href="{{ post.url }}">{{ post.title | truncate: 50 }}</a></h2>
-<div>{{ post.date | date: "%b %e, %Y" }}</div>
-{% endfor %}

@@ -2,12 +2,13 @@
 layout: default
 ---
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  {% include series.html %}
 
   <header class="post-header">
     <!-- Backlink to previous post in the series -->
-    {% if page.series and page.previous %}
-    <a class="p-previous" href="{{ page.previous.url }}">&#x25c0; Read Part {{ page.previous.series.index }} : {{
-      page.previous.subtitle }}</a>
+    {% if previouspost %}
+    <a class="p-previous" href="{{ previouspost.url }}">
+      &#x25c0; Read Part {{ previouspost.series.index }} : {{previouspost.subtitle }}</a>
     {% endif %}
 
 
@@ -35,7 +36,7 @@ layout: default
 
       {%- if page.tags -%}
       • {% for tag in page.tags %}
-      <a href="/tags/{{tag}}"><span class="p-tag">{{tag}}</span></a>
+      <span class="p-tag">{{tag}}</span>
       {% endfor %}
       {%- endif -%}
     </p>
@@ -52,9 +53,9 @@ layout: default
     {{ content }}
   </div>
   <!-- Backlink to next post in the series -->
-  {% if page.series and page.next %}
-  <a class="p-next" href="{{ page.next.url }}">Read Part {{ page.next.series.index }} : {{
-    page.next.subtitle }} &#x2192</a>
+  {% if page.series and nextpost %}
+  <a class="p-next" href="{{ nextpost.url }}">Read Part {{ nextpost.series.index }} : {{
+    nextpost.subtitle }} &#x2192</a>
   {% endif %}
 
   {%- if site.disqus.shortname -%}

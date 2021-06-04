@@ -1,0 +1,30 @@
+<!-- Backlink to previous post in the series -->
+<!-- Check if this post is a part of a series. -->
+{% if page.series %}
+<!-- Collect all posts in this series -->
+{% assign seriesposts = site.posts | where: 'series.name', page.series.name | sort: 'series.index' %}
+
+{% assign previouspostindex = page.series.index | minus: 1 %}
+<!-- If there are more than one post -->
+{% if seriesposts.size > 1 && previouspostindex > 0 %}
+<!-- Find the post with index greater than this page-->
+{% assign previousposts = seriesposts | where: 'series.index' ,previouspostindex %}
+<!-- If a previous post is found, show a link -->
+{% if previousposts.size > 0 %}
+{% assign previouspost = previousposts | first %}
+{% endif %}
+{% endif %}
+
+{% assign nextpostindex = page.series.index | plus: 1 %}
+<!-- If there are more than one post -->
+{% if seriesposts.size > 1 && nextpostindex > 0 %}
+<!-- Find the post with index greater than this page-->
+{% assign nextposts = seriesposts | where: 'series.index' ,nextpostindex %}
+<!-- If a next post is found, show a link -->
+{% if nextposts.size > 0 %}
+{% assign nextpost = nextposts | first %}
+{% endif %}
+{% endif %}
+
+
+{% endif %}
