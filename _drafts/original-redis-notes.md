@@ -37,16 +37,16 @@ BUt the same commands should work fine on Linux systems as well.
 
 #### Steps
 1. Open a Powershell window and run 
-{% highlight powershell %}
+{%- highlight powershell -%}
 docker -v
-{% endhighlight %}
+{%- endhighlight -%}
 
 For me this prints `Docker version 20.10.5, build 55c4c88`
 
 2. Next we need to pull the redis image from the public docker registry.  
-{% highlight powershell %}
+{%- highlight powershell -%}
 docker pull redis
-{% endhighlight %}
+{%- endhighlight -%}
 
 At this point if you get an error saying
 ```
@@ -62,9 +62,9 @@ docker images
 This should should a list of images present in your system. You should see an entry for redis.
 
 4. As a quick check, start a new insatnce of the redis image and check if it is working as expected.
-{% highlight powershell %}
+{%- highlight powershell -%}
 docker run --rm --name test-redis-instance redis
-{% endhighlight %}
+{%- endhighlight -%}
 
 #### Future scope
 - Setup the redis cluster on a cloud VM. (to understand cloud environments)

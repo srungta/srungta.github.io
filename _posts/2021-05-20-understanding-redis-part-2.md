@@ -1,10 +1,9 @@
 ---
 layout: post
 
-title: Understanding Redis - Part 2
-subtitle: Running Redis locally using Docker
+title: Running Redis locally using Docker
 tldr: Run a standalone redis instance using Docker.
-permalink: /blog/redis/understanding-redis-part-2
+permalink: /blog/redis/running-redis-locally-using-docker
 author: srungta
 tags: 
 - Redis
@@ -38,9 +37,9 @@ I will be using Docker images from redis for this post.
 
 #### Validate docker 
 Open a Powershell window and run 
-{% highlight powershell %}
+{%- highlight powershell -%}
 docker -v
-{% endhighlight %}
+{%- endhighlight -%}
 For me this prints `Docker version 20.10.5, build 55c4c88`
 At this point if you get an error saying
 ```
@@ -50,9 +49,9 @@ it means your docker service is running. Start that first.
 
 #### Get the Redis image 
  Next we need to pull the redis image from the public docker registry.  
-{% highlight powershell %}
+{%- highlight powershell -%}
 docker pull redis
-{% endhighlight %}
+{%- endhighlight -%}
 This will pull the latest redis image from the docker public registry.
 If everything is fine, you should see multiple lines of logs with a progress bar next to each line. Let the download complete.
 
@@ -65,9 +64,9 @@ This should should a list of images present in your system. You should see an en
 
 #### Run an instance 
 As a quick check, start a new insatnce of the redis image and check if it is working as expected.
-{% highlight powershell %}
+{%- highlight powershell -%}
 docker run --rm --name test-redis-instance redis
-{% endhighlight %}
+{%- endhighlight -%}
 This should print a long alphanumeric hash on your console. That is your container id.
 Breakdown of the command  
 

@@ -2,18 +2,27 @@
 layout: default
 ---
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
-  {% include series.html %}
+  {%- include series.html -%}
+  {%- if page.subtitle -%}
+  {%- assign pagesubtitle = page.subtitle -%}
+  {%- elsif page.series -%}
+  {%- assign pagesubtitle = page.series.name | append: ' - Part ' | append: page.series.index -%}
+  {%- else -%}
+  {%- assign pagesubtitle = 'HI' -%}
+  {%- endif -%}
 
   <header class="post-header">
     <!-- Backlink to previous post in the series -->
-    {% if previouspost %}
-    <a class="p-previous" href="{{ previouspost.url }}">
-      &#x25c0; Read Part {{ previouspost.series.index }} : {{previouspost.subtitle }}</a>
-    {% endif %}
+    {%- if previouspost -%}
+    <div class="p-previous">
+      <a href="{{ previouspost.url }}">
+        &#x25c0; Previously, {{previouspost.title }}</a>
+    </div>
+    {%- endif -%}
 
 
     <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
-    <h2 class="post-subtitle p-name" itemprop="name sub-headline">{{page.subtitle | escape}}</h2>
+    <h3 class="post-subtitle p-name" itemprop="name sub-headline">{{pagesubtitle | escape}}</h3>
     <p class="post-meta">
       {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
       <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
@@ -27,17 +36,17 @@ layout: default
       </time>
       {%- endif -%}
       {%- if page.author -%}
-      • {% for author in page.author %}
+      • {%- for author in page.author -%}
       <span itemprop="author" itemscope itemtype="http://schema.org/Person">
         <span class="p-author h-card" itemprop="name">{{ author }}</span></span>
-      {%- if forloop.last == false %}, {% endif -%}
-      {% endfor %}
+      {%- if forloop.last == false -%}, {%- endif -%}
+      {%- endfor -%}
       {%- endif -%}
 
       {%- if page.tags -%}
-      • {% for tag in page.tags %}
+      &nbsp;•&nbsp; {%- for tag in page.tags -%}
       <span class="p-tag">{{tag}}</span>
-      {% endfor %}
+      {%- endfor -%}
       {%- endif -%}
     </p>
   </header>
@@ -53,10 +62,11 @@ layout: default
     {{ content }}
   </div>
   <!-- Backlink to next post in the series -->
-  {% if page.series and nextpost %}
-  <a class="p-next" href="{{ nextpost.url }}">Read Part {{ nextpost.series.index }} : {{
-    nextpost.subtitle }} &#x2192</a>
-  {% endif %}
+  {%- if page.series and nextpost -%}
+  <div class="p-next">
+    <a href="{{ nextpost.url }}">Next up, {{nextpost.title }} &#x2192</a>
+  </div>
+  {%- endif -%}
 
   {%- if site.disqus.shortname -%}
   {%- include disqus_comments.html -%}
