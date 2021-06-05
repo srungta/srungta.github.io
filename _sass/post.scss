@@ -1,9 +1,27 @@
+// Edited SCSS from minima theme
+.post-title {
+    // ORIGINAL : @include relative-font-size(2.625);
+    @include relative-font-size(2.4);
+    letter-spacing: -1px;
+    line-height: 1;
+  
+    @include media-query($on-laptop) {
+      // ORIGINAL : @include relative-font-size(2.25);
+      @include relative-font-size(2);
+    }
+  }
+  .post-subtitle{
+      font-weight: 600;
+  }
+
+// New SCSS added on top of minima
 
 .p-tag{
     background-color: #0089e0;
     padding: 0.1rem 0.4rem;
     border-radius: 0.2rem;
     color: white;
+    margin: 0px 2px;
 }
 
 .p-tldr{

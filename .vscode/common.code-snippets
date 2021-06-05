@@ -1,6 +1,6 @@
 {
     "code": {
-        "scope": "markdown",
+        "scope": "markdown,html",
         "prefix": "code",
         "body": [
             "{%- highlight $1 -%}",
@@ -8,5 +8,33 @@
             "{%- endhighlight -%}"
         ],
         "description": "Add a Jekyll style code snippet"
+    },
+    "lif": {
+        "scope": "markdown,html",
+        "prefix": "lif",
+        "body": [
+            "{%- if $1 -%}",
+            "$2",
+            "{%- endif -%}"
+        ],
+        "description": "Add a Jekyll style if snippet"
+    },
+    "lfor": {
+        "scope": "markdown,html",
+        "prefix": "lfor",
+        "body": [
+            "{%- for $1 in $2 -%}",
+            "$2",
+            "{%- endfor -%}"
+        ],
+        "description": "Add a Jekyll style for snippet"
+    },
+    "lass": {
+        "scope": "markdown,html",
+        "prefix": "lass",
+        "body": [
+            "{%- assign $1 = $2 -%}"
+        ],
+        "description": "Add a Jekyll style assign snippet"
     }
 }
