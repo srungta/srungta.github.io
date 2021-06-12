@@ -129,13 +129,20 @@ Finding the IP addresses like this is annoying and error prone.
 Docker has something called [Docker Compose](https://docs.docker.com/compose/) that lets use write multi container docker applications nicely.
 To do this create a folder named `floozy` (this name does not matter)
 inside the folder create four files 
-{%- highlight bash -%}
+```bash
 |- floozy
-    |--- docker-compose.yml [Starts up multiple containers and connects them]
-    |--- redis.DockerFile [Describes how to build the redis container]
-    |--- grafana.DockerFile [Describes how to build the grafana container]
-    |--- .env [Sets some environment variables]
-{%- endhighlight -%}
+    |--- docker-compose.yml
+    |--- redis.DockerFile
+    |--- grafana.DockerFile
+    |--- .env
+```
+
+| File               | Usage                                           |
+|--------------------|-------------------------------------------------|
+| docker-compose.yml | Starts up multiple containers and connects them |
+| redis.DockerFile   | Describes how to build the redis container      |
+| grafana.DockerFile | Describes how to build the grafana container    |
+| .env               | Sets some environment variables                 |
 
 > **DockerFile** is used to create custom images based on some base images. [Read more about Dockerfile on their official site](https://docs.docker.com/engine/reference/builder/)
 
@@ -160,8 +167,9 @@ ENV GF_INSTALL_PLUGINS=redis-datasource
 ```yaml
 # Use version 2 of the compose formal
 version: '2'
-# Define custom network so that we can clearly analyse
-# what is going on and also so that our containers are unaffected by other things
+# Define custom network.
+# So that we can clearly analyse what is going on.
+# Also so that our containers are unaffected by other things
 networks:
     # Alias for the network
     cache:
@@ -174,7 +182,9 @@ services:
     redis-instance:
         # This part tells docker how to build the redis container
         build: 
-            # This is the directory where docker will look for the dockerfile specified below
+            # This is the directory
+            # where docker will look 
+            # for the dockerfile specified below
             context: .
             # The docker file that has the definition for the image
             dockerfile: redis.DockerFile
@@ -184,7 +194,9 @@ services:
     
     # This is the definition for our grafana container
     grafana-ui:
-        # Map the 3000 port to the host system so that you can view the UI in the browser
+        # Map the 3000 port to 
+        # the host system so that 
+        # you can view the UI in the browser
         ports: 
             - "3000:3000"
         # Same as redis

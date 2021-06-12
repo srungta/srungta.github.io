@@ -45,7 +45,8 @@
 // Add a copy button on top right on hover over code elements
 body main div article div.post-content.e-content pre {     
     cursor: pointer;  
-    position: relative;
+    position: relative;    
+    white-space: pre-wrap;
     &:hover::before {
         content: "📋 Copy";
         display: block;
