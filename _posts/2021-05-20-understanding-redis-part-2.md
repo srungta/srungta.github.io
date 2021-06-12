@@ -70,7 +70,7 @@ docker run --rm --name test-redis-instance redis
 This should print a long alphanumeric hash on your console. That is your container id.
 Breakdown of the command  
 
-| Priority apples       | Second priority                                                             |
+| Command               | Meaning                                                                     |
 |-----------------------|-----------------------------------------------------------------------------|
 | `docker`              | base command                                                                |
 | `run`                 | starts a container                                                          |
