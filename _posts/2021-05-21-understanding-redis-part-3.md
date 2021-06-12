@@ -108,9 +108,4 @@ OK
 127.0.0.1:6379>
 {%- endhighlight -%}
 
-Go ahead and give the other commands [listed on the Redis CLI reference here](https://redis.io/commands)
-
-In the next post, we will try to do this using a script.
-
-
-
+Go ahead and try the other commands [listed on the Redis CLI reference here](https://redis.io/commands)
