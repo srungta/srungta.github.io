@@ -9,6 +9,23 @@
         ],
         "description": "Add a Jekyll style code snippet"
     },
+    "img": {
+        "scope": "markdown,html",
+        "prefix": "img",
+        "body": [
+            "![$1](/assets/images/$2)"
+        ],
+        "description": "Add a Jekyll style image link"
+    },
+    "link": {
+        "scope": "markdown,html",
+        "prefix": "link",
+        "body": [
+            "[$1]($2)"
+        ],
+        "description": "Add a markdown link"
+    },
+    
     "lif": {
         "scope": "markdown,html",
         "prefix": "lif",
