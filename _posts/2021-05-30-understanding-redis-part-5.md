@@ -1,9 +1,9 @@
 ---
 layout: post
 
-title: Monitoring Redis with Graphana
-tldr: Monitoring Redis with Graphana, an open source visualization tool.
-permalink: /blog/redis/monitoring-redis-with-graphana
+title: Connecting Redis to Graphana
+tldr: Graphana is an open source visualization tool that can help us visualize redis metrics.
+permalink: /blog/redis/connecting-redis-to-graphana
 author: srungta
 tags: 
 - Redis
@@ -99,7 +99,7 @@ docker network inspect bridge
 {%- endhighlight -%}
 This prints a JSON.
 Look for a section called `Containers`.
-{%- highlight json -%}
+```json
 ...
 "Containers": {
     "71df1fb060baeb221cb01b78e3c60717934fa...": {
@@ -118,7 +118,7 @@ Look for a section called `Containers`.
     }
 }
 ...
-{%- endhighlight -%}
+```
 Copy the `IPv4Address` for the `test-redis-instance` container. In my case it is `172.17.0.3`.
 Now in the graphana UI, use this IP along with the port 6379, as the address of the redis instance `172.17.0.3:6379`
 ![Graphana redis IP](/assets/images/redis/graphana-redis-ip.png)
@@ -127,4 +127,104 @@ Now in the graphana UI, use this IP along with the port 6379, as the address of 
 #### Connecting redis instance to graphana [The easy way]
 Finding the IP addresses like this is annoying and error prone.
 Docker has something called [Docker Compose](https://docs.docker.com/compose/) that lets use write multi container docker applications nicely.
-TO do this create a 
+To do this create a folder named `floozy` (this name does not matter)
+inside the folder create four files 
+{%- highlight bash -%}
+|- floozy
+    |--- docker-compose.yml [Starts up multiple containers and connects them]
+    |--- redis.DockerFile [Describes how to build the redis container]
+    |--- graphana.DockerFile [Describes how to build the graphana container]
+    |--- .env [Sets some environment variables]
+{%- endhighlight -%}
+
+> **DockerFile** is used to create custom images based on some base images. [Read more about Dockerfile on their official site](https://docs.docker.com/engine/reference/builder/)
+
+#### redis.DockerFile
+Since we did not do any customization on top of redis image, this file can just have this
+{%- highlight docker -%}
+FROM redis
+{%- endhighlight -%}
+This is basically saying use the default redis image.
+
+#### graphana.DockerFile
+Remember we had to install the redis connector plugin on the base graphana image. Now we can do it in the DockerFile
+
+```docker
+# Take the base graphana image
+FROM grafana/grafana:latest 
+# Set the GF_INSTALL_PLUGINS environment variable so that the plugin is installed
+ENV GF_INSTALL_PLUGINS=redis-datasource
+```
+
+#### docker-compose.yml
+```yaml
+# Use version 2 of the compose formal
+version: '2'
+# Define custm network so that we can clearly analyse
+# what is going on and also so that our containers are unaffected by other things
+networks:
+    # Alias for the network
+    cache:
+        # Explicitly specifying the name of the network
+        name: cache
+
+# This is the list of services/containers to run
+services:
+    # This is the definition for our redis container
+    redis-instance:
+        # This part tells docker how to build the redis container
+        build: 
+            # This is the directory where docker will look for the dockerfile specified below
+            context: .
+            # The docker file that has the definition for the image
+            dockerfile: redis.DockerFile
+        # Add this container to the cache network created above
+        networks:
+            - cache
+    
+    # This is the definition for our graphana container
+    graphana-ui:
+        # Map the 3000 port to the host system so that you can view the UI in the browser
+        ports: 
+            - "3000:3000"
+        # Same as redis
+        build: 
+            context: .
+            dockerfile: graphana.DockerFile
+        # Same as redis
+        networks:
+            - cache
+```
+
+#### .env
+This sets the environment variables.
+By default when you use docker compose to create containers, it prefixes the names of the containers with the name of the folder. I find that annoying at times. you can set an environment variable called `COMPOSE_PROJECT_NAME` which will be used as prefix.
+In .env file.
+```env
+COMPOSE_PROJECT_NAME=understanding-redis
+```
+
+When all this is done, navigate to `floozy` folder and run 
+```powershell
+docker compose up -d --build
+```
+You will see a lot of logs similar to the ones you see when downloading a new docker image.
+This is docker compose building the docker files and creating containers for you.
+You should see something like below on the cli
+```bash
+- Network cache                                   Created
+- Container understanding-redis_redis-instance_1  Started
+- Container understanding-redis_graphana-ui_1     Started
+
+```
+Run `docker ps` to see the containers.
+
+#### But why all this setup?
+The advantage of docker compose is that it lets containers locate and refer to each other by their names/aliases instead of IP addresses.
+So now instead of finding the IP of redis instance the hard way, you can just say `redis-instance` as the host name.
+
+In the graphana UI at [http://localhost:3000/datasources](http://localhost:3000/datasources), replace the ip address with just `redis-instance:6379`
+![Graphana redis with service name](/assets/images/redis/graphana-redis-instance.png)
+The connection suceeds.
+
+From now on we will try to use docker compose wherever possible, when we need communication between containers.

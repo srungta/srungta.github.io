@@ -9,6 +9,16 @@
         ],
         "description": "Add a Jekyll style code snippet"
     },
+    "fenced-code": {
+        "scope": "markdown,html",
+        "prefix": "``",
+        "body": [
+            "```$1",
+            "$2",
+            "```"
+        ],
+        "description": "Add a Jekyll style code snippet"
+    },
     "img": {
         "scope": "markdown,html",
         "prefix": "img",
