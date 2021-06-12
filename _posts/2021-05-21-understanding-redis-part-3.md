@@ -19,7 +19,7 @@ In the last part we started a local Redis instance, but we did not talk about ho
 In this part, we will try to do that.
 
 #### Run an instance 
-As a quick check, lets start a new insatnce of the redis image.
+As a quick check, lets start a new instance of the redis image.
 {%- highlight powershell -%}
 docker run --rm --name test-redis-instance redis
 {%- endhighlight -%}
@@ -66,7 +66,7 @@ As you are tyPING any command in redis-cli, you should see suggestions and help 
 
 #### Setting a key value.
 The next command is the most common use case for Redis. Setting a key and a value.
-For thsi we will use the `SET` command.
+For this we will use the `SET` command.
 
 {%- highlight bash -%}
 root@db0f535254e7:/data# redis-cli

@@ -54,12 +54,12 @@ There are different ways of doing this.
 2. Through some low level magic code, you access `A`'s address space and read `key1` in `B`. This is ridiculous and might not even be possible. 
 3.  You maintain `key1`'s value in an external service/program `C` and both `A` and `B` ask `C` for this value.  
 
-Point 3 is seen in many systems. All databases, Web APIs, RPCs etc are forms of the program `C` for their clients.
+Point 3 is seen in many systems. All databases, Web APIs, RPC etc are forms of the program `C` for their clients.
 Redis is similarly a type of `C`, an external program that maintains the values that are needed by the client programs `A` and `B`.
 
 > Usually programs like `C` are called `servers` and programs like `A` and `B` are called `clients`.
 
-The speciality of Redis is that it maintains these values in memory so the retrival of these values is really quick.
+The specialty of Redis is that it maintains these values in memory so the retrieval of these values is really quick.
 [In contrast to a SQL like system which may have to do a disk read to get the value]
 
 Programs like Redis that maintain a key to value mappings are usually called `key-value stores` 
@@ -71,7 +71,7 @@ Programs like Redis that maintain a key to value mappings are usually called `ke
 Let us take an example to understand what this means.  
 In our previous example, we were maintaining a map of keys to values.  
 Let us say your key is a 20 character long string which has the name of a person, and your value is a 480 character long string which has the address and other details of that person.  
-If we consider one character as 1 byte, for each person you need **~500 bytes** of memeory.  
+If we consider one character as 1 byte, for each person you need **~500 bytes** of memory.  
 The population of Zaire is around **80 million people**.  
 Let us say you want to store the name and address of all 80 million people in Zaire.   
 That means you need a total space of 500 * 80,000,000 bytes of memory, which is **~40 GB** of memory.  
@@ -93,12 +93,12 @@ They just need to know at least one. In the back ground Redis can take care of g
 From the example in 3., now let is say you were running a cluster with 40 machines. This means each machine will have data for about 2 million people. For some unknown reason, let us say one of these machines `goes down` (meaning it becomes undiscoverable, or restarts, or loses internet connectivity, or there is an OS error, or the systems hangs, or the machine overheats and shuts down or there is a lighting strike). In this case the data of about 2 million people is now gone. (⓿_⓿)  
 This is usually bad.  
 To avoid such scenarios, large scale systems like yours, do not keep a single a single copy of data. They `replicate` the data on multiple machines.  
-This is like you keeping your important documents on an external harddrive, as well as keeping a copy of it on GDrive, one on Dropbox, one on OneDrive and one physical xerox in your cupboard.  
+This is like you keeping your important documents on an external HDD, as well as keeping a copy of it on GDrive, one on Dropbox, one on OneDrive and one physical xerox in your cupboard.  
 So that if one is lost the others can be used.  
 Similarly data is also replicated between multiple machines, so that if one goes down the other can be used.  
 Redis lets you do this also as part of its cluster formations.  
 So you can say that , "Hey I have 40 machine and 40 GB of data. Instead of keeping 1 GB of data per machine. Keep 2GB of data on each machine. Use the first 20 machines as the primary ones. Use the second set of 20 machines as backup if one of the machines in first set goes down."  
 Now even if all 20 machines of the primary set go down, your cluster is still available to clients.   
-> Fault tolerance : if one or more of the parts in the system is faulty, the system can continue to operate upto some extent. 
+> Fault tolerance : if one or more of the parts in the system is faulty, the system can continue to operate up to some extent. 
 
 In the next part let us try running the Redis software and see how it works.

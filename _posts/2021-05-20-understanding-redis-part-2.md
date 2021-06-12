@@ -23,7 +23,7 @@ I will be using Docker images from redis for this post.
 > If you are not sure what Docker is, you should [read this article](https://medium.com/@SaadAAkash/docker-for-dummies-literally-ab3fc6362d5f).
 
 ### Why use docker?
-- The simpler reason is because I dont want to install any dependencies on my system.
+- The simpler reason is because I don't want to install any dependencies on my system.
 - Docker also gives a completely reproducible environment, which mean whatever you read here, you will be able to reproduce exactly.
 
 
@@ -63,7 +63,7 @@ docker images
 This should should a list of images present in your system. You should see an entry for redis.
 
 #### Run an instance 
-As a quick check, start a new insatnce of the redis image and check if it is working as expected.
+As a quick check, start a new instance of the redis image and check if it is working as expected.
 {%- highlight powershell -%}
 docker run --rm --name test-redis-instance redis
 {%- endhighlight -%}

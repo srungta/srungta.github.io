@@ -20,7 +20,7 @@ In the last part we started a local Redis instance and added some keys using the
 #### What metrics will we target to get?
 In this post, we will try to get the cache hit values.
 Cache hit/miss numbers helps us understand how many times the key we looked up was present in the cache.
-A high cache hit rate means the cache is being used better. Our ideal cahce hit rate is 100% (we get all the values in the cache). However it is usually hard to get it in production because your cache size is usually less than your key space (Eg: You can only store names of 100 people at max, but there are a total of 100 people, so inevitably someone's name will not be in the cache at the moment.)
+A high cache hit rate means the cache is being used better. Our ideal cache hit rate is 100% (we get all the values in the cache). However it is usually hard to get it in production because your cache size is usually less than your key space (Eg: You can only store names of 100 people at max, but there are a total of 100 people, so inevitably someone's name will not be in the cache at the moment.)
 A high miss rate means we are probably not caching the most used values. In this case, we should have a deeper look at what are the values that are getting cached and what are the values that are being queried.
 [From our past example of people information, if you have the person's first name as key, but you are looking up values based on person's last name, you will have a high miss rate. Analysis of cache hit/miss also helps us find these logical bugs.]
 
@@ -80,7 +80,7 @@ With these values, our cache hit rate is
 `CACHE_MISS_RATE = CACHE_MISSES/(CACHE_HITS+CACHE_MISSES) = 3/(5+3) = 3/8 = 37.5%`  
 
 Now lets get these values from `INFO` command.
-You can read more about the command in the [officiual reference doc](https://redis.io/commands/INFO#:~:text=The%20INFO%20command%20returns%20information,clients%20%3A%20Client%20connections%20section)
+You can read more about the command in the [official reference doc](https://redis.io/commands/INFO#:~:text=The%20INFO%20command%20returns%20information,clients%20%3A%20Client%20connections%20section)
 In the same cli type 
 {%- highlight bash -%}
 root@db0f535254e7:/data# redis-cli
@@ -95,7 +95,7 @@ keyspace_hits:5
 keyspace_misses:3
 ...
 {%- endhighlight -%}
-You will see a lot of values coming up. You can find their descriptions in the [officiual reference doc](https://redis.io/commands/INFO#:~:text=The%20INFO%20command%20returns%20information,clients%20%3A%20Client%20connections%20section)
+You will see a lot of values coming up. You can find their descriptions in the [official reference doc](https://redis.io/commands/INFO#:~:text=The%20INFO%20command%20returns%20information,clients%20%3A%20Client%20connections%20section)
 
 The `keyspace_hits` is the cache hit value that we talked about earlier and the `keyspace_misses` is the cache miss values.
 
