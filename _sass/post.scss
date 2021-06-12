@@ -41,3 +41,40 @@
 .p-previous{
     margin: 10px 0;
 }
+
+// Add a copy button on top right on hover over code elements
+body main div article div.post-content.e-content pre {     
+    cursor: pointer;  
+    position: relative;
+    &:hover::before {
+        content: "📋 Copy";
+        display: block;
+        cursor: pointer;
+        width: fit-content;
+        border: 1px solid #60607424;
+        padding: 5px;
+        border-radius: 5px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #5252843a;
+    }
+    
+    // This class will be toggled via JavaScript
+    &.copied {    
+        &::before {
+            content: "✔️ Copied";
+            display: block;
+            cursor: pointer;
+            width: fit-content;
+            border: 1px solid #60607424;
+            padding: 5px;
+            border-radius: 5px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #5252843a;
+        }
+    }
+}
+  
