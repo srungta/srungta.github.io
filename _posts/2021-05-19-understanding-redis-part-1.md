@@ -1,5 +1,6 @@
 ---
 layout: post
+unique_id: REDIS1
 
 title: Introduction to Redis
 tldr: Introduces redis as a distributed key value store using analogies.

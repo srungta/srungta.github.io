@@ -1,5 +1,6 @@
 ---
 layout: post
+unique_id: REDIS3
 
 title: Using the Redis CLI
 tldr: Connecting to a Redis instance using CLI

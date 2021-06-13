@@ -67,6 +67,7 @@ layout: default
     <a href="{{ nextpost.url }}">Next up, {{nextpost.title }} &#x2192</a>
   </div>
   {%- endif -%}
+  {%- include github-feedback.html -%}
 
   {%- if site.disqus.shortname -%}
   {%- include disqus_comments.html -%}
