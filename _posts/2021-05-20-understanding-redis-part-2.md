@@ -1,5 +1,6 @@
 ---
 layout: post
+unique_id: REDIS2
 
 title: Running Redis locally using Docker
 tldr: Run a standalone redis instance using Docker.

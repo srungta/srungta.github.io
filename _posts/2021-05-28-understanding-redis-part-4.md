@@ -1,5 +1,6 @@
 ---
 layout: post
+unique_id: REDIS4
 
 title: Tracking Redis Metrics using INFO
 tldr: Tracking Redis metrics using Redis INFO command.
