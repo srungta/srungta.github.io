@@ -1,0 +1,3 @@
+- name: Understanding Redis
+  description: Setting up a production Redis cluster using docker.
+  status: ONGOING
