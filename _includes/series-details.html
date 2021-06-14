@@ -1,0 +1,30 @@
+{%- assign seriesposts = site.posts | where: 'series.name', include.item.name | sort: 'series.index' -%}
+<li>
+    {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+    <h2>
+        <b>{{ include.item.name | escape }}</b>
+    </h2>
+    <p>{{ include.item.description | escape }}</p>
+
+    {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+    {%- if seriesposts.size > 0 -%}
+    <ol>
+        {%- for post in seriesposts -%}
+        <li>
+            <a href="{{ post.url | relative_url }}">
+                {{ post.title | escape }}
+            </a>
+        </li>
+        {%- if post.tldr -%}
+        <span class="p-series-tldr">
+            {{post.tldr}}
+        </span>
+        {%- endif -%}
+
+        {%- if site.show_excerpts -%}
+        {{ post.excerpt }}
+        {%- endif -%}
+        {%- endfor -%}
+    </ol>
+    {%- endif -%}
+</li>
