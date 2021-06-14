@@ -4,15 +4,15 @@
     @include relative-font-size(2.4);
     letter-spacing: -1px;
     line-height: 1;
-  
+
     @include media-query($on-laptop) {
-      // ORIGINAL : @include relative-font-size(2.25);
-      @include relative-font-size(2);
+        // ORIGINAL : @include relative-font-size(2.25);
+        @include relative-font-size(2);
     }
-  }
-  .post-subtitle{
-      font-weight: 600;
-  }
+}
+.post-subtitle{
+    font-weight: 600;
+}
 
 // New SCSS added on top of minima
 
@@ -40,6 +40,19 @@
 
 .p-previous{
     margin: 10px 0;
+}
+
+.p-series-tldr{
+    @include relative-font-size(0.9);
+    color: #6a6a6a;
+}
+
+.rss-subscribe-button{
+    padding: 2px 5px;
+    background-color: #fac081e8;
+    color: white;
+    text-decoration: none !important;
+    border-radius: 2px;
 }
 
 // Add a copy button on top right on hover over code elements

@@ -3,37 +3,19 @@ layout: default
 ---
 
 <div class="home">
-  {%- if page.title -%}
-  <h1 class="page-heading">{{ page.title }}</h1>
-  {%- endif -%}
-
   {{ content }}
 
-  {%- if site.posts.size > 0 -%}
-  <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
-  <ul class="post-list">
-    {%- for post in site.posts -%}
-    <li>
-      {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-      <h3>
-        <a class="post-link" href="{{ post.url | relative_url }}">
-          {{ post.title | escape }}
-        </a>
-        <span class="post-meta">
-          {{ post.date | date: date_format }}
-          {%- if post.series -%}
-          &nbsp;&middot; {{ post.series.name | escape }} - Part {{ post.series.index | escape }}
-          {%- endif -%}
-        </span>
-      </h3>
-      {%- if site.show_excerpts -%}
-      {{ post.excerpt }}
-      {%- endif -%}
-    </li>
+  {%- if site.data.series.size > 0 -%}
+  <h2>{{ "Article series" }}</h2>
+  <ul >
+    {%- for series in site.data.series -%}
+    <div id="test">
+      {%- include series-details.html item=series -%}
+    </div>
     {%- endfor -%}
   </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ " /feed.xml" | relative_url }}">via RSS</a></p>
   {%- endif -%}
-
+  <a class="rss-subscribe-button" href="{{ "/feed.xml" | relative_url }}">
+    Subscribe via RSS
+  </a>
 </div>
