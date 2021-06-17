@@ -13,7 +13,7 @@ tags:
 - Grafana
 
 series: 
-  name:  Understanding Redis
+  id: REDIS
   index: 5
 ---
 
