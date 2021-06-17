@@ -11,7 +11,7 @@ tags:
 - Systems
 
 series: 
-  name:  Understanding Redis
+  id: REDIS
   index: 1
 ---
 

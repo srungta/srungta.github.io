@@ -1,4 +1,5 @@
-{%- assign seriesposts = site.posts | where: 'series.name', include.item.name | sort: 'series.index' -%}
+{%- assign seriesposts = site.posts | where: 'series.id', include.item.id | sort: 'series.index' -%}
+{%- if seriesposts.size > 0 -%}
 <li>
     {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
     <h2>
@@ -28,3 +29,4 @@
     </ol>
     {%- endif -%}
 </li>
+{%- endif -%}

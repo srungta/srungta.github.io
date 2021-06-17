@@ -3,10 +3,17 @@ layout: default
 ---
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
   {%- include series.html -%}
+
+  <!-- Try to set subtitle -->
   {%- if page.subtitle -%}
   {%- assign pagesubtitle = page.subtitle -%}
+  <!-- If this post is part of a series use that -->
   {%- elsif page.series -%}
-  {%- assign pagesubtitle = page.series.name | append: ' - Part ' | append: page.series.index -%}
+  <!-- Find the matching series -->
+  {%- assign serieswithsameid = site.data.series | where: 'id', page.series.id | first -%}
+  {%- if serieswithsameid -%}
+  {%- assign pagesubtitle = serieswithsameid.name | append: ' - Part ' | append: page.series.index -%}
+  {%- endif -%}
   {%- else -%}
   {%- assign pagesubtitle = 'HI' -%}
   {%- endif -%}

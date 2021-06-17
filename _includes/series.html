@@ -1,8 +1,8 @@
-<!-- Backlink to previous post in the series -->
+<!-- Back link to previous post in the series -->
 <!-- Check if this post is a part of a series. -->
 {%- if page.series -%}
 <!-- Collect all posts in this series -->
-{%- assign seriesposts = site.posts | where: 'series.name', page.series.name | sort: 'series.index' -%}
+{%- assign seriesposts = site.posts | where: 'series.id', page.series.id | sort: 'series.index' -%}
 
 {%- assign previouspostindex = page.series.index | minus: 1 -%}
 <!-- If there are more than one post -->
