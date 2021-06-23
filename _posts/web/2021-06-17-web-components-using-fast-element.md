@@ -126,21 +126,12 @@ I am using the below configuration. You can check the other options mentioned in
 ```json
 {
   "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
     "module": "ES2015",
     "moduleResolution": "Node",
     "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "outDir": "./dist",
-    "rootDir": "./",
-    "strict": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
     "target": "ES2015"
   },
   "files": ["src/index.ts"]
@@ -172,8 +163,9 @@ export {adder};
 npm run build
 ```
 
-You should see a new folder called `dist` that has the transpiled js and map files.
+You should see a new folder called `dist` that has the transpiled js file.
 
+> You should also add this `dist` folder to your `.gitignore`.
 
 #### Adding a dummy HTML file
 Add a `index.html` file with the following contents.
@@ -301,26 +293,26 @@ In your `package.json` file add the following scripts
   "build:prod": "webpack --mode=production --node-env=production",
   "watch": "webpack --watch",
   "serve": "webpack serve",
-  "start": "webpack serve",
+  "start": "webpack serve"
 }
 ...
 ```
 
 5. Type `npm run build:dev` to see a `dist` folder getting created with an `index.html` file and a `main.js` file.
 
-6. Type `npm run start` to see a dev server start and your html file should pop up.
+6. Type `npm run start` to see a dev server start and your html file should pop up. Changes to your files should automatically refresh the browser.
 
 #### Adding FAST element.
 Now that we have the basic dev experience setup, we will start with FAST element development.
 Install the FAST element package using  
 ```bash
-npm install @microsoft/FAST-element
+npm install @microsoft/fast-element
 ```
 
 #### Adding the custom component.
 1. Create a new file called `src/PersonCard.ts` with following contents.    
 ```typescript  
-import { attr, customElement, FASTElement, html} from "@microsoft/FAST-element";
+import { attr, customElement, FASTElement, html} from "@microsoft/fast-element";
 const template = html<PersonCard>`<h1>${(x) => x.shouldGreet ? "Hello" : ""} ${(x) => x.name?.toUpperCase()}</h1>`;
 @customElement({
   name: "person-card",
@@ -357,6 +349,7 @@ You can remove rest of the dummy code.
 
 Run `npm run start` to see the web component in action.
 Voila. Your first web component works.
+![Webpack demo](/assets/images/web/fast/webpack-works.png)
 
 > Keep committing your changes at regular intervals as checkpoints.  
 
@@ -366,10 +359,14 @@ We will setup a storybook so that we can test the web component in isolation.
 
 1. Add storybook js
 We will use the storybook init command to add storybook dependencies automatically.
-At project root, run `npm sb init`
+At project root, run `npx sb init`
 
 2. Choose the `html` option.
 
+```bash
+√ Do you want to manually choose a Storybook project type to install? ... yes
+√ Please choose a project type from the following list: » html
+```
 3. This command should add the dependencies in `package.json`, it will also add the related scripts and some sample stories.
 
 #### Adding stories for PersonCard
@@ -395,12 +392,25 @@ Primary.args = {
 };
 ```
 
-2. Run `npm run storybook` to start your storybook.
+2. Run `npm run build-storybook` to build and then `npm run storybook` to start your storybook.
+You will get an error if the sort
+`TypeError: Cannot read property 'get' of undefined`
+This is being tracked as a Github issue on the storybookjs repo.
+[DefinePlugin cannot read property 'get' of undefined](https://github.com/storybookjs/storybook/issues/14497)  
+
+> You should add `storybook-static` to your `.gitignore`
+
+3. Based on the suggestion in the issue, run this command to install `dotenv-webpack`
+```bash
+npm install dotenv-webpack
+```
+
+4. Run `npm run storybook` again to start your storybook.
 You should see an option in left nav with `PersonCard` title.  
 Click on it and you should see a UI like below. 
 ![Storybook for person card](/assets/images/web/FAST/storybook-demo-fail.png)
 
-But why does the UI does not show the text?
+Click on person card. But why does the UI does not show the text?
 
 This is because there is an existing issue with storybook.
 Storybook uses `babel` as a transpiler for typescript instead of `ts-loader`.
