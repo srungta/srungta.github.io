@@ -408,7 +408,7 @@ npm install dotenv-webpack
 4. Run `npm run storybook` again to start your storybook.
 You should see an option in left nav with `PersonCard` title.  
 Click on it and you should see a UI like below. 
-![Storybook for person card](/assets/images/web/FAST/storybook-demo-fail.png)
+![Storybook for person card](/assets/images/web/fast/storybook-demo-fail.png)
 
 Click on person card. But why does the UI does not show the text?
 
@@ -443,7 +443,7 @@ npm install -D ts-loader@^7.0.2
 This is the same version that the official FAST repo uses. [Link to the Github repo](https://github.com/microsoft/FAST/blob/eeb625e346a54da4c1f338eb90341a6e2d9ddb83/packages/web-components/FAST-components/package.json#L107)
 
 Rerun `npm run storybook` and things should work now with a UI like below. 😊
-![Storybook for person card](/assets/images/web/FAST/storybook-demo-success.png)
+![Storybook for person card](/assets/images/web/fast/storybook-demo-success.png)
 
 Change the text in the controls and see it live in action.  
 Fin.
