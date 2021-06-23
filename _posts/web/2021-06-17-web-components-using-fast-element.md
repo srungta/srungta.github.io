@@ -2,21 +2,22 @@
 layout: post
 unique_id: WEB01
 
-title: Creating web components using Microsoft fast elements
-tldr: Fast is a web component library and framework from Microsoft.
-permalink: /blog/web/creating-web-components-using-microsoft-fast-element
+title: Creating web components using Microsoft FAST elements
+subtitle: Setup a project with webpack, add a custom web component with stories.
+tldr: FAST is a web component library and framework from Microsoft.
+permalink: /blog/web/creating-web-components-using-microsoft-FAST-element
 author: srungta
 tags: 
 - Web-Component
 - Web
-- Fast
+- FAST
 
 series: 
   id: WEB
   index: 1
 ---
 
-#### What is Fast?
+#### What is FAST?
 Microsoft FAST is a collection of technologies built on Web Components and modern Web Standards It helps you write your custom HTML elements with ease.
 
 > You can read more about web components [on this mozilla docs page](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
@@ -50,8 +51,8 @@ If all is good you should see something like
 #### Creating the package
 1. Create a workspace folder.
 ```
-mkdir fast-playground
-cd fast-playground
+mkdir FAST-playground
+cd FAST-playground
 ```
 
 2. Initialize the npm package using
@@ -61,7 +62,7 @@ npm init
 This should ask you a couple of questions about your package.  
 This is what i used.  
 ```bash
-~/fast-playground>npm init
+~/FAST-playground>npm init
 This utility will walk you through creating a package.json file.
 It only covers the most common items, and tries to guess sensible defaults.
 See 'npm help json' for definitive documentation on these fields
@@ -69,22 +70,22 @@ and exactly what they do.
 Use 'npm install <pkg>' afterwards to install a package and
 save it as a dependency in the package.json file.
 Press ^C at any time to quit.
-package name: (fast-playground) fast-playground
+package name: (FAST-playground) FAST-playground
 version: (1.0.0)
-description: Test package to create fast components
+description: Test package to create FAST components
 entry point: (index.js) index.js
 test command:
 git repository:
 keywords: FAST
 author: srungta
 license: (ISC) MIT
-About to write to ~/fast-playground\package.json:
+About to write to ~/FAST-playground\package.json:
 ```
 ```json
 {
-  "name": "fast-playground",
+  "name": "FAST-playground",
   "version": "1.0.0",
-  "description": "Test package to create fast components",
+  "description": "Test package to create FAST components",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -98,7 +99,7 @@ About to write to ~/fast-playground\package.json:
 ```
 ```
 Is this OK? (yes) yes
-~/fast-playground>
+~/FAST-playground>
 ```
 
 > At this point it would also be advisable to initialize a Git repo in the same directory using `git init` so that you can track changes across files easily.
@@ -117,7 +118,7 @@ npm install --save typescript
 
 2. Initialize a `tsconfig.json` file using
 ```
-~/fast-playground>.\node_modules\.bin\tsc --init
+~/FAST-playground>.\node_modules\.bin\tsc --init
 ```
 
 3. Edit your `tsconfig.json` to set your preferences.
@@ -313,13 +314,13 @@ In your `package.json` file add the following scripts
 Now that we have the basic dev experience setup, we will start with FAST element development.
 Install the FAST element package using  
 ```bash
-npm install @microsoft/fast-element
+npm install @microsoft/FAST-element
 ```
 
 #### Adding the custom component.
 1. Create a new file called `src/PersonCard.ts` with following contents.    
 ```typescript  
-import { attr, customElement, FASTElement, html} from "@microsoft/fast-element";
+import { attr, customElement, FASTElement, html} from "@microsoft/FAST-element";
 const template = html<PersonCard>`<h1>${(x) => x.shouldGreet ? "Hello" : ""} ${(x) => x.name?.toUpperCase()}</h1>`;
 @customElement({
   name: "person-card",
@@ -397,14 +398,14 @@ Primary.args = {
 2. Run `npm run storybook` to start your storybook.
 You should see an option in left nav with `PersonCard` title.  
 Click on it and you should see a UI like below. 
-![Storybook for person card](/assets/images/web/fast/storybook-demo-fail.png)
+![Storybook for person card](/assets/images/web/FAST/storybook-demo-fail.png)
 
 But why does the UI does not show the text?
 
 This is because there is an existing issue with storybook.
 Storybook uses `babel` as a transpiler for typescript instead of `ts-loader`.
 We can force storybook to use `ts-loader` by updating the `.storybook/main.js`.
-This is what is also done in [the official FAST repo](https://github.com/microsoft/fast/blob/eeb625e346a54da4c1f338eb90341a6e2d9ddb83/packages/web-components/fast-components/.storybook/main.js#L10.)  
+This is what is also done in [the official FAST repo](https://github.com/microsoft/FAST/blob/eeb625e346a54da4c1f338eb90341a6e2d9ddb83/packages/web-components/FAST-components/.storybook/main.js#L10.)  
 ```js
 module.exports = {
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
@@ -429,10 +430,10 @@ This can be fixed by running
 ```bash
 npm install -D ts-loader@^7.0.2
 ```
-This is the same version that the official FAST repo uses. [Link to the Github repo](https://github.com/microsoft/fast/blob/eeb625e346a54da4c1f338eb90341a6e2d9ddb83/packages/web-components/fast-components/package.json#L107)
+This is the same version that the official FAST repo uses. [Link to the Github repo](https://github.com/microsoft/FAST/blob/eeb625e346a54da4c1f338eb90341a6e2d9ddb83/packages/web-components/FAST-components/package.json#L107)
 
 Rerun `npm run storybook` and things should work now with a UI like below. 😊
-![Storybook for person card](/assets/images/web/fast/storybook-demo-success.png)
+![Storybook for person card](/assets/images/web/FAST/storybook-demo-success.png)
 
 Change the text in the controls and see it live in action.  
 Fin.
