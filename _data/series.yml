@@ -1,9 +1,14 @@
+
+- name: Distributed Systems
+  description: Setting up different parts of a distributed system from scratch to unbox how things happen in the background.
+  status: ONGOING
+  id: DISTRIB
+
+- name: Web explorations
+  description: Experiments in different types of web technologies.
+  id: WEB
+  
 - name: Understanding Redis
   description: Trying to set up a production Redis cluster using docker. We will start with "What is Redis" and try to end up configuring a multi node cluster. The intent will also be to setup monitoring and automation wherever applicable.
   status: ONGOING
   id: REDIS
-
-- name: Web explorations
-  description: Experiments in different types of web technologies.
-  status: ONGOING
-  id: WEB

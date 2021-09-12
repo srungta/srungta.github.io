@@ -5,7 +5,12 @@
     <h2>
         <b>{{ include.item.name | escape }}</b>
     </h2>
-    <p>{{ include.item.description | escape }}</p>
+    <p>
+        {%- if include.item.status -%}
+            <span class="p-tag">{{ include.item.status }}</span>
+        {%- endif -%}
+        {{ include.item.description | escape }}
+    </p>
 
     {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
     {%- if seriesposts.size > 0 -%}
@@ -29,4 +34,5 @@
     </ol>
     {%- endif -%}
 </li>
+<br />
 {%- endif -%}
