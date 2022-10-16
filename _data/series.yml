@@ -5,6 +5,10 @@
   id: DISTRIB
   sortInReverse: true
 
+- name: Kubernetes
+  description: Kubernetes, also known as K8s, is an open-source system for automating deployment, scaling, and management of containerized applications.
+  id: K8S
+
 - name: Web explorations
   description: Experiments in different types of web technologies.
   id: WEB
