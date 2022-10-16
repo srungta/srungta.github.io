@@ -1,4 +1,9 @@
-{%- assign seriesposts = site.posts | where: 'series.id', include.item.id | sort: 'series.index' | reverse -%}
+{%- if include.item.sortInReverse -%}
+{%- assign seriesposts = site.posts | where: 'series.id', include.item.id | sort: 'series.index'|reverse -%}
+{% else %}
+{%- assign seriesposts = site.posts | where: 'series.id', include.item.id | sort: 'series.index' -%}
+{%- endif -%}
+
 {%- if seriesposts.size > 0 -%}
 <li>
     {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}

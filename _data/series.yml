@@ -3,6 +3,7 @@
   description: Setting up different parts of a distributed system from scratch to unbox how things happen in the background.
   status: ONGOING
   id: DISTRIB
+  sortInReverse: true
 
 - name: Web explorations
   description: Experiments in different types of web technologies.
