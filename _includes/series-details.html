@@ -1,4 +1,4 @@
-{%- assign seriesposts = site.posts | where: 'series.id', include.item.id | sort: 'series.index' -%}
+{%- assign seriesposts = site.posts | where: 'series.id', include.item.id | sort: 'series.index' | reverse -%}
 {%- if seriesposts.size > 0 -%}
 <li>
     {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
@@ -7,7 +7,7 @@
     </h2>
     <p>
         {%- if include.item.status -%}
-            <span class="p-tag">{{ include.item.status }}</span>
+        <span class="p-tag">{{ include.item.status }}</span>
         {%- endif -%}
         {{ include.item.description | escape }}
     </p>
@@ -20,6 +20,9 @@
             <a href="{{ post.url | relative_url }}">
                 {{ post.title | escape }}
             </a>
+            {%- if post.isNew -%}
+            <span class="p-post-new">NEW</span>
+            {%- endif -%}
         </li>
         {%- if post.tldr -%}
         <span class="p-series-tldr">
