@@ -103,9 +103,14 @@ I used these settings.
 
 #### 4. Check if you can login into your VMs.
 Once you are connected to the VPN, let us validate if you can access the worker VMS.
-If everything is okat you should be able to ssh into the VMs using their private IP on the network.
+If everything is okay you should be able to ssh into the VMs using their private IP on the network.
 You can find this in the `overview` tab of the VM details on Azure.
 
-Next open a `bash` terminal and 
+For me the private IP was of the form `10.5.0.4`
+Open a `cmd` or `bash` terminal and type `ssh azureuser@10.5.0.4`
+You should be able to login into the VM. :)
+![SSH Login](/assets/images/distrib/DISTRIB02/login-ssh.png)
+
+> I usually set an auto shutdown on my VMs to save cost. Make sure your VM is running before you type to ssh.  
 
 Fin.
