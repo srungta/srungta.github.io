@@ -10,7 +10,6 @@ author: srungta
 tags: 
 - Azure
 - VPN
-isNew: true
 
 series: 
   id: DISTRIB
