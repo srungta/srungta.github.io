@@ -7,7 +7,6 @@ subtitle: Securing websites from attacks using nonce tokens
 tldr: Using nonce tokens in your website provides strong protection against CSRF and XSS attacks.
 permalink: /blog/start-right/ui-nonce
 author: srungta
-isNew: true
 tags:
   - Start Right
   - Frontend
