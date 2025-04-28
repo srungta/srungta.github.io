@@ -1,4 +1,10 @@
-- name: Starting Right - FrontEnd
+# - name: Sample
+#   description: Sample description.
+#   status: ONGOING
+#   id: SAMPLE
+#   sortInReverse: true
+  
+- name: Starting Right
   description: Tips and tricks when setting up a new project (and some for older ones too.)
   id: STARTRIGHT-FRONTEND
 
@@ -18,5 +24,5 @@
   
 - name: Understanding Redis
   description: Trying to set up a production Redis cluster using docker. We will start with "What is Redis" and try to end up configuring a multi node cluster. The intent will also be to setup monitoring and automation wherever applicable.
-  status: ONGOING
+  # status: ONGOING
   id: REDIS

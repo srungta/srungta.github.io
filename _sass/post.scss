@@ -49,6 +49,56 @@
     margin: 10px 0;
 }
 
+.lp {
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #ffecff;
+    border-radius: 10px;
+
+    .lp-legend {
+        background-color: white;
+        padding: 2px 4px;
+        border-radius: 10px;
+    }
+
+    .lp-list {
+        .lp-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 5px 0;
+
+            .lp-item-title {
+                font-size: 1.2em;
+                text-decoration: none;
+            }
+
+            .lp-item-author {
+                font-size: 0.8em;
+            }
+
+            .lp-item-tldr {
+                @include relative-font-size(0.9);
+                color: #6a6a6a;
+            }
+        }
+    }
+
+
+}
+
+.p-series-details {
+    background-color: #e4f4ff;
+    padding: 10px 20px;
+    border-radius: 10px;
+
+    legend {
+        background-color: white;
+        padding: 2px 4px;
+        border-radius: 10px;
+    }
+}
+
 .p-series-tldr {
     @include relative-font-size(0.9);
     color: #6a6a6a;
@@ -61,6 +111,19 @@
     color: white;
     background: #e70000;
     border-radius: 3px;
+}
+
+.line {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    line-height: 0.1em;
+    margin: 40px 0 20px;
+
+    span {
+        background: #fff;
+        padding: 0 10px;
+    }
 }
 
 .rss-subscribe-button {

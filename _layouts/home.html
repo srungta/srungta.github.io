@@ -5,17 +5,38 @@ layout: default
 <div class="home">
   {{ content }}
 
-  {%- if site.data.series.size > 0 -%}
-  <h2>{{ "Article series" }}</h2>
-  <ul >
-    {%- for series in site.data.series -%}
-    <div id="test">
-      {%- include series-details.html item=series -%}
+  {%- if site.posts.size > 0 -%}
+  <fieldset class="lp">
+    <legend class="lp-legend">Latest Post</legend>
+    <div class="lp-list">
+      {%- for post in site.posts limit:1 -%}
+      <div class="lp-item">
+
+        <a class="lp-item-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <span class="lp-item-author">
+          by {{ post.author }} &nbsp;•&nbsp; {{ post.date | date: "%B %d, %Y"}}
+        </span>
+        <div>
+          {{post.subtitle}}
+        </div>
+        <div class="lp-item-tldr">
+          {{post.tldr}}
+        </div>
+      </div>
+      {%- endfor -%}
     </div>
-    {%- endfor -%}
-  </ul>
+  </fieldset>
   {%- endif -%}
-  <a class="rss-subscribe-button" href="{{ "/feed.xml" | relative_url }}">
+
+  <h2 class="line"><span>Other Articles</span></h2>
+  {%- if site.data.series.size > 0 -%}
+  <section>
+    {%- for series in site.data.series -%}
+    {%- include series-details.html item=series -%}
+    {%- endfor -%}
+  </section>
+  {%- endif -%}
+  <a class="rss-subscribe-button" href="{{ " /feed.xml" | relative_url }}">
     Subscribe via RSS
   </a>
 </div>
