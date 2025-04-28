@@ -22,8 +22,8 @@ permalink: /all-posts/
       <td>
         <a href="{{ post.url }}">{{ post.title }}</a>
       </td>
-      <td>
-        <time datetime="{{ post.date | date: " %Y-%m-%d" }}">{{ post.date | date_to_long_string }}</time>
+      <td style="width:96px">
+        <time datetime="{{ post.date | date: " %Y-%m-%d" }}">{{ post.date | date_to_string  }}</time>
       </td>
       <td>
         {% for tag in post.tags %}

@@ -63,6 +63,10 @@ defaults:
     values:
       layout: tag_page
       permalink: tags/:tag/
+  - scope:
+      path: ""
+    values:
+      image: /assets/images/about/Shaswat-Mini.png
 
 # For SEO
 timezone: Asia/Kolkata
