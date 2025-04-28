@@ -3,8 +3,8 @@ layout: post
 unique_id: STARTRIGHT-01
 
 title: What/Why/How of 'nonce'
-subtitle: Using nonce (CSRF tokens) improves security and
-tldr: Suggestions on why having a type system like TS can help you in the long run.
+subtitle: Securing websites from attacks using nonce tokens
+tldr: Using nonce tokens in your website gives a strong protection against CSRF and XSS attacks.
 permalink: /blog/start-right/ui-nonce
 author: srungta
 tags:
