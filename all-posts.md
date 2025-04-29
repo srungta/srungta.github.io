@@ -27,7 +27,7 @@ permalink: /all-posts/
       </td>
       <td>
         {% for tag in post.tags %}
-        <span class="p-tags-string">{{ tag }},</span>
+        <span class="tag-string">{{ tag }},</span>
         {% endfor %}
       </td>
       <td>{{ post.tldr }}</td>

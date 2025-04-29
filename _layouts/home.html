@@ -6,7 +6,7 @@ layout: default
   {{ content }}
 
   {%- if site.posts.size > 0 -%}
-  <fieldset class="lp">
+  <fieldset class="latest-post">
     <legend class="lp-legend">Latest Post</legend>
     <div class="lp-list">
       {%- for post in site.posts limit:1 -%}
@@ -36,7 +36,7 @@ layout: default
     {%- endfor -%}
   </section>
   {%- endif -%}
-  <a class="rss-subscribe-button" href="{{ " /feed.xml" | relative_url }}">
+  <a class="rss-subscribe-button" href="{{'/feed.xml' | relative_url }}">
     Subscribe via RSS
   </a>
 </div>

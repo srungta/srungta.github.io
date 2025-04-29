@@ -5,14 +5,14 @@
 {%- endif -%}
 
 {%- if seriesposts.size > 0 -%}
-<fieldset class="p-series-details">
+<fieldset class="series-details">
     {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
     <legend>
         <b>{{ include.item.name | escape }}</b>
     </legend>
     <p>
         {%- if include.item.status -%}
-        <span class="p-tag">{{ include.item.status }}</span>
+        <span class="tag">{{ include.item.status }}</span>
         {%- endif -%}
         {{ include.item.description | escape }}
     </p>
@@ -23,13 +23,13 @@
         {%- for post in seriesposts -%}
         <li>
             {%- if post.isNew -%}
-            <span class="p-post-new">NEW</span>
+            <span class="sd-post-new">NEW</span>
             {%- endif -%}
             <a href="{{ post.url | relative_url }}">
                 {{ post.title | escape }}
             </a>
             {%- if post.tldr -%}
-            <span class="p-series-tldr">
+            <span class="sd-tldr">
                 {{post.tldr}}
             </span>
             {%- endif -%}

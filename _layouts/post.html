@@ -28,24 +28,24 @@ layout: default
     {%- endif -%}
 
 
-    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
-    <h3 class="post-subtitle p-name" itemprop="name sub-headline">{{pagesubtitle | escape}}</h3>
+    <h1 class="post-title" itemprop="name headline">{{ page.title | escape }}</h1>
+    <h3 class="post-subtitle" itemprop="name sub-headline">{{pagesubtitle | escape}}</h3>
     <p class="post-meta">
       {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-      <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+      <time class="p-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
         {{ page.date | date: date_format }}
       </time>
       {%- if page.modified_date -%}
       ~
       {%- assign mdate = page.modified_date | date_to_xmlschema -%}
-      <time class="dt-modified" datetime="{{ mdate }}" itemprop="dateModified">
+      <time class="p-modified" datetime="{{ mdate }}" itemprop="dateModified">
         {{ mdate | date: date_format }}
       </time>
       {%- endif -%}
       {%- if page.author -%}
       • {%- for author in page.author -%}
       <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span class="p-author h-card" itemprop="name">{{ author }}</span>
+        <span class="p-author" itemprop="name">{{ author }}</span>
       </span>
       {%- if forloop.last == false -%}, {%- endif -%}
       {%- endfor -%}
@@ -53,7 +53,7 @@ layout: default
 
       {%- if page.tags -%}
       &nbsp;•&nbsp; {%- for tag in page.tags -%}
-      <span class="p-tag">{{tag}}</span>
+      <span class="tag">{{tag}}</span>
       {%- endfor -%}
       {%- endif -%}
     </p>
