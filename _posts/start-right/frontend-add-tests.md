@@ -16,6 +16,8 @@ series:
   id: STARTRIGHT-FRONTEND
   index: 5
 ---
+* TOC
+{:toc}
 
 ### What types of tests exist
 

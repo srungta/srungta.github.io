@@ -15,6 +15,8 @@ series:
   id: REDIS
   index: 4
 ---
+* TOC
+{:toc}
 
 In the last part we started a local Redis instance and added some keys using the Redis CLI. However whenever we deploy any caching system it is useful to track how well the cache is doing, whether it performing well, what is the read time, write time etc.
 

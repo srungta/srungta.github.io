@@ -15,6 +15,8 @@ series:
   id: REDIS
   index: 3
 ---
+* TOC
+{:toc}
 
 In the last part we started a local Redis instance, but we did not talk about how to actually get or add a key to the cache.
 In this part, we will try to do that.

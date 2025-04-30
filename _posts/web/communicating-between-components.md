@@ -16,6 +16,8 @@ series:
   id: WEB
   index: 2
 ---
+* TOC
+{:toc}
 ## communicating-between-components on a page
 
 ## Redux and action

@@ -15,6 +15,8 @@ series:
   id: K8S
   index: 1
 ---
+* TOC
+{:toc}
 
 What is Kubernetes?
 #### Create servers

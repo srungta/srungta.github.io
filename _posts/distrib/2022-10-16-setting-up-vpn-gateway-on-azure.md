@@ -15,6 +15,8 @@ series:
   id: DISTRIB
   index: 2
 ---
+* TOC
+{:toc}
 
 #### What is virtual private network?
 - A `network` is just a group of machines that can talk to (discover) each other.

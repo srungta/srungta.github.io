@@ -16,6 +16,8 @@ series:
   id: STARTRIGHT-FRONTEND
   index: 3
 ---
+* TOC
+{:toc}
 
 ## THe role of telemetry in modern web
 

@@ -16,6 +16,8 @@ series:
   id: STARTRIGHT-FRONTEND
   index: 1
 ---
+* TOC
+{:toc}
 
 ## A note on modern Web
 

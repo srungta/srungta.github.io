@@ -16,6 +16,8 @@ series:
   id: WEB
   index: 1
 ---
+* TOC
+{:toc}
 
 #### What is FAST?
 Microsoft FAST is a collection of technologies built on Web Components and modern Web Standards It helps you write your custom HTML elements with ease.

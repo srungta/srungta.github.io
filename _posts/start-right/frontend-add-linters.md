@@ -16,6 +16,8 @@ series:
   id: STARTRIGHT-FRONTEND
   index: 2
 ---
+* TOC
+{:toc}
 
 ## What is linters
 

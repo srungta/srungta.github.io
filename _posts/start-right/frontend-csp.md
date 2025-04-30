@@ -17,6 +17,8 @@ series:
   id: STARTRIGHT
   index: 2
 ---
+* TOC
+{:toc}
 ### Understanding Content Security Policy (CSP)
 
 Content Security Policy (CSP) is essentially a header that your server sends to the frontend. The header value tells the browser what exactly it should allow to run. Anything that violates the CSP policy is blocked implicitly by the browser. It is a very simple and super powerful 

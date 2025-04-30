@@ -14,6 +14,8 @@ series:
   id: REDIS
   index: 1
 ---
+* TOC
+{:toc}
 
 #### What is Redis?
 Redis is a caching software. What this means is that it helps you keep values in main memory instead of disk, so that you can access them quickly.

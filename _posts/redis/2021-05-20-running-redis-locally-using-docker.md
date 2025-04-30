@@ -15,6 +15,8 @@ series:
   id: REDIS
   index: 2
 ---
+* TOC
+{:toc}
 
 In this part, we will try to run a redis standalone instance on your local machine.
 Typically you can install Redis using its official tar.gz releases.

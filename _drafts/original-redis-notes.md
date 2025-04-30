@@ -8,6 +8,8 @@ tags:
 - Docker
 - Systems
 ---
+* TOC
+{:toc}
 
 #### Intent behind this blogpost
 I am trying to understand distributed systems from its basic building blocks. First step I picked up in the process was to setup a cache cluster.

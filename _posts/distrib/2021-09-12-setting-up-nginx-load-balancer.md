@@ -16,6 +16,9 @@ series:
   index: 1
 ---
 
+* TOC
+{:toc}
+
 #### Why a load balancer?
 - Your website is hosted on a VM.
 - The VM can handle 100 users at a time.

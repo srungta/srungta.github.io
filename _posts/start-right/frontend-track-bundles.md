@@ -16,6 +16,8 @@ series:
   id: STARTRIGHT-FRONTEND
   index: 4
 ---
+* TOC
+{:toc}
 
 ### What are bundles
 

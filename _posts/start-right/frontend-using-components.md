@@ -16,6 +16,8 @@ series:
   id: STARTRIGHT-FRONTEND
   index: 6
 ---
+* TOC
+{:toc}
 
 ## COmponentising your web
 ## STorybook testing
