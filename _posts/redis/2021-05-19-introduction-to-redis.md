@@ -14,8 +14,10 @@ series:
   id: REDIS
   index: 1
 ---
+* TOC
+{:toc}
 
-#### What is Redis?
+## What is Redis?
 Redis is a caching software. What this means is that it helps you keep values in main memory instead of disk, so that you can access them quickly.
 
 For example, when you write a program like 
@@ -65,7 +67,7 @@ The specialty of Redis is that it maintains these values in memory so the retrie
 
 Programs like Redis that maintain a key to value mappings are usually called `key-value stores` 
 
-#### What makes Redis an important key value store?
+## What makes Redis an important key value store?
 1. Redis makes it super fast to get the `value` when you know the `key`.( because values are kept in memory )
 2. Multiple programs can access the value of keys without knowing about each other. (They just need to know the redis server program )
 3. Redis is a **distributed key value store.**  

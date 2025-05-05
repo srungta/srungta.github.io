@@ -15,17 +15,19 @@ series:
   id: REDIS
   index: 4
 ---
+* TOC
+{:toc}
 
 In the last part we started a local Redis instance and added some keys using the Redis CLI. However whenever we deploy any caching system it is useful to track how well the cache is doing, whether it performing well, what is the read time, write time etc.
 
-#### What metrics will we target to get?
+## What metrics will we target to get?
 In this post, we will try to get the cache hit values.
 Cache hit/miss numbers helps us understand how many times the key we looked up was present in the cache.
 A high cache hit rate means the cache is being used better. Our ideal cache hit rate is 100% (we get all the values in the cache). However it is usually hard to get it in production because your cache size is usually less than your key space (Eg: You can only store names of 100 people at max, but there are a total of 100 people, so inevitably someone's name will not be in the cache at the moment.)
 A high miss rate means we are probably not caching the most used values. In this case, we should have a deeper look at what are the values that are getting cached and what are the values that are being queried.
 [From our past example of people information, if you have the person's first name as key, but you are looking up values based on person's last name, you will have a high miss rate. Analysis of cache hit/miss also helps us find these logical bugs.]
 
-#### Connect to a Redis instance
+## Connect to a Redis instance
 As always we will start a redis instance. You can use the exec command to connect to it.
 {%- highlight powershell -%}
 docker run --rm --name test-redis-instance redis
@@ -39,7 +41,7 @@ PONG
 {%- endhighlight -%}
 
 
-#### Using Redis's INFO commands
+## Using Redis's INFO commands
 Redis CLI provides inbuilt commands to get the statistics for the redis instances and clusters.
 Lets us set and get some values first, so that we have some info to look at.
 {%- highlight bash -%}

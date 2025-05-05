@@ -15,6 +15,8 @@ series:
   id: REDIS
   index: 2
 ---
+* TOC
+{:toc}
 
 In this part, we will try to run a redis standalone instance on your local machine.
 Typically you can install Redis using its official tar.gz releases.
@@ -23,20 +25,20 @@ I will be using Docker images from redis for this post.
 
 > If you are not sure what Docker is, you should [read this article](https://medium.com/@SaadAAkash/docker-for-dummies-literally-ab3fc6362d5f).
 
-### Why use docker?
+## Why use docker?
 - The simpler reason is because I don't want to install any dependencies on my system.
 - Docker also gives a completely reproducible environment, which mean whatever you read here, you will be able to reproduce exactly.
 
 
-### Pre requisites
+## Pre requisites
 - A windows or a linux system with internet.
 - Docker Engine. (You can find installation instructions [on the official site](https://docs.docker.com/engine/install/))
 
 > I am on a Windows machine so I will be using Powershell for most of my work. But the same commands should work fine on Linux systems as well.
 
-### Steps
+## Steps
 
-#### Validate docker 
+### Validate docker 
 Open a Powershell window and run 
 {%- highlight powershell -%}
 docker -v
@@ -48,7 +50,7 @@ error during connect: This error may indicate that the docker daemon is not runn
 ```
 it means your docker service is running. Start that first.
 
-#### Get the Redis image 
+### Get the Redis image 
  Next we need to pull the redis image from the public docker registry.  
 {%- highlight powershell -%}
 docker pull redis
@@ -56,14 +58,14 @@ docker pull redis
 This will pull the latest redis image from the docker public registry.
 If everything is fine, you should see multiple lines of logs with a progress bar next to each line. Let the download complete.
 
-#### Validate image
+### Validate image
 Once the download completes check if the image is available on your system.
 ```powershell
 docker images
 ```  
 This should should a list of images present in your system. You should see an entry for redis.
 
-#### Run an instance 
+### Run an instance 
 As a quick check, start a new instance of the redis image and check if it is working as expected.
 {%- highlight powershell -%}
 docker run --rm --name test-redis-instance redis
