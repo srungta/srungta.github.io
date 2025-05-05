@@ -18,6 +18,9 @@ series:
   index: 1
 ---
 
+* TOC
+{:toc}
+
 ### What is a Nonce? A Simple Explanation
 
 At its core, a "nonce" is simply a "number used once." Its primary purpose is to introduce uniqueness into a system or communication to prevent certain types of attacks. The key characteristics of a nonce are its uniqueness, its often random or pseudo-random generation, and its intended one-time use within a specific context.

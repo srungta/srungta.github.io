@@ -16,18 +16,20 @@ series:
   id: WEB
   index: 1
 ---
+* TOC
+{:toc}
 
-#### What is FAST?
+## What is FAST?
 Microsoft FAST is a collection of technologies built on Web Components and modern Web Standards It helps you write your custom HTML elements with ease.
 
 > You can read more about web components [on this mozilla docs page](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
 
-#### What we will try to achieve?
+## What we will try to achieve?
 - Set up a managed typescript project to write the components.
 - Have hot reload and watch mode enabled.
 - Create a web component that displays the name in uppercase based on an input attribute with an optional greeting.
 
-#### Setting up the environment.
+## Setting up the environment.
 1. Install Node from https://nodejs.org/en/download/ page.
 2. After the installation is complete, open a command line window (cmd, bash, powershell anything is fine) and type
 ```
@@ -48,7 +50,7 @@ If all is good you should see something like
 6.9.0
 ```
 
-#### Creating the package
+## Creating the package
 1. Create a workspace folder.
 ```
 mkdir FAST-playground
@@ -105,7 +107,7 @@ Is this OK? (yes) yes
 > At this point it would also be advisable to initialize a Git repo in the same directory using `git init` so that you can track changes across files easily.
 
 
-#### Adding typescript
+## Adding typescript
 Typescript adds much needed type support for javascript. 
 Webpack makes it easier to create bundles for JS, CSS and HTML files. It also helps us setup the TS to JS transpilation.
 So we add typescript to the package and use that instead of plain JS.
@@ -139,7 +141,7 @@ I am using the below configuration. You can check the other options mentioned in
 ```
 
 
-#### Add dummy typescript files
+## Add dummy typescript files
 1. Create a file `src/index.ts` with following contents.
 ```typescript
 const adder = (a: number, b: number):number => {
@@ -167,7 +169,7 @@ You should see a new folder called `dist` that has the transpiled js file.
 
 > You should also add this `dist` folder to your `.gitignore`.
 
-#### Adding a dummy HTML file
+## Adding a dummy HTML file
 Add a `index.html` file with the following contents.
 ```html
 <!DOCTYPE html>
@@ -185,7 +187,7 @@ Add a `index.html` file with the following contents.
 ```
 
 
-#### Adding webpack
+## Adding webpack
 While the `tsc` is sufficient for now, running it again and again after every change is annoying.
 We will setup webpack as our build system, so that it can watch the changed files, generate the js files, bundle them as a single file and serve up the html (yet to be added) files.
 > `tsc` comes with a default `--watch` flag that we could use to watch the files for compilation. We are using webpack as it helps add plugins for other things also.
@@ -302,14 +304,14 @@ In your `package.json` file add the following scripts
 
 6. Type `npm run start` to see a dev server start and your html file should pop up. Changes to your files should automatically refresh the browser.
 
-#### Adding FAST element.
+## Adding FAST element.
 Now that we have the basic dev experience setup, we will start with FAST element development.
 Install the FAST element package using  
 ```bash
 npm install @microsoft/fast-element
 ```
 
-#### Adding the custom component.
+## Adding the custom component.
 1. Create a new file called `src/PersonCard.ts` with following contents.    
 ```typescript  
 import { attr, customElement, FASTElement, html} from "@microsoft/fast-element";
@@ -353,7 +355,7 @@ Voila. Your first web component works.
 
 > Keep committing your changes at regular intervals as checkpoints.  
 
-#### BONUS : Setup up storybook
+## BONUS : Setup up storybook
 [Storybook JS](https://storybook.js.org/) is a nifty tool for UI component testing.
 We will setup a storybook so that we can test the web component in isolation.
 
@@ -369,7 +371,7 @@ At project root, run `npx sb init`
 ```
 3. This command should add the dependencies in `package.json`, it will also add the related scripts and some sample stories.
 
-#### Adding stories for PersonCard
+## Adding stories for PersonCard
 1. Create a file named `src/PersonCard.stories.ts` with following contents.
 ```typescript
 import { Story, Meta } from "@storybook/html";
