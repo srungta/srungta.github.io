@@ -7,9 +7,10 @@ layout: default
 
   {%- if site.posts.size > 0 -%}
   <fieldset class="latest-post">
-    <legend class="lp-legend">Latest Post</legend>
+    <legend class="lp-legend">Featured Post</legend>
     <div class="lp-list">
-      {%- for post in site.posts limit:1 -%}
+      {% assign featured_posts = site.posts | where: "featured", true %}
+      {%- for post in featured_posts limit:1 -%}
       <div class="lp-item">
 
         <a class="lp-item-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
