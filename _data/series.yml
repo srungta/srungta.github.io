@@ -3,7 +3,7 @@
 #   status: ONGOING
 #   id: SAMPLE
 #   sortInReverse: true
-  
+
 - name: Starting Right
   description: Tips and tricks when setting up a new project (and some for older ones too.)
   id: STARTRIGHT
@@ -21,8 +21,12 @@
   description: Experiments in different types of web technologies.
   id: WEB
   sortInReverse: true
-  
+
 - name: Understanding Redis
   description: Trying to set up a production Redis cluster using docker. We will start with "What is Redis" and try to end up configuring a multi node cluster. The intent will also be to setup monitoring and automation wherever applicable.
   # status: ONGOING
   id: REDIS
+
+- name: Extending Jekyll
+  description: Documenting how Jekyll is extended for custom features on this site.
+  id: JEKYLL
