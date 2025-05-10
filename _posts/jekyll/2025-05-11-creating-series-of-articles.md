@@ -31,9 +31,9 @@ The way I've currently implemented this is by having a master data file for seri
 Jekyll supports data files that are available as built-in variables, allowing you to have virtually any valid data structure. So, we can do this:
 
 1.  Add a file named `series.yml` in your `_data` folder.
-2.  I use a simple setup like this:
+2.  I use a simple setup like this:  
     ```yaml
-    - name: Series 1
+      name: Series 1
       description: Description of Series 1
       id: SERIES_ID_1
     ```
@@ -68,41 +68,41 @@ At the time of writing, the UI looks like this: 👇
 </div>
 
 1.  In your `home.html`, you can add the following:
-    ```ruby
-    { %- if site.data.series.size > 0 -%}
+    ```html
+    { %- if site.data.series.size > 0 - % }
       <section>
-        { %- for series in site.data.series -%}
-          { %- include series-details.html item=series -%}
-        { %- endfor -%}
+        { %- for series in site.data.series - % }
+          { %- include series-details.html item=series - % }
+        { %- endfor - % }
       </section>
-    { %- endif -%}
+    { %- endif - % }
     ```
     - Here, `site.data.series.size > 0` is a sanity check to ensure rendering only occurs when there is more than one series defined.
-    - `{ %- for series in site.data.series -%}` iterates over the array of series objects in your data file.
-    - `{ %- include series-details.html item=series -%}` passes the current `series` object from the loop to a layout file called `series-details.html`.
+    - `{ %- for series in site.data.series - % }` iterates over the array of series objects in your data file.
+    - `{ %- include series-details.html item=series - % }` passes the current `series` object from the loop to a layout file called `series-details.html`.
 
 2.  In `series-details.html`, you now have access to the metadata of a single series through the `include` object.
     We can first display the details of the series itself for context:
     ```html
-    <b>{{ include.item.name | escape }}</b> <!-- Name of series -->
-    <p>{{ include.item.description }}</p> <!-- Name of series -->
+    <b>{ { include.item.name | escape } }</b> <!-- Name of series -->
+    <p>{ { include.item.description } }</p> <!-- Name of series -->
     ```
     The `include.item` allows us to access the data passed to this layout in step 2.1.
     Now, let's display the list of posts within the series:
-    ```ruby
-    { %- assign seriesposts = site.posts | where: 'series.id', include.item.id | sort: 'series.index' -%}
-    { %- if seriesposts.size > 0 -%}
+    ```html
+    { %- assign seriesposts = site.posts | where: 'series.id', include.item.id | sort: 'series.index' - % }
+    { %- if seriesposts.size > 0 - % }
     <ol>
-      { %- for post in seriesposts -%}
+      { %- for post in seriesposts - % }
       <li>
-        <a href="{{ post.url | relative_url }}">"{{ post.title | escape }}"</a>
-        { %- if post.tldr -%}
-          <span class="sd-tldr">{{ post.tldr }}</span>
-        { %- endif -%}
+        <a href="{ { post.url | relative_url } }">"{ { post.title | escape } }"</a>
+        { %- if post.tldr - % }
+          <span class="sd-tldr">{ { post.tldr } }</span>
+        { %- endif - % }
       </li>
-      { %- endfor -%}
+      { %- endfor - % }
     </ol>
-    { %- endif -%}
+    { %- endif - % }
     ```
     - `assign seriesposts = site.posts | where: 'series.id', include.item.id | sort: 'series.index' ` is the core of the filtering logic. It selects all `site.posts` where the `series.id` (defined in the post's front matter) matches the `include.item.id` (the ID from `_data/series.yml`). Then, it sorts these posts based on the `series.index` (also defined in the post's front matter).
     - The rest of the code iterates through the filtered and sorted `seriesposts` to display their details.
@@ -111,54 +111,62 @@ At the time of writing, the UI looks like this: 👇
 ### Showing the Previous and Next Links on the Post Page
 
 If you look at the top and bottom of a post, you should see something like this: 👇
+<div class="centered-image-container">
+  <img alt="Previous Link posts" src ="/assets/images/jekyll/JEKYLL02/Previous-Link.png" class="centered-image" />
+</div>
+and
+<div class="centered-image-container">
+  <img alt="Next Link posts" src ="/assets/images/jekyll/JEKYLL02/Next-Link.png" class="centered-image" />
+</div>
+
 1.  First, we need to determine the previous and next posts for the current post. You can add the following code within your `_layouts\post.html`:
     ```html
     <!-- Back link to previous post in the series -->
     <!-- Check if this post is a part of a series. -->
-    { %- if page.series -%}
+    { %- if page.series - % }
       <!-- Collect all posts in this series -->
-      { %- assign seriesposts = site.posts | where: 'series.id', page.series.id | sort: 'series.index' -%}
+      { %- assign seriesposts = site.posts | where: 'series.id', page.series.id | sort: 'series.index' - % }
 
-      { %- assign previouspostindex = page.series.index | minus: 1 -%}
+      { %- assign previouspostindex = page.series.index | minus: 1 - % }
       <!-- If there are more than one post -->
-      { %- if seriesposts.size > 1 && previouspostindex > 0 -%}
+      { %- if seriesposts.size > 1 && previouspostindex > 0 - % }
       <!-- Find the post with index greater than this page-->
-        { %- assign previousposts = seriesposts | where: 'series.index' ,previouspostindex -%}
+        { %- assign previousposts = seriesposts | where: 'series.index' ,previouspostindex - % }
         <!-- If a previous post is found, show a link -->
-        { %- if previousposts.size > 0 -%}
-          { %- assign previouspost = previousposts | first -%}
-        { %- endif -%}
-      { %- endif -%}
+        { %- if previousposts.size > 0 - % }
+          { %- assign previouspost = previousposts | first - % }
+        { %- endif - % }
+      { %- endif - % }
 
-      { %- assign nextpostindex = page.series.index | plus: 1 -%}
+      { %- assign nextpostindex = page.series.index | plus: 1 - % }
       <!-- If there are more than one post -->
-      { %- if seriesposts.size > 1 && nextpostindex > 0 -%}
+      { %- if seriesposts.size > 1 && nextpostindex > 0 - % }
         <!-- Find the post with index greater than this page-->
-        { %- assign nextposts = seriesposts | where: 'series.index' ,nextpostindex -%}
+        { %- assign nextposts = seriesposts | where: 'series.index' ,nextpostindex - % }
         <!-- If a next post is found, show a link -->
-        { %- if nextposts.size > 0 -%}
-          { %- assign nextpost = nextposts | first -%}
-        { %- endif -%}
-      { %- endif -%}
-    { %- endif -%}
+        { %- if nextposts.size > 0 - % }
+          { %- assign nextpost = nextposts | first - % }
+        { %- endif - % }
+      { %- endif - % }
+    { %- endif - % }
     ```
 
 2.  Now, within your `post.html` layout, you can use the `previouspost` and `nextpost` variables to display the links:
     ```html
        <!-- Backlink to previous post in the series -->
-    { %- if previouspost -%}
+    { %- if previouspost - % }
     <div class="p-previous">
-      <a href="{{ previouspost.url }}">&#x25c0; Previously, {{ previouspost.title }}</a>
+      <a href="{ { previouspost.url } }">&#x25c0; Previously, { { previouspost.title } }</a>
     </div>
-    { %- endif -%}
+    { %- endif - % }
     ```
     And at the end of your post.html:
     ```html
-    { %- if page.series and nextpost -%}
+    { %- if page.series and nextpost - % }
     <div class="p-next">
-      <a href="{{ nextpost.url }}">Next up, {{ nextpost.title }} &#x2192</a>
+      <a href="{ { nextpost.url } }">Next up, { { nextpost.title } }} &#x2192</a>
     </div>
-    { %- endif -%}
+    { %- endif - % }
     ```
 
 ## Pros and Cons of This Approach
