@@ -114,10 +114,72 @@ At the time of writing the UI looks like this.👇
 
 
 ### Showing the Previous and Next link on post page.
-If you look at the top and bottom of a post you should see something like
+If you look at the top and bottom of a post you should see something like 👇
+<!-- IMAGE -->
 
+
+1. First we need to determine what are the previous and next posts for the current posts. We can add the below in `_layouts\post.html`
+   ```html
+    <!-- Back link to previous post in the series -->
+    <!-- Check if this post is a part of a series. -->
+    {%- if page.series -%}
+      <!-- Collect all posts in this series -->
+      {%- assign seriesposts = site.posts | where: 'series.id', page.series.id | sort: 'series.index' -%}
+
+      {%- assign previouspostindex = page.series.index | minus: 1 -%}
+      <!-- If there are more than one post -->
+      {%- if seriesposts.size > 1 && previouspostindex > 0 -%}
+      <!-- Find the post with index greater than this page-->
+        {%- assign previousposts = seriesposts | where: 'series.index' ,previouspostindex -%}
+        <!-- If a previous post is found, show a link -->
+        {%- if previousposts.size > 0 -%}
+          {%- assign previouspost = previousposts | first -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- assign nextpostindex = page.series.index | plus: 1 -%}
+      <!-- If there are more than one post -->
+      {%- if seriesposts.size > 1 && nextpostindex > 0 -%}
+        <!-- Find the post with index greater than this page-->
+        {%- assign nextposts = seriesposts | where: 'series.index' ,nextpostindex -%}
+        <!-- If a next post is found, show a link -->
+        {%- if nextposts.size > 0 -%}
+          {%- assign nextpost = nextposts | first -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
+   ```
+
+   Now in your `post.html` you can use `previouspost` and `nextpost` to show the previous and next post.
+
+    ```html
+       <!-- Backlink to previous post in the series -->
+    {%- if previouspost -%}
+    <div class="p-previous">
+      <a href="{{ previouspost.url }}">&#x25c0; Previously, {{previouspost.title }}</a>
+    </div>
+    {%- endif -%}
+    ```
+
+    and in the end
+
+    ```html
+    <!-- Backlink to next post in the series -->
+    {%- if page.series and nextpost -%}
+    <div class="p-next">
+      <a href="{{ nextpost.url }}">Next up, {{nextpost.title }} &#x2192</a>
+    </div>
+    {%- endif -%}
+    ```
+
+## Pros and Cons of this approach
+1. `✅ PRO` Series posts get autolinked just by setting front matter.
+2. `✅ PRO` Adding a new series is easy. Just add to `_data\series.yml`
+3. `✅ PRO` Empty series do not show up on the list.
+4. `✅ PRO` First post in a series does not have previous link and last post does not have a next link.
+5. `❌CON` Making sure that the index of posts in the series are properly ordered.
 
 
 ## Conclusion
 
-Integrating GitHub Issues into your Jekyll site is a simple yet powerful way to collect and manage user feedback, without a service overhead.
+Collating the posts under series can be managed easily in jekyll though some front end matter and liquid expressions.
