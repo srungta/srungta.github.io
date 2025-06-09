@@ -16,9 +16,8 @@ series:
 
 featured: true
 ---
-
-- TOC
-  {:toc}
+* TOC
+{:toc}
 
 ## Introduction to MCP Servers
 
