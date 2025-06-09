@@ -14,8 +14,9 @@ series:
   id: LLM
   index: 1
 ---
-* TOC
-{:toc}
+
+- TOC
+  {:toc}
 
 ## Introduction to MCP Servers
 
@@ -143,19 +144,18 @@ Let's add a tool to the server so that we can add the `add-reminder` skill to ou
 const server = new McpServer({...});
 ...
 server.tool(
-  "add-reminder", 
-  "Add a reminder for the user", 
+  "add-reminder",
+  "Add a reminder for the user",
   {
     reminderText: z.string().describe("Free form text containing the content of the reminder"))
   },
   async (
-    { reminderText }, 
-    ctx) => 
+    { reminderText },
+    ctx) =>
     {
       // TODO : Actully save the reminder text to some external system.
       let response = [
         `Request ID : ${ctx.requestId}`,
-        `Progress Token : ${ctx._meta?.progressToken}`,
         `Your reminder is set.`,
         `Reminder Content: "${reminderText}"`
       ]
@@ -169,6 +169,11 @@ server.tool(
 async function main() {...}
 ```
 
+1. Here we add a tool called `add-reminder`. Make sure to use a good description of what the tool does so that the MCP client can have help text and it can choose your tool better. In our case, writing a simple text like `Add a reminder...` works because it is the only one that is installed, but in real world, users will have multiple servers installed. Having a good description will ensure users are able to trigger your tool consistently.
+2. `reminderText` is a argument that we expose. `z.string()` does a validation check that the value passed to reminderText is actually a string. It throws a runtime error otherwise. The description of the argument is also important as it is used by client to understand what value to pass.
+3. The callback function is where the actual processing happens. The `ctx` object has additional metadata sent by the client. This has the information that we had seen in the inspector like `ctx.requestId`.
+4. The return value has to be in a structure format. Since `content` is an array, you can send multiple content types like image, video etc. as part of single response. Here we only send `text`.
+
 ### Add a reminder from text with date and time
 
 ### Add a reminder to capture recurring intent
@@ -176,45 +181,6 @@ async function main() {...}
 ### Handling recurrance and non-recurrance correctly.
 
 ### Follow ups with multiple calls to server.
-
-MCP Server: Add Reminder Tool (TypeScript SDK)
-
-First, install the MCP SDK:
-
-```bash
-npm install @mcp/sdk
-```
-
-Now, create your MCP server:
-
-```typescript
-import { MCPServer, Tool, ToolContext, z } from "@mcp/sdk";
-
-const reminders: { text: string; time: string }[] = [];
-
-const addReminderTool = new Tool({
-  name: "add-reminder",
-  description: "Add a new reminder",
-  inputSchema: z.object({
-    text: z.string(),
-    time: z.string().describe("ISO 8601 format"),
-  }),
-  async execute(input, ctx: ToolContext) {
-    reminders.push({ text: input.text, time: input.time });
-    return { status: "success", reminder: input };
-  },
-});
-
-const server = new MCPServer({
-  tools: [addReminderTool],
-});
-
-server.listen(8000, () => {
-  console.log("MCP server running on http://localhost:8000");
-});
-```
-
-This endpoint accepts a reminder text and time, then stores it in memory.
 
 ## Testing with Inspector
 
