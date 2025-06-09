@@ -215,7 +215,7 @@ Inspector will show the request and response, helping you debug and iterate quic
 We should also test how the tool works with Claude Desktop in a real life scenario.
 We can follow the doc at [Model Context Protocol docs](https://modelcontextprotocol.io/quickstart/server#testing-your-server-with-claude-for-desktop-2) to get started.
 
-Open claude and go to `File->Settings->Developer->Edit config`.
+Open Claude and go to `File->Settings->Developer->Edit config`.
 <div class="centered-image-container">
   <img alt="claude config" src ="/assets/images/llm/LLMMCP01/claude-1.png" class="centered-image" />
 </div>
@@ -235,11 +235,11 @@ Claude options should show `reminders`.
 <div class="centered-image-container">
   <img alt="claude config" src ="/assets/images/llm/LLMMCP01/claude-2.png" class="centered-image" />
 </div>
-Under `reminders, there should be the `add-reminder` tool enabled.
+Under `reminders`, there should be the `add-reminder` tool enabled.
 <div class="centered-image-container">
   <img alt="claude config" src ="/assets/images/llm/LLMMCP01/claude-3.png" class="centered-image" />
 </div>
-Claude would ask you for permission before using the server. During development, use "Allow Once" so that you can check the permission window and updates to it everytime.
+Claude will ask you for permission before using the server. During development, use "Allow Once" so that you can check the permission window and updates to it every time.
 <div class="centered-image-container">
   <img alt="claude config" src ="/assets/images/llm/LLMMCP01/claude-4.png" class="centered-image" />
 </div>
