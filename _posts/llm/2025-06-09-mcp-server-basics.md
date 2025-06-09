@@ -137,33 +137,7 @@ main().catch((error) => {
 2. `const transport = new StdioServerTransport();` creates a stdio-based server transport which essentially means you can start receiving messages on stdin and sending messages on stdout. This is essentially how local MCP servers talk to clients.
    > Using stdio also means that you can't randomly use `console.log` statements in your code anymore as they will be passed back to the client and will cause parsing errors.
 
-### Test with inspector
-
-You can test your MCP server using the [MCP Inspector](https://inspector.mcp.ai/):
-
-1. Start your server: `node build/index.js`
-2. Open Inspector and connect to `http://localhost:8000`
-3. Try calling the `add-reminder` tool with sample inputs:
-
-```json
-{
-  "text": "Doctor appointment",
-  "time": "2025-06-10T15:00:00Z"
-}
-```
-
-Inspector will show the request and response, helping you debug and iterate quickly.
-
-### Test with Claude Desktop
-
-To test with Claude Desktop:
-
-1. Add your MCP server as a custom tool.
-2. Ask Claude:  
-   _"Remind me to call mom at 7pm tonight."_
-3. Claude will call your `add-reminder` tool with the parsed details.
-
-This workflow demonstrates how AI can use your server to automate reminders.
+> **TODO:** Add a screenshot of the server running in the terminal.
 
 ### Add functionality to add a reminder from text
 
@@ -210,6 +184,44 @@ Testing this against Claude gives us a nice end-to-end working example.
 ```
 Add a reminder to catch the bus.
 ```
+
+> **TODO:** Add a screenshot of the tool being called from Claude or Inspector.
+
+
+### Test with inspector
+
+We can test the MCP server using the [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector).
+It is the simplest way to test the handling of different inputs from the mcp client.
+
+1. Build your server: `npm run build`.
+2. Open Inspector `npx -y @modelcontextprotocol/inspector node build\index.js`
+3. In the inspector connect to and connect to `http://localhost:8000`
+3. Try calling the `add-reminder` tool with sample inputs:
+
+```json
+{
+  "text": "Doctor appointment",
+  "time": "2025-06-10T15:00:00Z"
+}
+```
+
+Inspector will show the request and response, helping you debug and iterate quickly.
+
+> **TODO:** Add a screenshot of MCP Inspector with a sample request and response.
+
+### Test with Claude Desktop
+
+We should also test how the tool works with Claude Desktop in a real life scenario.
+
+1. Add your MCP server as a custom tool.
+2. Ask Claude:  
+   _"Remind me to call mom at 7pm tonight."_
+3. Claude will call your `add-reminder` tool with the parsed details.
+
+This workflow demonstrates how AI can use your server to automate reminders.
+
+> **TODO:** Add a screenshot of Claude Desktop with the reminder tool in action.
+
 
 ### Add a reminder from text with date and time
 
@@ -270,6 +282,8 @@ Add a reminder to catch the bus at 5PM tomorrow.
 ```
 
 As seen above, the client automagically changes 5PM tomorrow to the correct ISO formatted string. The server, however, should definitely validate the parsed value.
+
+> **TODO:** Add a screenshot of the server response with parsed time.
 
 ### Add a reminder to capture recurrence intent
 
@@ -348,6 +362,8 @@ Add a reminder to catch the bus at 5PM everyday.
 
 Now instead of passing the date in `reminderTime`, you should get a value like `FREQ=DAILY;BYHOUR=17;BYMINUTE=0` (every day at 5PM) in `recurranceTime`.
 
+> **TODO:** Add a screenshot of the server response with a recurrence rule.
+
 **Congratulations, you have a functional MCP server.**
 
 ## Learnings
@@ -356,3 +372,7 @@ Now instead of passing the date in `reminderTime`, you should get a value like `
 2. Validate and Normalize Inputs. Ensure your server validates and normalizes inputs. For example, parse and check date/time formats.
 3. Expect mistakes from the client. Add proper defenses for incorrect inputs and workflows.
 4. Use optional fields to eliminate the client force fitting values.
+5. Document your tool descriptions and argument schemas well for best client compatibility.
+6. Use MCP Inspector and other tools to debug and iterate quickly.
+
+> **TODO:** Add a summary diagram showing the flow from client → MCP server → response.
