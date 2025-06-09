@@ -22,7 +22,7 @@ series:
 
 MCP (Model Control Protocol) servers are designed to bridge the gap between AI models and external tools or services. They serve a similar purpose to what API endpoints have been doing for decades. MCP servers expose a set of "tools" (APIs) that the AI can call to perform actions, fetch data, or automate workflows. This enables AI assistants to interact with your apps, databases, or devices in a secure and structured way.
 
-> **Note:** MCP is an open protocol. You can find more details and the full specification at [modelcontextprotocol.io](https://modelcontextprotocol.io/).
+> MCP is an open protocol. You can find more details and the full specification at [modelcontextprotocol.io](https://modelcontextprotocol.io/).
 
 ## What We Are Building
 
@@ -75,7 +75,8 @@ Update your package.json to add `type: "module"` and a build script:
     "reminders": "./build/index.js"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "tsc --watch"
   },
   "files": ["build"]
 }
@@ -101,11 +102,13 @@ Create a `tsconfig.json` in the root:
 }
 ```
 
-> **Note:** If you use a different directory structure, update `rootDir` and `outDir` accordingly.
+> If you use a different directory structure, update `rootDir` and `outDir` accordingly.
 
 ### Add a basic server that does not do anything
 
 Let's start with a basic server that exposes the metadata about the server first.
+
+Add the below to `src\index.ts`.
 
 ```typescript
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -137,39 +140,38 @@ main().catch((error) => {
 2. `const transport = new StdioServerTransport();` creates a stdio-based server transport which essentially means you can start receiving messages on stdin and sending messages on stdout. This is essentially how local MCP servers talk to clients.
    > Using stdio also means that you can't randomly use `console.log` statements in your code anymore as they will be passed back to the client and will cause parsing errors.
 
-> **TODO:** Add a screenshot of the server running in the terminal.
-
 ### Add functionality to add a reminder from text
 
 Let's add a tool to the server so that we can add the `add-reminder` skill to our server.
 
 ```typescript
-const server = new McpServer({...});
-...
+// ...
+import { z } from "zod";
+// ...
+// const server = new McpServer({...});
+// ...
 server.tool(
   "add-reminder",
   "Add a reminder for the user",
   {
-    reminderText: z.string().describe("Free form text containing the content of the reminder")
+    reminderText: z
+      .string()
+      .describe("Free form text containing the content of the reminder"),
   },
-  async (
-    { reminderText },
-    ctx) =>
-    {
-      // TODO: Actually save the reminder text to some external system.
-      let response = [
-        `Request ID : ${ctx.requestId}`,
-        `Your reminder is set.`,
-        `Reminder Content: "${reminderText}"`
-      ]
-      return {
-          content: [
-              { type: "text",text: response.join("\n") }
-          ]
-      }
-    });
-...
-async function main() {...}
+  async ({ reminderText }, ctx) => {
+    // TODO: Actually save the reminder text to some external system.
+    let response = [
+      `Request ID : ${ctx.requestId}`,
+      `Your reminder is set.`,
+      `Reminder Content: "${reminderText}"`,
+    ];
+    return {
+      content: [{ type: "text", text: response.join("\n") }],
+    };
+  }
+);
+// ...
+// async function main() {...}
 ```
 
 1. Here we add a tool called `add-reminder`. Make sure to use a good description of what the tool does so that the MCP client can have help text and it can choose your tool better. In our case, writing a simple text like `Add a reminder...` works because it is the only one that is installed, but in the real world, users will have multiple servers installed. Having a good description will ensure users are able to trigger your tool consistently.
@@ -185,43 +187,66 @@ Testing this against Claude gives us a nice end-to-end working example.
 Add a reminder to catch the bus.
 ```
 
-> **TODO:** Add a screenshot of the tool being called from Claude or Inspector.
-
-
 ### Test with inspector
 
 We can test the MCP server using the [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector).
 It is the simplest way to test the handling of different inputs from the mcp client.
 
 1. Build your server: `npm run build`.
-2. Open Inspector `npx -y @modelcontextprotocol/inspector node build\index.js`
-3. In the inspector connect to and connect to `http://localhost:8000`
-3. Try calling the `add-reminder` tool with sample inputs:
+2. Open Inspector `npx -y @modelcontextprotocol/inspector node ./build/index.js`
+  <div class="centered-image-container">
+    <img alt="Inspector in cli" src ="/assets/images/llm/LLMMCP01/inspector-1.png" class="centered-image" />
+  </div>
 
-```json
-{
-  "text": "Doctor appointment",
-  "time": "2025-06-10T15:00:00Z"
-}
-```
+Click on connect and you should see the add-reminder tool with the reminderText parameter.
+<div class="centered-image-container">
+  <img alt="Inspector with parameters" src ="/assets/images/llm/LLMMCP01/inspector-2.png" class="centered-image" />
+</div>
+
+Try calling the `add-reminder` tool with sample inputs:
+<div class="centered-image-container">
+  <img alt="Inspector with parameters passed to tool" src ="/assets/images/llm/LLMMCP01/inspector-3.png" class="centered-image" />
+</div>
 
 Inspector will show the request and response, helping you debug and iterate quickly.
-
-> **TODO:** Add a screenshot of MCP Inspector with a sample request and response.
 
 ### Test with Claude Desktop
 
 We should also test how the tool works with Claude Desktop in a real life scenario.
+We can follow the doc at [Model Context Protocol docs](https://modelcontextprotocol.io/quickstart/server#testing-your-server-with-claude-for-desktop-2) to get started.
 
-1. Add your MCP server as a custom tool.
-2. Ask Claude:  
-   _"Remind me to call mom at 7pm tonight."_
-3. Claude will call your `add-reminder` tool with the parsed details.
+Open claude and go to `File->Settings->Developer->Edit config`.
+<div class="centered-image-container">
+  <img alt="claude config" src ="/assets/images/llm/LLMMCP01/claude-1.png" class="centered-image" />
+</div>
+Add the following config to `claude_desktop_config.json`.
 
-This workflow demonstrates how AI can use your server to automate reminders.
-
-> **TODO:** Add a screenshot of Claude Desktop with the reminder tool in action.
-
+```json
+{
+  "mcpServers": {
+    "reminders": {
+      "command": "node",
+      "args": ["C:\\src\\Github\\reminders\\build\\index.js"] // Use absolute path.
+    }
+  }
+}
+```
+Claude options should show `reminders`.
+<div class="centered-image-container">
+  <img alt="claude config" src ="/assets/images/llm/LLMMCP01/claude-2.png" class="centered-image" />
+</div>
+Under `reminders, there should be the `add-reminder` tool enabled.
+<div class="centered-image-container">
+  <img alt="claude config" src ="/assets/images/llm/LLMMCP01/claude-3.png" class="centered-image" />
+</div>
+Claude would ask you for permission before using the server. During development, use "Allow Once" so that you can check the permission window and updates to it everytime.
+<div class="centered-image-container">
+  <img alt="claude config" src ="/assets/images/llm/LLMMCP01/claude-4.png" class="centered-image" />
+</div>
+Use the prompt to see the request and response objects.
+<div class="centered-image-container">
+  <img alt="claude config" src ="/assets/images/llm/LLMMCP01/claude-5.png" class="centered-image" />
+</div>
 
 ### Add a reminder from text with date and time
 
@@ -253,7 +278,7 @@ server.tool(
     // Validate and parse reminderTime as ISO 8601
     let parsedTime: Date | null = null;
     try {
-      parsedTime = new Date(reminderTime);
+      parsedTime = new Date(reminderTime ?? "");
       if (isNaN(parsedTime.getTime())) {
         throw new Error("Invalid date");
       }
@@ -283,8 +308,12 @@ Add a reminder to catch the bus at 5PM tomorrow.
 
 As seen above, the client automagically changes 5PM tomorrow to the correct ISO formatted string. The server, however, should definitely validate the parsed value.
 
-> **TODO:** Add a screenshot of the server response with parsed time.
-
+<div class="centered-image-container">
+  <img alt="Response shown in claude" src ="/assets/images/llm/LLMMCP01/point-in-time-1.png" class="centered-image" />
+</div>
+<div class="centered-image-container">
+  <img alt="Response shown in claude" src ="/assets/images/llm/LLMMCP01/point-in-time-2.png" class="centered-image" />
+</div>
 ### Add a reminder to capture recurrence intent
 
 Many reminders are not one-time events. They repeat on a schedule (e.g., "every Monday at 9am" or "on the 1st of every month").
@@ -321,7 +350,7 @@ server.tool(
     let parsedTime: Date | null = null;
     if (reminderTime) {
       try {
-        parsedTime = new Date(reminderTime);
+        parsedTime = new Date(reminderTime ?? "");
         if (isNaN(parsedTime.getTime())) {
           throw new Error("Invalid date");
         }
@@ -362,7 +391,12 @@ Add a reminder to catch the bus at 5PM everyday.
 
 Now instead of passing the date in `reminderTime`, you should get a value like `FREQ=DAILY;BYHOUR=17;BYMINUTE=0` (every day at 5PM) in `recurranceTime`.
 
-> **TODO:** Add a screenshot of the server response with a recurrence rule.
+<div class="centered-image-container">
+  <img alt="Response shown in claude" src ="/assets/images/llm/LLMMCP01/recurrance-1.png" class="centered-image" />
+</div>
+<div class="centered-image-container">
+  <img alt="Response shown in claude" src ="/assets/images/llm/LLMMCP01/recurrance-2.png" class="centered-image" />
+</div>
 
 **Congratulations, you have a functional MCP server.**
 
@@ -374,5 +408,3 @@ Now instead of passing the date in `reminderTime`, you should get a value like `
 4. Use optional fields to eliminate the client force fitting values.
 5. Document your tool descriptions and argument schemas well for best client compatibility.
 6. Use MCP Inspector and other tools to debug and iterate quickly.
-
-> **TODO:** Add a summary diagram showing the flow from client → MCP server → response.
