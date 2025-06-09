@@ -16,8 +16,6 @@ tags:
 series:
   id: STARTRIGHT
   index: 2
-
-featured: true
 ---
 
 * TOC

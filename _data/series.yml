@@ -4,6 +4,10 @@
 #   id: SAMPLE
 #   sortInReverse: true
 
+- name: Large Language Models
+  description: Experiments with LLMs and the ecosystem of tools around them
+  id: LLM
+
 - name: Starting Right
   description: Tips and tricks when setting up a new project (and some for older ones too.)
   id: STARTRIGHT
