@@ -2,7 +2,7 @@
 layout: post
 unique_id: LLMMCP01
 title: MCP server basics - Building an MCP server for reminders
-subtitle: sss.
+subtitle: Learn how to build an MCP server for reminders and enable seamless interaction between AI assistants and your applications.
 tldr: Create an MCP server to handle reminders to understand how data flows between the MCP client and the server
 permalink: /blog/llm/mcp/mcp-server-basics
 author: srungta
@@ -22,27 +22,29 @@ series:
 
 MCP (Model Control Protocol) servers are designed to bridge the gap between AI models and external tools or services. They serve a similar purpose to what API endpoints have been doing for decades. MCP servers expose a set of "tools" (APIs) that the AI can call to perform actions, fetch data, or automate workflows. This enables AI assistants to interact with your apps, databases, or devices in a secure and structured way.
 
+> **Note:** MCP is an open protocol. You can find more details and the full specification at [modelcontextprotocol.io](https://modelcontextprotocol.io/).
+
 ## What We Are Building
 
 In this post, we'll build a simple MCP server that manages reminders. The server will expose a tool to add reminders, which can then be invoked by an AI assistant or inspected manually. This example will help you understand how to structure your server, handle inputs, and ensure a smooth experience for both users and AI models.
 
-## Lets start building
+## Let's start building
 
-We will start with simple typescript server and progressively add stuff. We wont really be saving the reminder but mostly focus on interactions between MCP clients and the server. We will build a minimal MCP server exposing an `add-reminder` tool. We'll use TypeScript and the official MCP SDK for this example. We follow the documentation at https://modelcontextprotocol.io/quickstart/server#node to get started.
+We will start with a simple TypeScript server and progressively add features. We won't really be saving the reminder but will mostly focus on interactions between MCP clients and the server. We will build a minimal MCP server exposing an `add-reminder` tool. We'll use TypeScript and the official MCP SDK for this example. We follow the documentation at https://modelcontextprotocol.io/quickstart/server#node to get started.
 
-**Our scenario :** `Add a reminder to catch the bus daily at 5PM.`
+**Our scenario:** `Add a reminder to catch the bus daily at 5PM.`
 
-### Setup the project
+### Set up the project
 
-Install node on your system from https://nodejs.org first so that you can run the TS code locally. Anything above NOde 16 should be okay.
-Check if you have node by running this in your terminal.
+Install Node on your system from https://nodejs.org first so that you can run the TS code locally. Anything above Node 16 should be okay.
+Check if you have Node by running this in your terminal.
 
 ```
 node --version
 npm --version
 ```
 
-Lets initialize the project
+Let's initialize the project
 
 ```
 # Create a new directory for our project
@@ -60,8 +62,8 @@ npm install -D typescript
 ```
 
 1. `@modelcontextprotocol/sdk` is the official MCP SDK - https://github.com/modelcontextprotocol/typescript-sdk
-2. `zod` is a typescript validation library. Not essential but eases development - https://zod.dev/
-3. `@types/node` for getting types for common node models.
+2. `zod` is a TypeScript validation library. Not essential but eases development - https://zod.dev/
+3. `@types/node` for getting types for common Node modules.
 4. `typescript` because type check is a boon.
 
 Update your package.json to add `type: "module"` and a build script:
@@ -99,9 +101,11 @@ Create a `tsconfig.json` in the root:
 }
 ```
 
-### Add a basic server that does not do anything.
+> **Note:** If you use a different directory structure, update `rootDir` and `outDir` accordingly.
 
-Lets start with a basic server that exposes the metadata about the server first.
+### Add a basic server that does not do anything
+
+Let's start with a basic server that exposes the metadata about the server first.
 
 ```typescript
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -130,12 +134,36 @@ main().catch((error) => {
 ```
 
 1. `name: "reminders",` declares a server of the name "reminders". This is the name that shows up on your clients like Claude. So choose wisely.
-2. `const transport = new StdioServerTransport();` creates a stdio based server transport which essentially means you can start receiving messages on stdin and sending messages on stdout. This is essentially how local MCP servers talk to clients.
-   > Using stdio also means that you cant randomly use `console.log` statements in your code anymore as they will be passed back to the client and will cause parsing errors.
+2. `const transport = new StdioServerTransport();` creates a stdio-based server transport which essentially means you can start receiving messages on stdin and sending messages on stdout. This is essentially how local MCP servers talk to clients.
+   > Using stdio also means that you can't randomly use `console.log` statements in your code anymore as they will be passed back to the client and will cause parsing errors.
 
-### Test with inspector.
+### Test with inspector
 
-### Test with claude desktop.
+You can test your MCP server using the [MCP Inspector](https://inspector.mcp.ai/):
+
+1. Start your server: `node build/index.js`
+2. Open Inspector and connect to `http://localhost:8000`
+3. Try calling the `add-reminder` tool with sample inputs:
+
+```json
+{
+  "text": "Doctor appointment",
+  "time": "2025-06-10T15:00:00Z"
+}
+```
+
+Inspector will show the request and response, helping you debug and iterate quickly.
+
+### Test with Claude Desktop
+
+To test with Claude Desktop:
+
+1. Add your MCP server as a custom tool.
+2. Ask Claude:  
+   _"Remind me to call mom at 7pm tonight."_
+3. Claude will call your `add-reminder` tool with the parsed details.
+
+This workflow demonstrates how AI can use your server to automate reminders.
 
 ### Add functionality to add a reminder from text
 
@@ -148,13 +176,13 @@ server.tool(
   "add-reminder",
   "Add a reminder for the user",
   {
-    reminderText: z.string().describe("Free form text containing the content of the reminder"))
+    reminderText: z.string().describe("Free form text containing the content of the reminder")
   },
   async (
     { reminderText },
     ctx) =>
     {
-      // TODO : Actully save the reminder text to some external system.
+      // TODO: Actually save the reminder text to some external system.
       let response = [
         `Request ID : ${ctx.requestId}`,
         `Your reminder is set.`,
@@ -170,12 +198,12 @@ server.tool(
 async function main() {...}
 ```
 
-1. Here we add a tool called `add-reminder`. Make sure to use a good description of what the tool does so that the MCP client can have help text and it can choose your tool better. In our case, writing a simple text like `Add a reminder...` works because it is the only one that is installed, but in real world, users will have multiple servers installed. Having a good description will ensure users are able to trigger your tool consistently.
-2. `reminderText` is a argument that we expose. `z.string()` does a validation check that the value passed to reminderText is actually a string. It throws a runtime error otherwise. The description of the argument is also important as it is used by client to understand what value to pass.
+1. Here we add a tool called `add-reminder`. Make sure to use a good description of what the tool does so that the MCP client can have help text and it can choose your tool better. In our case, writing a simple text like `Add a reminder...` works because it is the only one that is installed, but in the real world, users will have multiple servers installed. Having a good description will ensure users are able to trigger your tool consistently.
+2. `reminderText` is an argument that we expose. `z.string()` does a validation check that the value passed to reminderText is actually a string. It throws a runtime error otherwise. The description of the argument is also important as it is used by the client to understand what value to pass.
 3. The callback function is where the actual processing happens. The `ctx` object has additional metadata sent by the client. This has the information that we had seen in the inspector like `ctx.requestId`.
-4. The return value has to be in a structure format. Since `content` is an array, you can send multiple content types like image, video etc. as part of single response. Here we only send `text`.
+4. The return value has to be in a structured format. Since `content` is an array, you can send multiple content types like image, video, etc. as part of a single response. Here we only send `text`.
 
-Testing this against Claude gives us a nice end to end working example.
+Testing this against Claude gives us a nice end-to-end working example.
 
 **Sample prompt**
 
@@ -185,7 +213,7 @@ Add a reminder to catch the bus.
 
 ### Add a reminder from text with date and time
 
-Reminders don't really work well without specifiying when you should be reminded. Our intention here is that we want the LLMs to do the heavy lifting and figure out the reminder time from user's text instead of us parsing the original text and getting it. This is where the superpowers of LLMs start to kick in.
+Reminders don't really work well without specifying when you should be reminded. Our intention here is that we want the LLMs to do the heavy lifting and figure out the reminder time from the user's text instead of us parsing the original text and getting it. This is where the superpowers of LLMs start to kick in.
 
 Let's update our `add-reminder` tool to accept a `reminderTime` argument in addition to `reminderText`. This allows the client (or LLM) to extract and provide the time, so your server doesn't need to parse natural language dates.
 
@@ -238,15 +266,15 @@ server.tool(
 **Sample prompt**
 
 ```
-Add a reminder to catch the bus at 5PM tomorrow.`
+Add a reminder to catch the bus at 5PM tomorrow.
 ```
 
-As seen above the client automagically changes 5PM tomorrow to the correct ISO formatted string. The server however should definitely validate the parsed value.
+As seen above, the client automagically changes 5PM tomorrow to the correct ISO formatted string. The server, however, should definitely validate the parsed value.
 
 ### Add a reminder to capture recurrence intent
 
 Many reminders are not one-time events. They repeat on a schedule (e.g., "every Monday at 9am" or "on the 1st of every month").
-If you prompt the server with current code with something like `Add a reminder to catch the bus at 5PM everyday` you will typically only capture the first instance because ISO date string do not capture recurrance.
+If you prompt the server with the current code with something like `Add a reminder to catch the bus at 5PM everyday` you will typically only capture the first instance because ISO date strings do not capture recurrence.
 To support this, let's add a `recurranceTime` parameter to our `add-reminder` tool. We'll use the [iCalendar (RFC 5545) recurrence rule format](https://icalendar.org/iCalendar-RFC-5545/3-3-10-recurrence-rule.html), commonly known as "RRULE", to describe recurrence patterns.
 
 Update your tool registration as follows:
@@ -271,7 +299,7 @@ server.tool(
       .string()
       .optional()
       .describe(
-        "Contains the date time of the recurring reminder in iCalendar RRULE format if it is specified by the user. Use this field only for recurring reminders or for reminders with more than one point in time. if a single specific point in time is mentioned in the reminder, use reminderTime field."
+        "Contains the date time of the recurring reminder in iCalendar RRULE format if it is specified by the user. Use this field only for recurring reminders or for reminders with more than one point in time. If a single specific point in time is mentioned in the reminder, use reminderTime field."
       ),
   },
   async ({ reminderText, reminderTime, recurranceTime }, ctx) => {
@@ -310,126 +338,21 @@ server.tool(
 
 1. `recurranceTime` is also `optional()`.
 2. `rruleValid = recurranceTime.startsWith("FREQ=")` is just a placeholder. Use a library to validate RRULE.
-3. Description of `reminderTime` and `recurranceTime` have been update to let the client know when to use what.
+3. Description of `reminderTime` and `recurranceTime` have been updated to let the client know when to use what.
 
-   **Sample prompt**
+**Sample prompt**
 
 ```
-Add a reminder to catch the bus at 5PM everyday.`
+Add a reminder to catch the bus at 5PM everyday.
 ```
+
 Now instead of passing the date in `reminderTime`, you should get a value like `FREQ=DAILY;BYHOUR=17;BYMINUTE=0` (every day at 5PM) in `recurranceTime`.
 
-### Follow ups with multiple calls to server.
+**Congratulations, you have a functional MCP server.**
 
-## Testing with Inspector
+## Learnings
 
-You can test your MCP server using the [MCP Inspector](https://inspector.mcp.ai/):
-
-1. Start your server: `node dist/index.js`
-2. Open Inspector and connect to `http://localhost:8000`
-3. Try calling the `add-reminder` tool with sample inputs:
-
-```json
-{
-  "text": "Doctor appointment",
-  "time": "2025-06-10T15:00:00Z"
-}
-```
-
-Inspector will show the request and response, helping you debug and iterate quickly.
-
-## Testing with Claude Desktop
-
-To test with Claude Desktop:
-
-1. Add your MCP server as a custom tool.
-2. Ask Claude:  
-   _"Remind me to call mom at 7pm tonight."_
-3. Claude will call your `add-reminder` tool with the parsed details.
-
-This workflow demonstrates how AI can use your server to automate reminders.
-
-## Best Practices for Tool Inputs
-
-### 1. Use Structured Inputs
-
-Define clear, typed input schemas for each tool. Avoid free-form text when possible.
-
-**Example:**
-
-```typescript
-inputSchema: z.object({
-  text: z.string(),
-  time: z.string().describe("ISO 8601"),
-});
-```
-
-### 2. Validate and Normalize Inputs
-
-Ensure your server validates and normalizes inputs. For example, parse and check date/time formats.
-
-```typescript
-import { DateTime } from "luxon";
-
-const addReminderTool = new Tool({
-  name: "add-reminder",
-  description: "Add a new reminder",
-  inputSchema: z.object({
-    text: z.string(),
-    time: z.string(),
-  }),
-  async execute(input, ctx) {
-    const dt = DateTime.fromISO(input.time);
-    if (!dt.isValid) {
-      return { status: "error", message: "Invalid time format" };
-    }
-    reminders.push({ text: input.text, time: input.time });
-    return { status: "success", reminder: input };
-  },
-});
-```
-
-### 3. Progressive Enhancement: Example Scenarios
-
-Let's see how input handling can evolve:
-
-#### Scenario 1: Minimal Input
-
-```json
-{
-  "text": "Meeting",
-  "time": "2025-06-10T09:00:00Z"
-}
-```
-
-Works, but doesn't handle ambiguity or missing fields.
-
-#### Scenario 2: Flexible Input
-
-Allow optional fields, but clarify defaults.
-
-```typescript
-inputSchema: z.object({
-  text: z.string(),
-  time: z.string().optional(), // If not provided, ask the user
-});
-```
-
-#### Scenario 3: User-Friendly Prompts
-
-If the time is missing or ambiguous, return a prompt for clarification:
-
-```typescript
-async execute(input, ctx) {
-  if (!input.time) {
-    return { status: "need_more_info", message: "What time should I set the reminder for?" };
-  }
-  // ...rest of logic
-}
-```
-
-This approach ensures the AI can ask follow-up questions, leading to a better user experience.
-
-## Conclusion
-
-Building an MCP server is straightforward, but designing robust tools requires attention to input structure, validation, and user experience. By following these best practices and testing with Inspector and Claude Desktop, you can create powerful integrations that make your AI assistant truly helpful.
+1. Use Structured Inputs. Define clear, typed input schemas for each tool. Avoid free-form text when possible.
+2. Validate and Normalize Inputs. Ensure your server validates and normalizes inputs. For example, parse and check date/time formats.
+3. Expect mistakes from the client. Add proper defenses for incorrect inputs and workflows.
+4. Use optional fields to eliminate the client force fitting values.
