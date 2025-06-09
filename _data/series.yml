@@ -8,6 +8,10 @@
   description: Tips and tricks when setting up a new project (and some for older ones too.)
   id: STARTRIGHT
 
+- name: Large Language Models
+  description: Experiments with LLMs and the ecosystem of tools around them
+  id: LLM
+
 - name: Distributed Systems
   description: Setting up different parts of a distributed system from scratch to unbox how things happen in the background.
   id: DISTRIB
