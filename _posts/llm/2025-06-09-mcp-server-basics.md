@@ -131,6 +131,7 @@ main().catch((error) => {
 
 1. `name: "reminders",` declares a server of the name "reminders". This is the name that shows up on your clients like Claude. So choose wisely.
 2. `const transport = new StdioServerTransport();` creates a stdio based server transport which essentially means you can start receiving messages on stdin and sending messages on stdout. This is essentially how local MCP servers talk to clients.
+   > Using stdio also means that you cant randomly use `console.log` statements in your code anymore as they will be passed back to the client and will cause parsing errors.
 
 ### Test with inspector.
 
@@ -174,11 +175,149 @@ async function main() {...}
 3. The callback function is where the actual processing happens. The `ctx` object has additional metadata sent by the client. This has the information that we had seen in the inspector like `ctx.requestId`.
 4. The return value has to be in a structure format. Since `content` is an array, you can send multiple content types like image, video etc. as part of single response. Here we only send `text`.
 
+Testing this against Claude gives us a nice end to end working example.
+
+**Sample prompt**
+
+```
+Add a reminder to catch the bus.
+```
+
 ### Add a reminder from text with date and time
 
-### Add a reminder to capture recurring intent
+Reminders don't really work well without specifiying when you should be reminded. Our intention here is that we want the LLMs to do the heavy lifting and figure out the reminder time from user's text instead of us parsing the original text and getting it. This is where the superpowers of LLMs start to kick in.
 
-### Handling recurrance and non-recurrance correctly.
+Let's update our `add-reminder` tool to accept a `reminderTime` argument in addition to `reminderText`. This allows the client (or LLM) to extract and provide the time, so your server doesn't need to parse natural language dates.
+
+First, update the tool registration:
+
+```typescript
+import { z } from "zod";
+
+server.tool(
+  "add-reminder",
+  "Add a reminder for the user",
+  {
+    reminderText: z
+      .string()
+      .describe("Free form text containing the content of the reminder"),
+    reminderTime: z
+      .string()
+      .optional()
+      .describe(
+        "Contains the date time of the reminder in ISO format if it is specified by the user. Use this field only if a single specific point in time is mentioned in the reminder."
+      ),
+  },
+  async ({ reminderText, reminderTime }, ctx) => {
+    // ...
+    // Validate and parse reminderTime as ISO 8601
+    let parsedTime: Date | null = null;
+    try {
+      parsedTime = new Date(reminderTime);
+      if (isNaN(parsedTime.getTime())) {
+        throw new Error("Invalid date");
+      }
+    } catch (e) {}
+    let response = [
+      `Request ID: ${ctx.requestId}`,
+      `Your reminder is set.`,
+      `Reminder Content: "${reminderText}"`,
+      `Reminder Time: ${reminderTime}`,
+      `Parsed Time: ${parsedTime}`,
+    ];
+    return {
+      content: [{ type: "text", text: response.join("\n") }],
+    };
+  }
+);
+```
+
+1. Typically for dates you would want to use z.date() but we use z.string() here because MCP clients would not be able to parse Date objects directly. So, we add a string to date parser on our own and then take appropriate action if the date is not parseable.
+2. There is an additional `optional()` decorator in `reminderTime` to account for the fact that users may not specify a time at all.
+
+**Sample prompt**
+
+```
+Add a reminder to catch the bus at 5PM tomorrow.`
+```
+
+As seen above the client automagically changes 5PM tomorrow to the correct ISO formatted string. The server however should definitely validate the parsed value.
+
+### Add a reminder to capture recurrence intent
+
+Many reminders are not one-time events. They repeat on a schedule (e.g., "every Monday at 9am" or "on the 1st of every month").
+If you prompt the server with current code with something like `Add a reminder to catch the bus at 5PM everyday` you will typically only capture the first instance because ISO date string do not capture recurrance.
+To support this, let's add a `recurranceTime` parameter to our `add-reminder` tool. We'll use the [iCalendar (RFC 5545) recurrence rule format](https://icalendar.org/iCalendar-RFC-5545/3-3-10-recurrence-rule.html), commonly known as "RRULE", to describe recurrence patterns.
+
+Update your tool registration as follows:
+
+```typescript
+import { z } from "zod";
+
+server.tool(
+  "add-reminder",
+  "Add a reminder for the user",
+  {
+    reminderText: z
+      .string()
+      .describe("Free form text containing the content of the reminder"),
+    reminderTime: z
+      .string()
+      .optional()
+      .describe(
+        "Contains the date time of the reminder in ISO format if it is specified by the user. Use this field only if a single specific point in time is mentioned in the reminder. For recurring reminders, use recurranceTime."
+      ),
+    recurranceTime: z
+      .string()
+      .optional()
+      .describe(
+        "Contains the date time of the recurring reminder in iCalendar RRULE format if it is specified by the user. Use this field only for recurring reminders or for reminders with more than one point in time. if a single specific point in time is mentioned in the reminder, use reminderTime field."
+      ),
+  },
+  async ({ reminderText, reminderTime, recurranceTime }, ctx) => {
+    // Validate reminderTime as before
+    let parsedTime: Date | null = null;
+    if (reminderTime) {
+      try {
+        parsedTime = new Date(reminderTime);
+        if (isNaN(parsedTime.getTime())) {
+          throw new Error("Invalid date");
+        }
+      } catch (e) {}
+    }
+
+    // Optionally validate RRULE format (basic check)
+    let rruleValid = true;
+    if (recurranceTime) {
+      rruleValid = recurranceTime.startsWith("FREQ="); // TODO Use a library to validate
+    }
+
+    let response = [
+      `Request ID: ${ctx.requestId}`,
+      `Your reminder is set.`,
+      `Reminder Content: "${reminderText}"`,
+      `Reminder Time: ${reminderTime}`,
+      `Parsed Time: ${parsedTime}`,
+      `Recurrence Rule: ${recurranceTime || "None"}`,
+      `Recurrence Rule Valid: ${rruleValid}`,
+    ];
+    return {
+      content: [{ type: "text", text: response.join("\n") }],
+    };
+  }
+);
+```
+
+1. `recurranceTime` is also `optional()`.
+2. `rruleValid = recurranceTime.startsWith("FREQ=")` is just a placeholder. Use a library to validate RRULE.
+3. Description of `reminderTime` and `recurranceTime` have been update to let the client know when to use what.
+
+   **Sample prompt**
+
+```
+Add a reminder to catch the bus at 5PM everyday.`
+```
+Now instead of passing the date in `reminderTime`, you should get a value like `FREQ=DAILY;BYHOUR=17;BYMINUTE=0` (every day at 5PM) in `recurranceTime`.
 
 ### Follow ups with multiple calls to server.
 
