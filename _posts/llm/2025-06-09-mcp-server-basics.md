@@ -22,7 +22,7 @@ image: /assets/images/llm/LLMMCP01/inspector-1.png
 
 ## Introduction to MCP Servers
 
-MCP (Model Control Protocol) servers are designed to bridge the gap between AI models and external tools or services. They serve a similar purpose to what API endpoints have been doing for decades. MCP servers expose a set of "tools" (APIs) that the AI can call to perform actions, fetch data, or automate workflows. This enables AI assistants to interact with your apps, databases, or devices in a secure and structured way.
+MCP (Model Context Protocol) servers are designed to bridge the gap between AI models and external tools or services. They serve a similar purpose to what API endpoints have been doing for decades. MCP servers expose a set of "tools" (APIs) that the AI can call to perform actions, fetch data, or automate workflows. This enables AI assistants to interact with your apps, databases, or devices in a secure and structured way.
 
 > MCP is an open protocol. You can find more details and the full specification at [modelcontextprotocol.io](https://modelcontextprotocol.io/).
 
