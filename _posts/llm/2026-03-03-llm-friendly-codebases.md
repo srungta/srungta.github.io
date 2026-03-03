@@ -42,7 +42,7 @@ LLMs face the exact same challenges. An "LLM friendly" codebase is simply one wh
 LLMs are already writing code in production systems. Tools like GitHub Copilot, Codex, and Claude are generating pull requests, fixing bugs, and adding features. The question isn't whether to use them - it's how to use them effectively.
 
 I have been using most of the new coding models on a daily basis for fun and for production code.
-Here are some of my findings, that helped me reduce iterations with my agents.
+Here are some of my findings that helped me reduce iterations with my agents.
 
 {% capture core_insight %}
 To get the best out of your LLM agents:
@@ -54,7 +54,7 @@ To get the best out of your LLM agents:
 
 Let's explore what this means in practice.
 
-## Making It Easy to write good code
+## Making It Easy to Write Good Code
 
 ### 1. Write Code in Predictable Ways
 
@@ -87,7 +87,7 @@ LLMs learn from the code they see. Consistent patterns mean the LLM has strong s
 
 {% capture my_note %}
 Make sure the reference file is **of high quality**. A bad reference file is worse than no reference file.  
-The LLM will replicate the problems
+The LLM will replicate the problems.
 {% endcapture %}
 {% include note.html type="error" content=my_note %}
 
@@ -125,13 +125,13 @@ LLMs become extremely good at replicating well-defined patterns. If your pipelin
 
 > Task descriptions with examples produce better results than task descriptions with just text.
 
-❌**Instead of:**
+❌ **Instead of:**
 
 ```
 Add validation for the email field
 ```
 
-✅**Write:**
+✅ **Write:**
 
 ```
 Add validation for the email field.
@@ -151,10 +151,10 @@ LLMs are one-shot generators for most PR tools. They don't get to iterate with y
 
 > One change per PR works better than multiple changes in one PR.
 
-LLMs are getting exceeeding good at making large changes in one shot. However, the more changes that are made, the more you have to review. This applies to both human-written and LLM-written code, but it's especially important for LLMs because:
+LLMs are getting exceedingly good at making large changes in one shot. However, the more changes that are made, the more you have to review. This applies to both human-written and LLM-written code, but it's especially important for LLMs because:
 
 - Larger scope has more chances of deviations from objective.
-- Small hard to catch bugs can seep in when a lot of files are changed.
+- Small, hard-to-catch bugs can seep in when a lot of files are changed.
 
 **What to avoid**:  
 "Refactor the entire service layer and add three new features" is too much for one task.
@@ -191,7 +191,7 @@ Linters give immediate feedback. LLMs see the error, understand what's wrong, an
 
 ### 2. Break Builds on Violations (Not Just Warnings)
 
-> Some LLMs ignore warnings. They only fix errors that break the build.If something is important, make it an error, not a warning.
+> Some LLMs ignore warnings. They only fix errors that break the build. If something is important, make it an error, not a warning.
 
 **Example:**
 
@@ -252,13 +252,13 @@ Don't let LLMs add unnecessary tests just to increase coverage. Specify "add rel
 
 ### 1. Set Up Quick Validation Builds
 
-> If your build takes 20 minutes and the LLM runs 5 iterations, that's time just adds up.
+> If your build takes 20 minutes and the LLM runs 5 iterations, the time just adds up.
 
 **The Solution**: Create a lightweight "quick validation" build specifically for LLM iterations:
 
 - Skip time-consuming steps that aren't relevant (deployment, packaging, slow integration tests)
 - Run only linters, unit tests, and fast validations
-- For Agent based PRs, save the full build for final PR validation and use the simpler build before agents publish the PR.
+- For agent-based PRs, save the full build for final PR validation and use the simpler build before agents publish the PR.
 
 ### 2. Add Instructions to Avoid Common Issues
 
@@ -296,7 +296,7 @@ You don't need to fix everything at once. Here's a gradual approach based on wha
 
 1. ✅ Set up quick validation builds for faster iterations
 2. ✅ Test with LLMs and refine based on results
-3. ✅ Add instructions files liek copilot-instructions and claude skills to avoid common issues
+3. ✅ Add instructions files like copilot-instructions and claude skills to avoid common issues
 
 > Start with the area of your codebase that changes most frequently. That's where you'll see the biggest return on investment.
 
