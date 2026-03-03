@@ -22,21 +22,25 @@
     <ol>
         {%- for post in seriesposts -%}
         <li>
-            {%- if post.isNew -%}
-            <span class="sd-post-new">NEW</span>
-            {%- endif -%}
-            <a href="{{ post.url | relative_url }}">
-                {{ post.title | escape }}
-            </a>
-            {%- if post.tldr -%}
-            <span class="sd-tldr">
-                {{post.tldr}}
-            </span>
-            {%- endif -%}
+            <div class="sd-post">
+                <div>
+                    <a href="{{ post.url | relative_url }}">
+                        {{ post.title | escape }}
+                    </a>
+                    {%- if post.isNew -%}
+                    <span class="sd-post-new">*NEW*</span>
+                    {%- endif -%}
+                </div>
+                {%- if post.tldr -%}
+                <span class="sd-tldr">
+                    {{post.tldr}}
+                </span>
+                {%- endif -%}
 
-            {%- if site.show_excerpts -%}
-            {{ post.excerpt }}
-            {%- endif -%}
+                {%- if site.show_excerpts -%}
+                {{ post.excerpt }}
+                {%- endif -%}
+            </div>
         </li>
         {%- endfor -%}
     </ol>

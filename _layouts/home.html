@@ -12,11 +12,12 @@ layout: default
       {% assign featured_posts = site.posts | where: "featured", true %}
       {%- for post in featured_posts limit:1 -%}
       <div class="lp-item">
-
-        <a class="lp-item-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        <span class="lp-item-author">
-          by {{ post.author }} &nbsp;•&nbsp; {{ post.date | date: "%B %d, %Y"}}
-        </span>
+        <div>
+          <a class="lp-item-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <span class="lp-item-author">
+            &nbsp;•&nbsp; {{ post.date | date: "%B %d, %Y"}}
+          </span>
+        </div>
         <div>
           {{post.subtitle}}
         </div>

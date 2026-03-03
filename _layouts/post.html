@@ -60,10 +60,8 @@ layout: default
   </header>
   {%- if page.tldr -%}
   <div class="p-tldr">
-    <hr class="p-hr" />
-    <b>TLDR</b>
-    <span>{{page.tldr}}</span>
-    <hr class="p-hr" />
+    <h2 class="p-tldr-title">tl;dr;</h2>
+    <span class="p-tldr-content">{{page.tldr}}</span>
   </div>
   {%- endif -%}
   <div class="post-content e-content" itemprop="articleBody">

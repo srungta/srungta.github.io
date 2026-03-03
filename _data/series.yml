@@ -7,6 +7,7 @@
 - name: Large Language Models
   description: Experiments with LLMs and the ecosystem of tools around them
   id: LLM
+  sortInReverse: true
 
 - name: Starting Right
   description: Tips and tricks when setting up a new project (and some for older ones too.)
