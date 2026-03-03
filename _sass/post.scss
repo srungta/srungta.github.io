@@ -10,13 +10,118 @@
         @include relative-font-size(2);
     }
 }
-.post-subtitle{
+
+.post-subtitle {
     font-weight: 600;
 }
 
 // New SCSS added on top of minima
 
-.p-tag{
+// Post related styles
+.post {
+    .p-previous {
+        margin: 10px 0;
+    }
+
+    .p-next {
+        @include relative-font-size(1.4);
+        margin: 10px 0;
+        text-align: right;
+    }
+
+    .p-tldr {
+        margin: 10px 0;
+
+        .p-hr {
+            margin: 5px 0;
+        }
+    }
+}
+
+// Latest post related styles
+.latest-post {
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #ffecff;
+    border-radius: 10px;
+
+    .lp-legend {
+        background-color: white;
+        padding: 2px 4px;
+        border-radius: 10px;
+    }
+
+    .lp-list {
+        .lp-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 5px 0;
+
+            .lp-item-title {
+                font-size: 1.2em;
+                text-decoration: none;
+            }
+
+            .lp-item-author {
+                font-size: 0.8em;
+            }
+
+            .lp-item-tldr {
+                @include relative-font-size(0.9);
+                color: #6a6a6a;
+            }
+        }
+    }
+
+
+}
+
+// Series details related styles
+.series-details {
+    background-color: #e4f4ff;
+    padding: 10px 20px;
+    border-radius: 10px;
+
+    legend {
+        background-color: white;
+        padding: 2px 4px;
+        border-radius: 10px;
+    }
+
+    .sd-tldr {
+        @include relative-font-size(0.9);
+        color: #6a6a6a;
+    }
+
+    .sd-post-new {
+        vertical-align: super;
+        font-size: 0.7em;
+        padding: 0.5px 4px;
+        color: white;
+        background: #e70000;
+        border-radius: 3px;
+    }
+}
+
+// Feedback related styles
+.gh-feedback {
+    cursor: pointer;
+    text-align: right;
+    margin-top: 20px;
+
+    &-button {
+        cursor: pointer;
+        background-color: #01475185;
+        padding: 4px 5px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+    }
+}
+
+// Common styles for all pages
+.tag {
     background-color: #0089e0;
     padding: 0.1rem 0.4rem;
     border-radius: 0.2rem;
@@ -24,51 +129,43 @@
     margin: 0px 2px;
 }
 
-.p-tldr{
-    margin: 10px 0;
+.tag-string {
+    color: #b70606;
+    margin: 0px 2px;
+    font-weight: 700;
 }
 
-.p-hr{
-    margin: 5px 0;
+.line {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    line-height: 0.1em;
+    margin: 40px 0 20px;
+
+    span {
+        background: #fff;
+        padding: 0 10px;
+    }
 }
 
-.p-next{
-    @include relative-font-size(1.4);
-    margin: 10px 0;
-    text-align: right;
-}
-
-.p-previous{
-    margin: 10px 0;
-}
-
-.p-series-tldr{
-    @include relative-font-size(0.9);
-    color: #6a6a6a;
-}
-
-.p-post-new{
-    vertical-align: super;
-    font-size: 0.7em;
-    padding: 0.5px 4px;
-    color: white;
-    background: #e70000;
-    border-radius: 3px;
-}
-
-.rss-subscribe-button{
+.rss-subscribe-button {
     padding: 2px 5px;
-    background-color: #fac081e8;
+    background-color: #e27326;
     color: white;
     text-decoration: none !important;
     border-radius: 2px;
+
+    &:visited {
+        color: white;
+    }
 }
 
 // Add a copy button on top right on hover over code elements
 body main div article div.post-content.e-content pre {
-    cursor: pointer;  
-    position: relative;    
+    cursor: pointer;
+    position: relative;
     white-space: pre-wrap;
+
     &:hover::before {
         content: "📋 Copy";
         display: block;
@@ -83,9 +180,9 @@ body main div article div.post-content.e-content pre {
         right: 0;
         background-color: #5252843a;
     }
-    
+
     // This class will be toggled via JavaScript
-    &.copied {    
+    &.copied {
         &::before {
             content: "✔️ Copied";
             display: block;
@@ -103,17 +200,98 @@ body main div article div.post-content.e-content pre {
     }
 }
 
-// Feedback item
-.p-feedback{
-    cursor: pointer;
-    text-align: right;
-    margin-top: 20px;
-    &-button{
-        cursor: pointer;
-        background-color: #01475185;
-        padding: 4px 5px;
-        border: none;
-        border-radius: 5px;
-        color: white;
+// Images
+.wave-image-container {
+    position: relative;
+    display: inline-block;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+
+    /* Or block, depending on your layout */
+    .wave-image {
+        overflow: hidden;
+        display: block;
+        border-radius: 50%;
+        height: 300px;
+        width: 300px;
+        object-fit: cover;
+        --mask:
+            radial-gradient(34.99px at 48px 50%, #000 99%, #0000 101%) 0 calc(50% - 60px)/51% 120px repeat-y,
+            radial-gradient(34.99px at -18px 50%, #0000 99%, #000 101%) 30px 50%/calc(51% - 30px) 120px repeat-y,
+            radial-gradient(34.99px at calc(100% - 48px) 50%, #000 99%, #0000 101%) 100% calc(50% - 60px)/51% 120px repeat-y,
+            radial-gradient(34.99px at calc(100% + 18px) 50%, #0000 99%, #000 101%) calc(100% - 30px) 50%/calc(51% - 30px) 120px repeat-y;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+    }
+}
+
+.centered-image-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 10px 10px; 
+    height: fit-content;
+
+    /* Or block, depending on your layout */
+    .centered-image {
+        box-shadow: 0px 1px 10px #8c8cab;
+        overflow: hidden;
+        display: block;
+        border-radius: 10px;
+        max-width: 750px;
+    }
+}
+
+
+blockquote {
+    padding: 2px 2px 2px 8px;
+    border-left: 5px solid #fff055;
+    background-color: #fffcde;
+    line-height: 1.5em;
+    color: #333333;
+    font-style: unset;
+}
+
+.intro {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+
+    .intro-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .intro-dialog-container {
+        position: relative;
+        padding: 10px 5px;
+        width: 116px;
+        background-color: #d7ffaf;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include relative-font-size(1.2);
+        box-shadow: 2px 5px 7px -3px rgba(0, 0, 0, 0.75);
+
+        &::after {
+            content: "";
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid #d7ffaf;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            position: absolute;
+            right: 100%;
+        }
     }
 }

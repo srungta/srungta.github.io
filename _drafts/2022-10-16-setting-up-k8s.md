@@ -10,7 +10,6 @@ author: srungta
 tags: 
 - Kubernetes
 - K8S
-isNew: true
 
 series: 
   id: K8S

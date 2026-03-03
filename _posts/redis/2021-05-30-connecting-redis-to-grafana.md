@@ -16,6 +16,8 @@ series:
   id: REDIS
   index: 5
 ---
+* TOC
+{:toc}
 
 **DISCLAIMER:**  
 **This is a long-ish post as it also covers some aspects of docker networking and docker compose**  
@@ -25,7 +27,7 @@ We will use [Grafana](https://grafana.com/) for this post, which is free and has
 Also **Grafana** has Docker images available. 😊 So we will use that.
 
 
-#### Get the Grafana image 
+## Get the Grafana image 
 Lets first pull the Grafana image from the public docker registry.  
 {%- highlight powershell -%}
 docker pull grafana/grafana
@@ -33,7 +35,7 @@ docker pull grafana/grafana
 
 You can find more about different docker images for Grafana [on their official site](https://grafana.com/docs/grafana/latest/installation/docker/)
 
-#### Run the Grafana image 
+## Run the Grafana image 
 Run an instance of grafana using this command.
 {%- highlight powershell -%}
 docker run -d -p 3000:3000 grafana/grafana
@@ -42,7 +44,7 @@ Once the container starts, go to [http://localhost:3000/](http://localhost:3000/
 The default username and password is `admin`.
 ![Grafana admin login screen](/assets/images/redis/grafana-login.png)
 
-#### Add the Redis connector plugin
+## Add the Redis connector plugin
 Grafana does not ship with a Redis connector by default. However their is a community plugin that is useful. [More details on the official site](https://grafana.com/grafana/plugins/redis-datasource/)
 The plugin can be installed by passing an argument to the `docker run` command.
 The grafana image exposes a build argument called `GF_INSTALL_PLUGINS` which can be used to install the plugin at runtime.
@@ -51,7 +53,7 @@ The below plugin does it.
 docker run -d -p 3000:3000 --name grafana -e "GF_INSTALL_PLUGINS=redis-datasource" grafana/grafana
 {%- endhighlight -%}
 
-#### Validate the Redis connector is present
+## Validate the Redis connector is present
 Go to [http://localhost:3000/datasources](http://localhost:3000/datasources).
 
 You should see a `Add data source` button like below.
@@ -62,7 +64,7 @@ Search for `redis` in the search bar
 
 You should see a connector like shown in the image above.
 
-#### A short note on docker networking
+## A short note on docker networking
 Before we connect to our redis instance, a short note on how docker networks work.
 Docker containers are very isolated from their hosts, unless you configure them to behave differently.
 
@@ -70,7 +72,7 @@ So if you just write `docker run -d grafana/grafana` instead of `docker run -d -
 When we specify `-p` or `--port` parameter, it tell docker to map the container port number to the host port number.
 That way, when we say `-p 3000:3000`, dockers maps port 3000 of host system (your computer) to the port `3000` of the container. So when you open the [http://locahost:3000](http://locahost:3000) link in the browser, the request is routed to the container's port `3000` and you get the response.
 
-#### Connecting redis instance to grafana
+## Connecting redis instance to grafana
 Open [http://localhost:3000/datasources](http://localhost:3000/datasources) and search for redis again.
 Select the redis connector and fill in `http://localhost:6379` (our redis instance's port) in the address field and click `Save & Test`.
 ![Grafana Redis localhost](/assets/images/redis/grafana-redis-localhost.png)
@@ -90,7 +92,7 @@ I was also a bit confused at this point.
 After reading the [docker networking tutorial here](https://docs.docker.com/network/network-tutorial-standalone/) and [explanation of bridge networks here](https://docs.docker.com/network/network-tutorial-standalone/), here is a way to do it.
 
 
-#### Connecting redis instance to grafana [The hard way]
+### Connecting redis instance to grafana [The hard way]
 So we first have to locate the redis instance from the viewpoint of the grafana container.
 Since redis is not running inside the grafana container, it means both containers should be connected by some network.
 By default standalone containers connect to a docker network called `bridge`. This network acts as a liaison between the host and docker containers. (Helps move traffic, forward request, return data etc.). We just need to find the IP of the redis instance in the `bridge` network.
@@ -125,7 +127,7 @@ Now in the grafana UI, use this IP along with the port 6379, as the address of t
 ![Grafana redis IP](/assets/images/redis/grafana-redis-ip.png)
 
 
-#### Connecting redis instance to grafana [The easy way]
+### Connecting redis instance to grafana [The easy way]
 Finding the IP addresses like this is annoying and error prone.
 Docker has something called [Docker Compose](https://docs.docker.com/compose/) that lets use write multi container docker applications nicely.
 To do this create a folder named `floozy` (this name does not matter)

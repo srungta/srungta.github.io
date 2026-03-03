@@ -1,6 +1,19 @@
+# - name: Sample
+#   description: Sample description.
+#   status: ONGOING
+#   id: SAMPLE
+#   sortInReverse: true
+
+- name: Large Language Models
+  description: Experiments with LLMs and the ecosystem of tools around them
+  id: LLM
+
+- name: Starting Right
+  description: Tips and tricks when setting up a new project (and some for older ones too.)
+  id: STARTRIGHT
+
 - name: Distributed Systems
   description: Setting up different parts of a distributed system from scratch to unbox how things happen in the background.
-  status: ONGOING
   id: DISTRIB
   sortInReverse: true
 
@@ -11,14 +24,18 @@
 - name: Web explorations
   description: Experiments in different types of web technologies.
   id: WEB
+  sortInReverse: true
 
 - name: Starting right
   description: Things to consider when starting a new project.
   id: STARTRIGHT
   status: ONGOING
-  sortInReverse: true
 
 - name: Understanding Redis
   description: Trying to set up a production Redis cluster using docker. We will start with "What is Redis" and try to end up configuring a multi node cluster. The intent will also be to setup monitoring and automation wherever applicable.
-  status: ONGOING
+  # status: ONGOING
   id: REDIS
+
+- name: Extending Jekyll
+  description: Documenting how Jekyll is extended for custom features on this site.
+  id: JEKYLL

@@ -15,8 +15,10 @@ series:
   id: DISTRIB
   index: 1
 ---
+* TOC
+{:toc}
 
-#### Why a load balancer?
+## Why a load balancer?
 - Your website is hosted on a VM.
 - The VM can handle 100 users at a time.
 - Suddenly your website gets 500 users in one go because Cardi B tweeted about your site.
@@ -24,19 +26,19 @@ series:
 - But how do you redirect your requests?
 - You put a load balancer in front which redirects the client requests based on which VM is free.
 
-#### Why Nginx?
+## Why Nginx?
 NGINX is free and open sourced and widely used for web serving, reverse proxying, caching, load balancing, media streaming, and more. Also the setup is pretty straightforward.
 
-#### Where to get VMs?
+## Where to get VMs?
 You can use any of the cloud providers, AWS, Azure, Google CLoud etc.  
 They each have some sort of free or trial program.  
 For this post we will be using Azure VMs.
 
-#### What we will be doing?
+## What we will be doing?
 - We will setup a VM that will act as load balancer and 2 worker VMs that host a simple webpage.
 - We will use the nginx default page because i am feeling lazy.
 
-#### How will we do this?
+## How will we do this?
 This will be the general sequence of steps.
 
 - We setup a virtual network. 
@@ -48,7 +50,7 @@ This will be the general sequence of steps.
 
 Lets unpack this a bit and do this one by one.
 
-#### 1. Setup a Virtual network
+### 1. Setup a Virtual network
 Go to the azure portal and create a new virtual network. You can follow the instructions at https://docs.microsoft.com/en-us/azure/virtual-network/quick-create-portal#create-a-virtual-network or look at the GIF below. 
 
 
@@ -58,7 +60,7 @@ We add the Bastion host so that it is easy to login into the VMs on this network
 You can read more about Bastion on https://azure.microsoft.com/en-in/services/azure-bastion.
 > Bastion hosts cannot be stopped like a VM. Hence they will perpually cost you money. You can choose not to add the Bastion host during the creation of the vnet and can add it later as well.
 
-#### 2. Add 2 worker VMs to this network.
+### 2. Add 2 worker VMs to this network.
 Now that we have a network, we will add two small VMs to this network. 
 If you look at the GIF, we had created a subnet called `workers`. We will keep our worker nodes in that subnet for cleaner isolation.
 
@@ -73,7 +75,7 @@ The idea is that all traffic that comes to these worker VMs should come via the 
 Similar create one more VM called `lb-demo-worker-1`.
 
 
-#### 3. Configure NGINX on each worker to serve a default page. 
+### 3. Configure NGINX on each worker to serve a default page. 
 
 So till now we have a virtual network that has two VMs which have no public IP. How do we connect to these VMs then?
 At this point traditionally you will either setup a jumpbox to connect to the network which has a public IP or assign a public IP to your worker VMs and login using that.
@@ -116,7 +118,7 @@ This should print the contents of the html file.
 Do the same for the worker VM 1.
 Now we have the VMs that have the website we want to serve to users.
 
-#### 4. Add a front end load balancer VM
+### 4. Add a front end load balancer VM
 This step is not much different from creating worker vms.
 The key difference is that this VM will have a public IP and a network security group as well.
 > NSG is Azure's way of configuring what traffic is allowed to the VM.
@@ -125,14 +127,14 @@ The key difference is that this VM will have a public IP and a network security 
 ![Create the frontend VM](/assets/images/distrib/DISTRIB01/create-the-load-balancer-vm.gif)
 
 
-#### 5. Expose the front end LB VM through a public IP.
+### 5. Expose the front end LB VM through a public IP.
 
 You will notice that we have intentionally kept the port 80 open so that we can receive the HTTP traffic on this VM.
 We also created a public IP so that we open that IP in our browser.
 You can find the IP by navigating to the virtual machine in the portal or by searching for the name you gave to the public IP when creating the VM. Mine was `lb-demo-frontend-1-ip`
 (My assigned IP at this time was `20.51.244.165`.) If you open the ip in a browser now, you wont see anything. Just an error page. Because the vm does not have the server configured.
 
-#### 6. Setup NGINX to redirect traffic to worker VMs.
+### 6. Setup NGINX to redirect traffic to worker VMs.
 Same as the worker nodes, we install nginx on the frontend VM.
 Connect to the frontend VM using bastion and run
 ``` bash
@@ -156,7 +158,7 @@ In my case the IPs were `10.0.1.5` and `10.0.1.4`.
 
 
 NOw let us configure the load balancing.
-##### 6.1 Add load-balancer.config file.
+#### 6.1 Add load-balancer.config file.
 Login to your front end VM using bastion and type
 
 ``` bash
@@ -225,14 +227,14 @@ says that this server will listen to port 80. and for location `/` (which means 
 
 ![Add load balancer config](/assets/images/distrib/DISTRIB01/configure-load-balancer-config.gif)
 
-##### 6.2 Remove default config.
+#### 6.2 Remove default config.
 By default NGINX also comes with binding for port 80. That is why you see the default nginx page when you opened the IP.
 We should remove that
 ``` bash
 sudo rm /etc/nginx/sites-enabled/default
 ```
 
-##### 6.3 Restart the nginx server.
+#### 6.3 Restart the nginx server.
 Since we changed the routing logic, you can restart the nginx service using
 ``` bash
 sudo systemctl restart nginx

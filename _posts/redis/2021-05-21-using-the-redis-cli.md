@@ -15,18 +15,20 @@ series:
   id: REDIS
   index: 3
 ---
+* TOC
+{:toc}
 
 In the last part we started a local Redis instance, but we did not talk about how to actually get or add a key to the cache.
 In this part, we will try to do that.
 
-#### Run an instance 
+## Run an instance 
 As a quick check, lets start a new instance of the redis image.
 {%- highlight powershell -%}
 docker run --rm --name test-redis-instance redis
 {%- endhighlight -%}
 This should print a long alphanumeric hash on your console. That is your container id.
 
-#### Connect to the container bash
+## Connect to the container bash
 `docker` container are just vm-like environments running in an isolated environment. That means these instances can have other programs bundled inside them.  
 For instance the redis image is build on top of a linus distro and has the bash cli in it.  
 We can connect to the bash and execute commands using the `redis-cli` that comes with Redis.
@@ -45,7 +47,7 @@ This is the bash cli inside the container.
 You can try command bash commands like `ls`, `pwd` to see it working.
 
 
-#### Running Redis CLI commands
+## Running Redis CLI commands
 In the prompt, type `redis-cli`.
 {%- highlight bash -%}
 root@db0f535254e7:/data# redis-cli
@@ -65,7 +67,7 @@ A `PONG` message validates that your instance is working fine.
 As you are tyPING any command in redis-cli, you should see suggestions and help test in gray coming up.
 
 
-#### Setting a key value.
+## Setting a key value.
 The next command is the most common use case for Redis. Setting a key and a value.
 For this we will use the `SET` command.
 
