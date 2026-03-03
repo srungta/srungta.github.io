@@ -11,6 +11,22 @@
     }
 }
 
+.post-content {
+    h2 {
+        @include relative-font-size(2);
+        margin: 32px 0 15px;
+        // font-size: 26px;
+        font-weight: 600;
+    }
+
+    h3 {
+        @include relative-font-size(1.6);
+        margin: 32px 0 15px;
+        // font-size: 26px;
+        font-weight: 600;
+    }
+}
+
 .post-subtitle {
     font-weight: 600;
 }
@@ -30,10 +46,18 @@
     }
 
     .p-tldr {
+        background: #e4f8ff;
+        padding: 15px 20px;
+        border-radius: 20px;
         margin: 10px 0;
 
-        .p-hr {
-            margin: 5px 0;
+        .p-tldr-title {
+            @include relative-font-size(1.4);
+        }
+
+        .p-tldr-content {
+            @include relative-font-size(1.1);
+            color: #6a6a6a;
         }
     }
 }
@@ -54,6 +78,7 @@
     .lp-list {
         .lp-item {
             display: flex;
+            gap: 5px;
             flex-direction: column;
             justify-content: space-between;
             padding: 5px 0;
@@ -61,6 +86,7 @@
             .lp-item-title {
                 font-size: 1.2em;
                 text-decoration: none;
+                margin: 5px 0;
             }
 
             .lp-item-author {
@@ -82,11 +108,23 @@
     background-color: #e4f4ff;
     padding: 10px 20px;
     border-radius: 10px;
+    margin: 10px 0;
+
+    ol li {
+        margin-bottom: 1em;
+        /* Adjust the value as needed (e.g., px, rem) */
+    }
 
     legend {
         background-color: white;
         padding: 2px 4px;
         border-radius: 10px;
+    }
+
+    .sd-post {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
     }
 
     .sd-tldr {
@@ -95,12 +133,9 @@
     }
 
     .sd-post-new {
-        vertical-align: super;
-        font-size: 0.7em;
-        padding: 0.5px 4px;
-        color: white;
-        background: #e70000;
-        border-radius: 3px;
+        @include relative-font-size(0.7);
+        color: #e70000;
+        font-weight: 700;
     }
 }
 
@@ -233,7 +268,7 @@ body main div article div.post-content.e-content pre {
     justify-content: center;
     border-radius: 10px;
     margin: 0 auto;
-    padding: 10px 10px; 
+    padding: 10px 10px;
     height: fit-content;
 
     /* Or block, depending on your layout */
@@ -256,6 +291,25 @@ blockquote {
     font-style: unset;
     padding: 10px 20px;
     border-radius: 10px;
+
+    // info, warning, error types
+    &.info {
+        border-color: #5bc0de;
+        border-left-color: #5bc0de;
+        background-color: #d9edf7;
+    }
+
+    &.warning {
+        border-color: #f0ad4e;
+        border-left-color: #f0ad4e;
+        background-color: #fcf8e3;
+    }
+
+    &.error {
+        border-color: #d9534f;
+        border-left-color: #d9534f;
+        background-color: #f2dede;
+    }
 }
 
 .intro {

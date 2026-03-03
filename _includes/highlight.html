@@ -1,0 +1,7 @@
+<!-- Reusable highlight component. Takes a title (displayed in the legend) and content (supports markdown via markdownify). -->
+<fieldset class="series-details">
+    <legend>
+        <b>{{ include.title }}</b>
+    </legend>
+    {{ include.content | markdownify }}
+</fieldset>

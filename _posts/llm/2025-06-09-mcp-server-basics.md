@@ -14,7 +14,6 @@ series:
   id: LLM
   index: 1
 
-featured: true
 image: /assets/images/llm/LLMMCP01/inspector-1.png
 ---
 * TOC

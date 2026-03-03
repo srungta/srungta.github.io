@@ -1,0 +1,4 @@
+<!-- Reusable note component. Has a type with values "info", "warning", "error" uses blockquote with class corresponding to the type -->
+<blockquote class="note {{ include.type | default: 'info' }}">
+    {{ include.content | markdownify }}
+</blockquote>
