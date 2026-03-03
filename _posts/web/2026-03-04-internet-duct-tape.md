@@ -29,7 +29,7 @@ Spoiler: We never fixed it properly.
 
 Let's tour some of the most beautiful disasters in web technology.
 
-## Hack 1: JSONP (JavaScript Object Notation with Padding)
+## Hack 1: [JSONP][jsonp] (JavaScript Object Notation with Padding)
 
 ### The Problem
 
@@ -43,7 +43,7 @@ fetch('https://api.example.com/data')
 // ❌ Error: No 'Access-Control-Allow-Origin' header
 ```
 
-Same-origin policy blocks you. CORS doesn't exist yet (it's 2005). What do you do?
+[Same-origin policy][same-origin] blocks you. [CORS][cors] doesn't exist yet (it's the mid-2000s). What do you do?
 
 ### The Terrible Solution
 
@@ -78,7 +78,7 @@ Because it worked. And CORS took years to standardize and implement everywhere.
 
 **Status in 2026:** Officially dead. Unofficially, someone somewhere is still using it and their code will break when browsers finally remove support.
 
-## Hack 2: CORS Preflight (The OPTIONS Request Nobody Wanted)
+## Hack 2: [CORS Preflight][preflight] (The OPTIONS Request Nobody Wanted)
 
 ### The Problem
 
@@ -123,7 +123,7 @@ Only then does the browser send your actual POST request.
 - Doubles the number of requests
 - Adds latency
 - Server has to handle OPTIONS requests for every endpoint
-- `Access-Control-Max-Age` is supposed to cache the preflight, but browsers ignore it for complex requests
+- [`Access-Control-Max-Age`][max-age] is supposed to cache the preflight, but browsers cap it (Chrome ~2 hours, Firefox ~24 hours)
 - Many developers don't know why OPTIONS requests exist and misconfigure their servers
 
 **Why it exists:**  
@@ -135,7 +135,7 @@ Security. The browser wants to protect the server from dangerous requests. But a
 
 ### The Problem (2005)
 
-You want real-time updates. WebSockets don't exist. How do you get the server to push data to the client?
+You want real-time updates. [WebSockets][websockets] don't exist. How do you get the server to push data to the client?
 
 ### The Terrible Solution
 
@@ -162,7 +162,7 @@ setInterval(() => {
 
 **Variations:**
 
-**Long polling:** Keep the connection open until there's data
+**[Long polling][long-polling]:** Keep the connection open until there's data
 
 ```javascript
 function poll() {
@@ -188,11 +188,11 @@ Server holds the request open until there's data, then responds. Client immediat
 
 ### The Problem
 
-HTTP/1.1 has a limit on concurrent connections. Every image is a separate request. Loading 50 icons = 50 requests = slow.
+[HTTP/1.1][http11] has a limit on concurrent connections. Every image is a separate request. Loading 50 icons = 50 requests = slow.
 
 ### The Terrible Solution
 
-Encode images as base64 strings and embed them directly in CSS:
+Encode images as [base64][base64] strings and embed them directly in CSS as [data URLs][data-urls]:
 
 ```css
 .icon {
@@ -212,14 +212,14 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL
 **Why it was used:**
 - Reduces HTTP requests (important in HTTP/1.1)
 - Entire CSS file can be cached
-- No FOUC (Flash of Unstyled Content) waiting for images
+- No [FOUC][fouc] (Flash of Unstyled Content) waiting for images
 
-**Status in 2026:** HTTP/2 fixed the connection limit problem. But you still see base64 images in:
+**Status in 2026:** [HTTP/2][http2] fixed the connection limit problem. But you still see base64 images in:
 - Old codebases
 - Email HTML (email clients block external images)
 - Single-file HTML apps (everything in one file)
 
-## Hack 5: User-Agent Sniffing
+## Hack 5: [User-Agent][user-agent] Sniffing
 
 ### The Problem
 
@@ -256,7 +256,7 @@ Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 
 This is Edge pretending to be Chrome pretending to be Safari pretending to be Mozilla. Why? Because websites blocked Edge, so Edge pretended to be Chrome.
 
-**Better solution:** Feature detection
+**Better solution:** [Feature detection][feature-detection]
 
 ```javascript
 if ('geolocation' in navigator) {
@@ -270,7 +270,7 @@ if (typeof Promise !== 'undefined') {
 
 **Status in 2026:** User-Agent sniffing is officially discouraged. But it's still everywhere because old code never dies.
 
-## Hack 6: Cookies for Everything
+## Hack 6: [Cookies][cookies] for Everything
 
 ### The Problem (1994)
 
@@ -278,7 +278,7 @@ HTTP is stateless. You need to remember who the user is between requests.
 
 ### The Terrible Solution
 
-Cookies! A small piece of data sent with every request:
+[Cookies][cookies]! A small piece of data sent with every request:
 
 ```
 Set-Cookie: sessionId=abc123; Path=/; HttpOnly; Secure
@@ -289,7 +289,7 @@ Set-Cookie: sessionId=abc123; Path=/; HttpOnly; Secure
 - Limited to 4 KB per cookie
 - No structured data format
 - Global scope by default (every subdomain can read it)
-- Security nightmare (XSS can steal cookies, CSRF exploits them)
+- Security nightmare ([XSS][xss] can steal cookies, [CSRF][csrf] exploits them)
 
 **Why it lasted:**  
 Because nothing better existed. We needed some way to do sessions.
@@ -301,12 +301,12 @@ Because nothing better existed. We needed some way to do sessions.
 - Shopping carts
 - CSRF tokens (ironically, to protect against CSRF)
 
-**Status in 2026:** We have `localStorage`, `sessionStorage`, `IndexedDB`. But cookies persist because:
+**Status in 2026:** We have [`localStorage`][localstorage], [`sessionStorage`][sessionstorage], [`IndexedDB`][indexeddb]. But cookies persist because:
 - They're automatically sent with requests (good for auth)
 - They work across tabs
 - Old code depends on them
 
-## Hack 7: `document.write()` (The Original Sin)
+## Hack 7: [document.write()][document-write] (The Original Sin)
 
 ### The Problem
 
@@ -326,11 +326,15 @@ document.write('<div>Hello World</div>');
 - Everyone who has used it has a horror story
 
 **Why it existed:**  
-In 1995, there was no DOM API. `document.write()` was the only way to generate HTML from JavaScript.
+In 1995, there was no [DOM API][dom-api]. `document.write()` was the only way to generate HTML from JavaScript.
 
-**Status in 2026:** Officially deprecated. Still in millions of ad scripts because ad tech is where code goes to die.
+**Status in 2026:** Not officially deprecated in the spec, but strongly discouraged. Chrome actively blocks it in some scenarios. Still in millions of ad scripts because ad tech is where code goes to die.
 
-## Hack 8: `eval()` (The Devil's Function)
+## Hack 8: [eval()][eval] (The Devil's Function)
+
+### The Problem
+
+You need to execute dynamically constructed code. Maybe you're parsing a data format (before [`JSON.parse()`][json-parse] existed), maybe you're building a template engine, or maybe you're just making questionable life choices.
 
 ### The Terrible Solution
 
@@ -355,11 +359,11 @@ Sometimes you legitimately need to execute dynamic code. JSONP used `eval()` bef
 - Dynamic query builders
 - Bad decisions
 
-## Hack 9: The `<table>` Layout Era
+## Hack 9: The **<table>** Layout Era
 
 ### The Problem (1995)
 
-You want to create a layout with columns. CSS doesn't exist yet.
+You want to create a layout with columns. CSS layout support barely exists.
 
 ### The Terrible Solution
 
@@ -386,27 +390,37 @@ Use HTML tables for everything:
 - Generated by an ancient CMS
 - An email (email clients still use table layouts)
 
-## Hack 10: JavaScript Disabled Fallbacks
+## Hack 10: [!important][css-important] (The CSS Nuclear Option)
 
 ### The Problem
 
-JavaScript might be disabled. Your site needs to work anyway.
+Your CSS rule isn't being applied. Something else is overriding it. You don't know what, and you don't have time to figure it out.
 
-### The Solution That Became Unnecessary
+### The Terrible Solution
 
-```html
-<noscript>
-  <p>Please enable JavaScript to use this site.</p>
-</noscript>
+```css
+.button {
+  color: red !important;
+  background: blue !important;
+  margin: 10px !important;
+  /* I don't understand the cascade and at this point I'm afraid to ask */
+}
 ```
 
-**Why it was important:** In the early 2000s, some users disabled JavaScript for security/performance.
+**Why it's terrible:**
+- Breaks the natural [cascade][css-cascade] that makes CSS work
+- The only way to override `!important` is with another `!important`
+- Leads to specificity wars that nobody wins
+- Makes CSS unmaintainable — you can't tell what's overriding what
+- Commonly a sign that the real problem is poorly structured selectors
 
-**Status in 2026:**
-- < 0.5% of users have JavaScript disabled
-- But we still add `<noscript>` tags out of habit
-- Modern SPAs (Single Page Apps) don't work at all without JavaScript
-- The battle over "should sites work without JS" was lost years ago
+**Why it's used:**
+- Third-party widgets inject styles you can't control
+- Legacy CSS is too tangled to refactor safely
+- Deadline pressure: "just slap `!important` on it and ship"
+- It always works (that's the dangerous part)
+
+**Status in 2026:** Alive and thriving. Every codebase has at least one `!important`. Most have hundreds. [CSS-in-JS][css-in-js] and utility frameworks like [Tailwind][tailwind] reduce the need, but whenever CSS gets complicated, `!important` is the first thing developers reach for.
 
 ## Why These Hacks Matter
 
@@ -448,4 +462,32 @@ Next time you're tempted to call something a "hack," remember: the entire intern
 
 ---
 
-*What's your favorite terrible-but-working web hack? Have you maintained code from the JSONP era? Share your horror stories.*
+
+[jsonp]: https://en.wikipedia.org/wiki/JSONP "JSONP - Wikipedia"
+[same-origin]: https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy "Same-origin policy - MDN"
+[cors]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS "Cross-Origin Resource Sharing (CORS) - MDN"
+[preflight]: https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request "Preflight request - MDN"
+[max-age]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age "Access-Control-Max-Age - MDN"
+[websockets]: https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API "WebSockets API - MDN"
+[long-polling]: https://en.wikipedia.org/wiki/Push_technology#Long_polling "Long polling - Wikipedia"
+[http11]: https://datatracker.ietf.org/doc/html/rfc2616 "RFC 2616 - HTTP/1.1"
+[http2]: https://datatracker.ietf.org/doc/html/rfc7540 "RFC 7540 - HTTP/2"
+[base64]: https://developer.mozilla.org/en-US/docs/Glossary/Base64 "Base64 - MDN"
+[data-urls]: https://developer.mozilla.org/en-US/docs/Web/URI/Schemes/data "Data URLs - MDN"
+[fouc]: https://en.wikipedia.org/wiki/Flash_of_unstyled_content "Flash of unstyled content - Wikipedia"
+[user-agent]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent "User-Agent - MDN"
+[feature-detection]: https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Feature_detection "Feature detection - MDN"
+[cookies]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies "HTTP Cookies - MDN"
+[xss]: https://owasp.org/www-community/attacks/xss/ "Cross-Site Scripting (XSS) - OWASP"
+[csrf]: https://owasp.org/www-community/attacks/csrf "Cross-Site Request Forgery (CSRF) - OWASP"
+[localstorage]: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage "localStorage - MDN"
+[sessionstorage]: https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage "sessionStorage - MDN"
+[indexeddb]: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API "IndexedDB API - MDN"
+[document-write]: https://developer.mozilla.org/en-US/docs/Web/API/Document/write "document.write() - MDN"
+[dom-api]: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model "Document Object Model (DOM) - MDN"
+[eval]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval "eval() - MDN"
+[json-parse]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse "JSON.parse() - MDN"
+[css-important]: https://developer.mozilla.org/en-US/docs/Web/CSS/important "!important - MDN"
+[css-cascade]: https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade "CSS Cascade - MDN"
+[css-in-js]: https://en.wikipedia.org/wiki/CSS-in-JS "CSS-in-JS - Wikipedia"
+[tailwind]: https://tailwindcss.com/ "Tailwind CSS"
