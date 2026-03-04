@@ -23,7 +23,7 @@ isNew: true
 * TOC
 {:toc}
 
-# The tech debt of the Internet
+## The tech debt of the Internet
 
 The internet is a miracle of engineering. It is also held together by hacks, workarounds, and solutions that made everyone say "this is temporary until we fix it properly."
 
