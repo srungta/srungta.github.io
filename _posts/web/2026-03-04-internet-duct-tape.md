@@ -5,29 +5,27 @@ unique_id: WEB06
 title: The Internet is Held Together by Duct Tape
 subtitle: A tour of terrible but working solutions that power the web
 tldr: JSONP, CORS preflight, HTTP polling before WebSockets, base64 images in CSS - explore the ugly hacks that were supposed to be temporary but lasted decades. The internet is a beautiful disaster.
-# permalink: /blog/web/internet-duct-tape
+permalink: /blog/web/internet-duct-tape
 author: srungta
 tags:
   - Web
   - History
   - System Design
-  - Humor
 
 series:
   id: WEB
-  index: 7
+  index: 2
+isNew: true
 ---
 
 * TOC
 {:toc}
 
-## The Premise: Nothing Here Was Supposed to Last
+# The tech debt of the Internet
 
-The internet is a miracle of engineering. It's also held together by hacks, workarounds, and solutions that made everyone say "this is temporary until we fix it properly."
+The internet is a miracle of engineering. It is also held together by hacks, workarounds, and solutions that made everyone say "this is temporary until we fix it properly."
 
-Spoiler: We never fixed it properly.
-
-Let's tour some of the most beautiful disasters in web technology.
+Some of these we use everyday without noticing. Lets see how they came to be.
 
 ## Hack 1: [JSONP][jsonp] (JavaScript Object Notation with Padding)
 
@@ -36,20 +34,20 @@ Let's tour some of the most beautiful disasters in web technology.
 You want to fetch data from a different domain. The browser says no:
 
 ```javascript
-fetch('https://api.example.com/data')
-  .then(r => r.json())
-  .then(data => console.log(data));
+fetch("https://api.example.com/data")
+  .then((r) => r.json())
+  .then((data) => console.log(data));
 
 // ❌ Error: No 'Access-Control-Allow-Origin' header
 ```
 
-[Same-origin policy][same-origin] blocks you. [CORS][cors] doesn't exist yet (it's the mid-2000s). What do you do?
+[Same-origin policy][same-origin] blocks you. In the mid 2000s, [CORS][cors] doesn't exist yet. What do you do?
 
 ### The Terrible Solution
 
 **Observation:** `<script>` tags can load JavaScript from anywhere.
 
-**Terrible idea:** What if we put JSON data *inside* a JavaScript file?
+**Terrible idea:** What if we put JSON data _inside_ a JavaScript file?
 
 ```javascript
 // Your page
@@ -58,15 +56,16 @@ function handleData(data) {
 }
 
 // Their server returns this:
-handleData({"user": "Alice", "email": "alice@example.com"});
+handleData({ user: "Alice", email: "alice@example.com" });
 
 // You load it with a script tag:
-<script src="https://api.example.com/data?callback=handleData"></script>
+<script src="https://api.example.com/data?callback=handleData"></script>;
 ```
 
 **It works!** The server wraps JSON in a function call. Your page defines the function. Script tag loads and executes. You have your data.
 
 **Why it's terrible:**
+
 - The server can execute arbitrary JavaScript in your page
 - No error handling
 - URL length limits
@@ -82,13 +81,13 @@ Because it worked. And CORS took years to standardize and implement everywhere.
 
 ### The Problem
 
-CORS exists now! You can make cross-origin requests! Except... sometimes the browser sends TWO requests:
+It is 2005 and CORS exists now! You can make cross-origin requests! Except... sometimes the browser sends TWO requests:
 
 ```javascript
-fetch('https://api.example.com/data', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ data: 'hi' })
+fetch("https://api.example.com/data", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ data: "hi" }),
 });
 
 // Browser sends:
@@ -96,7 +95,7 @@ fetch('https://api.example.com/data', {
 // 2. POST request (your actual request)
 ```
 
-**Why two requests?** Because the browser doesn't trust you.
+**Why two requests?** Because the browser doesn't trust you (and rightly so!).
 
 ### The Terrible Solution
 
@@ -120,6 +119,7 @@ Access-Control-Max-Age: 86400
 Only then does the browser send your actual POST request.
 
 **Why it's terrible:**
+
 - Doubles the number of requests
 - Adds latency
 - Server has to handle OPTIONS requests for every endpoint
@@ -143,9 +143,9 @@ Just ask the server for updates every second:
 
 ```javascript
 setInterval(() => {
-  fetch('/updates')
-    .then(r => r.json())
-    .then(data => {
+  fetch("/updates")
+    .then((r) => r.json())
+    .then((data) => {
       if (data.newMessages) {
         showMessages(data.newMessages);
       }
@@ -154,6 +154,7 @@ setInterval(() => {
 ```
 
 **Why it's terrible:**
+
 - Makes 60 requests per minute even when nothing happens
 - Wastes bandwidth
 - Wastes server resources
@@ -166,9 +167,9 @@ setInterval(() => {
 
 ```javascript
 function poll() {
-  fetch('/updates')
-    .then(r => r.json())
-    .then(data => {
+  fetch("/updates")
+    .then((r) => r.json())
+    .then((data) => {
       handleData(data);
       poll(); // Immediately poll again
     });
@@ -180,9 +181,10 @@ Server holds the request open until there's data, then responds. Client immediat
 **Why it's also terrible:** Keeps connections open forever. But at least it doesn't waste requests when nothing happens.
 
 **Status in 2026:** WebSockets exist now. But polling still lives on in:
+
 - Systems that can't use WebSockets (restrictive firewalls)
-- Lazy developers who don't want to set up WebSocket infrastructure
 - "Enterprise" systems that haven't been updated since 2008
+- Systems that consider Server Sent Events and WebSockets too complex a solution for their use case.
 
 ## Hack 4: Base64 Images in CSS
 
@@ -203,6 +205,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL
 ```
 
 **Why it's terrible:**
+
 - Base64 is 33% larger than binary
 - Can't be cached separately from CSS
 - Makes CSS files huge
@@ -210,14 +213,18 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL
 - Makes CSS unreadable
 
 **Why it was used:**
+
 - Reduces HTTP requests (important in HTTP/1.1)
 - Entire CSS file can be cached
 - No [FOUC][fouc] (Flash of Unstyled Content) waiting for images
 
 **Status in 2026:** [HTTP/2][http2] fixed the connection limit problem. But you still see base64 images in:
+
 - Old codebases
 - Email HTML (email clients block external images)
 - Single-file HTML apps (everything in one file)
+- Systems where image hosting over CDNs is relatively expensive.
+- The image is small enough, what's the harm?(!)
 
 ## Hack 5: [User-Agent][user-agent] Sniffing
 
@@ -232,41 +239,48 @@ Check the `User-Agent` string:
 ```javascript
 const ua = navigator.userAgent;
 
-if (ua.includes('MSIE') || ua.includes('Trident')) {
+if (ua.includes("MSIE") || ua.includes("Trident")) {
   // Internet Explorer detected
   loadIEPolyfills();
 }
 
-if (ua.includes('Chrome')) {
+if (ua.includes("Chrome")) {
   // Use Chrome-specific features
 }
 ```
 
 **Why it's terrible:**
+
 - User-Agent strings lie
 - Browsers spoof each other to avoid being blocked
 - User-Agent strings are ridiculously long and complicated
 - Feature detection is better than browser detection
 
 **Example User-Agent:**
+
 ```
-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.59
 ```
 
-This is Edge pretending to be Chrome pretending to be Safari pretending to be Mozilla. Why? Because websites blocked Edge, so Edge pretended to be Chrome.
+This is Edge pretending to be Chrome pretending to be Safari pretending to be Mozilla. Why? Because if a website blocked Edge, this partially circumvents the ban.
 
-**Better solution:** [Feature detection][feature-detection]
+{% capture core_insight %}
+A much better approach is to use [Feature detection][feature-detection]. Check for presence of the feature in your JS
+**Example:**
 
 ```javascript
-if ('geolocation' in navigator) {
+if ("geolocation" in navigator) {
   // Use geolocation
 }
 
-if (typeof Promise !== 'undefined') {
+if (typeof Promise !== "undefined") {
   // Use promises
 }
 ```
+
+{% endcapture %}
+{% include highlight.html title="Feature detection" content=core_insight %}
 
 **Status in 2026:** User-Agent sniffing is officially discouraged. But it's still everywhere because old code never dies.
 
@@ -285,6 +299,7 @@ Set-Cookie: sessionId=abc123; Path=/; HttpOnly; Secure
 ```
 
 **Why it's terrible:**
+
 - Sent with EVERY request, even for images/CSS/JS
 - Limited to 4 KB per cookie
 - No structured data format
@@ -295,6 +310,7 @@ Set-Cookie: sessionId=abc123; Path=/; HttpOnly; Secure
 Because nothing better existed. We needed some way to do sessions.
 
 **What cookies are used for:**
+
 - Authentication (session tokens)
 - Tracking (ads, analytics)
 - User preferences
@@ -302,6 +318,7 @@ Because nothing better existed. We needed some way to do sessions.
 - CSRF tokens (ironically, to protect against CSRF)
 
 **Status in 2026:** We have [`localStorage`][localstorage], [`sessionStorage`][sessionstorage], [`IndexedDB`][indexeddb]. But cookies persist because:
+
 - They're automatically sent with requests (good for auth)
 - They work across tabs
 - Old code depends on them
@@ -315,10 +332,11 @@ You want to add content to a page dynamically.
 ### The Terrible Solution
 
 ```javascript
-document.write('<div>Hello World</div>');
+document.write("<div>Hello World</div>");
 ```
 
 **Why it's terrible:**
+
 - If called after page load, it WIPES THE ENTIRE PAGE
 - Blocks page parsing
 - Can't be used in async scripts
@@ -328,7 +346,9 @@ document.write('<div>Hello World</div>');
 **Why it existed:**  
 In 1995, there was no [DOM API][dom-api]. `document.write()` was the only way to generate HTML from JavaScript.
 
-**Status in 2026:** Not officially deprecated in the spec, but strongly discouraged. Chrome actively blocks it in some scenarios. Still in millions of ad scripts because ad tech is where code goes to die.
+**Status in 2026:** Not officially deprecated in the spec, but strongly discouraged. (See the mozilla document page on this and you will realize how red it is with warnings.) Chrome actively blocks it in some scenarios. Still in millions of ad scripts because ad tech is where code goes to die.
+
+> It was a reliable way to ensure the ad script executed and rendered its content across a variety of older browser environments without needing more complex DOM manipulation methods. Ad scripts often use document.write() to inject further <script> tags with dynamic parameters, effectively creating a chain of script loads to fetch the final ad creative
 
 ## Hack 8: [eval()][eval] (The Devil's Function)
 
@@ -344,6 +364,7 @@ eval(code); // Executes the string as JavaScript
 ```
 
 **Why it's terrible:**
+
 - Executes arbitrary code
 - Security nightmare
 - Performance nightmare (can't be optimized)
@@ -354,6 +375,7 @@ eval(code); // Executes the string as JavaScript
 Sometimes you legitimately need to execute dynamic code. JSONP used `eval()` before `JSON.parse()` existed.
 
 **Status in 2026:** Still exists. Still dangerous. Still used in:
+
 - Code playgrounds
 - Template engines
 - Dynamic query builders
@@ -379,6 +401,7 @@ Use HTML tables for everything:
 ```
 
 **Why it's terrible:**
+
 - Semantically wrong (tables are for data, not layout)
 - Accessibility nightmare
 - Inflexible
@@ -386,9 +409,12 @@ Use HTML tables for everything:
 - Screen readers think everything is tabular data
 
 **Status in 2026:** Finally dead. If you see table layouts in 2026, the website is either:
+
 - Very old
 - Generated by an ancient CMS
 - An email (email clients still use table layouts)
+
+> Please just use flexbox or css grids for your layouting.
 
 ## Hack 10: [!important][css-important] (The CSS Nuclear Option)
 
@@ -408,6 +434,7 @@ Your CSS rule isn't being applied. Something else is overriding it. You don't kn
 ```
 
 **Why it's terrible:**
+
 - Breaks the natural [cascade][css-cascade] that makes CSS work
 - The only way to override `!important` is with another `!important`
 - Leads to specificity wars that nobody wins
@@ -415,6 +442,7 @@ Your CSS rule isn't being applied. Something else is overriding it. You don't kn
 - Commonly a sign that the real problem is poorly structured selectors
 
 **Why it's used:**
+
 - Third-party widgets inject styles you can't control
 - Legacy CSS is too tangled to refactor safely
 - Deadline pressure: "just slap `!important` on it and ship"
@@ -458,10 +486,7 @@ And you know what? **It works.** Not elegantly. Not beautifully. But it works.
 
 Next time you're tempted to call something a "hack," remember: the entire internet is a hack. Your hack is in good company.
 
-**Remember:** Today's elegant solution is tomorrow's "why does this terrible legacy code exist?"
-
 ---
-
 
 [jsonp]: https://en.wikipedia.org/wiki/JSONP "JSONP - Wikipedia"
 [same-origin]: https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy "Same-origin policy - MDN"
