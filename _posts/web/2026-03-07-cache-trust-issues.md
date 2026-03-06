@@ -5,7 +5,7 @@ unique_id: WEB05
 title: My Cache Has Trust Issues - A Therapist's Guide to Cache Invalidation
 subtitle: Is this data fresh? Can I trust it? What if it changed?
 tldr: Caches are paranoid creatures with anxiety about staleness. Let's explore cache invalidation, TTL panic attacks, and why your cache needs therapy more than optimization.
-# permalink: /blog/web/cache-trust-issues
+permalink: /blog/web/cache-trust-issues
 author: srungta
 tags:
   - Web
@@ -15,8 +15,17 @@ tags:
 
 series:
   id: WEB
-  index: 6
+  index: 3
+  
+featured: true
+isNew: true
+image: /assets/images/web/cache/cover.png
 ---
+
+
+<div class="centered-image-container">
+  <img alt="Cache at therapy" src ="/assets/images/web/cache/cover.png" class="centered-image" />
+</div>
 
 * TOC
 {:toc}
@@ -436,7 +445,3 @@ The best you can do is:
 And maybe, just maybe, your cache will learn to trust again.
 
 **Remember:** The only thing worse than a stale cache is no cache at all. And the only thing worse than no cache is a cache that lies to you.
-
----
-
-*Does your cache have trust issues? Found a clever invalidation strategy? Tell me about your cache therapy journey.*
