@@ -27,6 +27,11 @@
   id: WEB
   sortInReverse: true
 
+- name: Starting right
+  description: Things to consider when starting a new project.
+  id: STARTRIGHT
+  status: ONGOING
+
 - name: Understanding Redis
   description: Trying to set up a production Redis cluster using docker. We will start with "What is Redis" and try to end up configuring a multi node cluster. The intent will also be to setup monitoring and automation wherever applicable.
   # status: ONGOING
