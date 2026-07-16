@@ -46,6 +46,19 @@ series:
 
 **The real lesson:** Unicode is hard. And emoji are Unicode's final boss.
 
+```mermaid
+timeline
+    title Incident Timeline — Friday Evening
+    5&#58;47 PM : User sets display name to "John 💩"
+              : Application crashes
+    5&#58;48 PM : All database requests timeout
+    5&#58;49 PM : Site down for all users
+    5&#58;52 PM : Engineers attempt rollback
+    5&#58;53 PM : Rollback fails
+    5&#58;54 PM : Database locked
+    5&#58;55 PM : Everyone panics 🔥
+```
+
 ## Chapter 1: What Even Is Unicode?
 
 ### ASCII (The Simple Days)
@@ -57,7 +70,7 @@ B = 66
 Z = 90
 ```
 
-128 characters total. All English letters, numbers, basic punctuation. 7 bits. Life was simple.
+128 characters total. All English letters, numbers, basic punctuation. 7 bits. Life was simple. ([Wikipedia: ASCII](https://en.wikipedia.org/wiki/ASCII))
 
 **Then the world happened.**
 
@@ -71,9 +84,24 @@ A = U+0041 (Latin Capital Letter A)
 𝐀 = U+1D400 (Mathematical Bold Capital A)
 ```
 
-140,000+ characters. Multiple ways to represent the same thing. Combining characters. Emoji. Emoji with skin tones. Emoji combined with other emoji.
+[140,000+ characters.](https://www.unicode.org/versions/Unicode15.1.0/) Multiple ways to represent the same thing. Combining characters. Emoji. Emoji with skin tones. Emoji combined with other emoji.
 
 **Unicode went from "character set" to "every written symbol in human history plus emoji."**
+
+```mermaid
+quadrantChart
+    title Character Set Coverage vs Complexity
+    x-axis Low Complexity --> High Complexity
+    y-axis Low Coverage --> High Coverage
+    quadrant-1 Powerful but tricky
+    quadrant-2 Ideal
+    quadrant-3 Limited and simple
+    quadrant-4 Complex but limited
+    ASCII: [0.05, 0.10]
+    Latin-1 / ISO-8859-1: [0.10, 0.20]
+    UTF-16: [0.65, 0.95]
+    UTF-8 / Unicode: [0.80, 0.99]
+```
 
 ## Chapter 2: The Many Ways Characters Lie About Their Size
 
@@ -89,8 +117,8 @@ A = U+0041 (Latin Capital Letter A)
 
 **What fits:**
 - 100 ASCII characters ✅
-- 33 Euro signs (3 bytes each)
-- 25 emoji (4 bytes each)
+- 33 Euro signs ([3 bytes each](https://en.wikipedia.org/wiki/UTF-8#Encoding))
+- 25 emoji ([4 bytes each](https://www.unicode.org/reports/tr51/))
 
 ### Size Lie #2: Combined Characters
 
@@ -132,6 +160,15 @@ A = U+0041 (Latin Capital Letter A)
 **Your validation:** "That's fine"  
 **Your database:** "This is 44 bytes (11 × 4). Too long."
 
+```mermaid
+flowchart LR
+    A["👨\nU+1F468\n4 bytes"] -->|ZWJ\nU+200D| B["👩\nU+1F469\n4 bytes"]
+    B -->|ZWJ\nU+200D| C["👧\nU+1F467\n4 bytes"]
+    C -->|ZWJ\nU+200D| D["👦\nU+1F466\n4 bytes"]
+    D --> E["👨‍👩‍👧‍👦\nLooks like: 1 char\n.length = 11\nBytes = 25"]
+    style E fill:#1a3a1a,stroke:#3fb950
+```
+
 ## Chapter 3: Real-World Horror Stories
 
 ### Story 1: The Name That Broke Authentication
@@ -172,6 +209,17 @@ normalizeText(username) === normalizeText(savedUsername)  // ✅ Works
 Content-Type: text/html; charset=UTF-8
 ```
 
+```mermaid
+flowchart LR
+    A["✅ Original\nこんにちは\nUTF-8 · 15 bytes"] -->|Server 1\nUTF-8 ✓| B["✅ Intact\nこんにちは"]
+    B -->|Server 2\nISO-8859-1 ✗| C["❌ Mojibake\n??????????\nKanji replaced"]
+    C -->|Server 3\nUTF-8| D["❌ Stored as valid\n??????????"]
+    D --> E["😢 Recipient\n??????????\nData permanently lost"]
+    style C fill:#3a1a00,stroke:#ff6600
+    style D fill:#3a1a00,stroke:#ff6600
+    style E fill:#3a0000,stroke:#ff4444
+```
+
 ### Story 3: The Tweet That Was Too Long
 
 **Twitter:** "Tweets are limited to 280 characters"
@@ -205,7 +253,7 @@ CREATE TABLE users (
 - `latin1`: 1 byte per character, so VARCHAR(100) = 100 bytes
 - `utf8mb4`: Up to 4 bytes per character, so VARCHAR(100) = 400 bytes max
 
-**But MySQL also has a row size limit (65,535 bytes).**
+**But MySQL also has a [row size limit (65,535 bytes)](https://dev.mysql.com/doc/refman/8.0/en/column-count-limit.html).**
 
 **If you have 200 VARCHAR(100) columns:**
 - `latin1`: 200 × 100 = 20,000 bytes ✅
@@ -264,7 +312,7 @@ app.get('/users/:name', (req, res) => {
 
 ## Chapter 4: The Emoji Special Cases
 
-### Skin Tone Modifiers
+### [Skin Tone Modifiers](https://www.unicode.org/reports/tr51/#Emoji_Modifiers_Table)
 
 ```javascript
 '👋'.length;      // 2 (base emoji)
@@ -275,7 +323,7 @@ app.get('/users/:name', (req, res) => {
 **Your database:** Each takes different space  
 **Your character limit:** Surprises await
 
-### Flags
+### [Flags](https://www.unicode.org/reports/tr51/#flag-emoji-tag-sequences)
 
 ```javascript
 '🇺🇸'.length;     // 4
@@ -300,6 +348,25 @@ app.get('/users/:name', (req, res) => {
 **Each variation:** Different byte count  
 **Your system:** Might treat them as completely different inputs
 
+```mermaid
+block-beta
+  columns 4
+  base["Base person"]:1
+  space
+  zwj["+ ZWJ +"]:1
+  space
+  prof["Profession symbol"]:1
+  space
+  result["= Variant emoji"]:1
+  space
+  m["👨 U+1F468"]:1 space mzwj["+ZWJ+"] space mdoc["⚕️ U+2695"]:1 space mres["👨‍⚕️ Male doctor"]:1
+  f["👩 U+1F469"]:1 space fzwj["+ZWJ+"] space fdoc["⚕️ U+2695"]:1 space fres["👩‍⚕️ Female doctor"]:1
+  n["🧑 U+1F9D1"]:1 space nzwj["+ZWJ+"] space ndoc["⚕️ U+2695"]:1 space nres["🧑‍⚕️ Neutral doctor"]:1
+  style mres fill:#1a3a1a
+  style fres fill:#1a3a1a
+  style nres fill:#1a3a1a
+```
+
 ## Chapter 5: The Database Encoding Trap
 
 ### MySQL Character Sets (A History of Mistakes)
@@ -309,12 +376,12 @@ app.get('/users/:name', (req, res) => {
 - Only Western European languages
 - Can't store emoji
 
-**`utf8`** (MySQL's version, not real UTF-8)
+**[`utf8`](https://dev.mysql.com/doc/refman/8.0/en/charset-unicode-utf8.html)** (MySQL's version, not real UTF-8)
 - Max 3 bytes per character
 - Can store most characters
 - **Cannot store emoji** (emoji need 4 bytes)
 
-**`utf8mb4`** (actual UTF-8)
+**[`utf8mb4`](https://dev.mysql.com/doc/refman/8.0/en/charset-unicode-utf8mb4.html)** (actual UTF-8)
 - Max 4 bytes per character
 - Can store emoji
 - **This is what you want**
@@ -360,6 +427,14 @@ INSERT INTO users (name) VALUES ('Hello 👋');
 ```
 
 **The fix:** Use `VARCHAR` or `TEXT`, not `CHAR`.
+
+```mermaid
+xychart-beta
+    title "MySQL Charset: Max bytes per character"
+    x-axis ["latin1", "utf8 (utf8mb3)", "utf8mb4"]
+    y-axis "Max bytes per character" 0 --> 4
+    bar [1, 3, 4]
+```
 
 ## Chapter 6: The Application Layer Traps
 
@@ -436,7 +511,7 @@ function normalizeInput(str) {
 }
 ```
 
-### Fix 3: Count Graphemes, Not Code Points
+### Fix 3: Count Graphemes, Not Code Points ([Intl.Segmenter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter))
 
 ```javascript
 function countGraphemes(str) {
@@ -472,7 +547,7 @@ CREATE TABLE posts (
 
 -- Use TEXT (or equivalent)
 CREATE TABLE posts (
-  content TEXT  -- Stores up to 4GB in PostgreSQL
+  content TEXT  -- Stores up to 1 GB per value in PostgreSQL (see [Character Types](https://www.postgresql.org/docs/current/datatype-character.html))
 );
 ```
 

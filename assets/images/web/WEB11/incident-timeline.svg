@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" font-family="'Segoe UI', system-ui, sans-serif">
+  <rect width="760" height="340" fill="#0f0f0f" rx="12"/>
+
+  <!-- Title -->
+  <text x="380" y="36" fill="#ff4444" font-size="15" font-weight="700" text-anchor="middle" letter-spacing="1">⚠ INCIDENT REPORT — SEVERITY P0</text>
+
+  <!-- Timeline line -->
+  <line x1="100" y1="80" x2="660" y2="80" stroke="#333" stroke-width="2"/>
+
+  <!-- Time markers -->
+  <!-- 5:47 -->
+  <circle cx="140" cy="80" r="7" fill="#ff4444"/>
+  <line x1="140" y1="87" x2="140" y2="120" stroke="#ff4444" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="140" y="135" fill="#ff4444" font-size="11" font-weight="700" text-anchor="middle">5:47 PM</text>
+  <text x="140" y="152" fill="#aaa" font-size="10" text-anchor="middle">User sets name</text>
+  <text x="140" y="165" fill="#aaa" font-size="10" text-anchor="middle">to "John 💩"</text>
+
+  <!-- 5:47b -->
+  <circle cx="230" cy="80" r="7" fill="#ff6600"/>
+  <line x1="230" y1="87" x2="230" y2="195" stroke="#ff6600" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="230" y="210" fill="#ff6600" font-size="11" font-weight="700" text-anchor="middle">5:47 PM</text>
+  <text x="230" y="227" fill="#aaa" font-size="10" text-anchor="middle">App crashes</text>
+  <text x="230" y="240" fill="#aaa" font-size="10" text-anchor="middle">DB locked</text>
+
+  <!-- 5:49 -->
+  <circle cx="330" cy="80" r="7" fill="#ff6600"/>
+  <line x1="330" y1="87" x2="330" y2="120" stroke="#ff6600" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="330" y="135" fill="#ff6600" font-size="11" font-weight="700" text-anchor="middle">5:49 PM</text>
+  <text x="330" y="152" fill="#aaa" font-size="10" text-anchor="middle">Site down</text>
+  <text x="330" y="165" fill="#aaa" font-size="10" text-anchor="middle">for all users</text>
+
+  <!-- 5:52 -->
+  <circle cx="430" cy="80" r="7" fill="#ffaa00"/>
+  <line x1="430" y1="87" x2="430" y2="195" stroke="#ffaa00" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="430" y="210" fill="#ffaa00" font-size="11" font-weight="700" text-anchor="middle">5:52 PM</text>
+  <text x="430" y="227" fill="#aaa" font-size="10" text-anchor="middle">Rollback</text>
+  <text x="430" y="240" fill="#aaa" font-size="10" text-anchor="middle">attempted</text>
+
+  <!-- 5:53 -->
+  <circle cx="530" cy="80" r="7" fill="#ff4444"/>
+  <line x1="530" y1="87" x2="530" y2="120" stroke="#ff4444" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="530" y="135" fill="#ff4444" font-size="11" font-weight="700" text-anchor="middle">5:53 PM</text>
+  <text x="530" y="152" fill="#aaa" font-size="10" text-anchor="middle">Rollback</text>
+  <text x="530" y="165" fill="#aaa" font-size="10" text-anchor="middle">fails</text>
+
+  <!-- 5:55 -->
+  <circle cx="630" cy="80" r="7" fill="#cc0000"/>
+  <line x1="630" y1="87" x2="630" y2="195" stroke="#cc0000" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="630" y="210" fill="#cc0000" font-size="11" font-weight="700" text-anchor="middle">5:55 PM</text>
+  <text x="630" y="227" fill="#aaa" font-size="10" text-anchor="middle">Everyone</text>
+  <text x="630" y="240" fill="#aaa" font-size="10" text-anchor="middle">panics 🔥</text>
+
+  <!-- Root cause box -->
+  <rect x="200" y="270" width="360" height="52" rx="8" fill="#1a0000" stroke="#ff4444" stroke-width="1.5"/>
+  <text x="380" y="291" fill="#ff4444" font-size="11" font-weight="700" text-anchor="middle">ROOT CAUSE</text>
+  <text x="380" y="309" fill="#ccc" font-size="11" text-anchor="middle">VARCHAR(100) + latin1 charset = max 25 emoji chars</text>
+  <text x="380" y="323" fill="#888" font-size="10" text-anchor="middle">💩 is 4 bytes · 1 emoji overflowed the column · cascading lock</text>
+</svg>

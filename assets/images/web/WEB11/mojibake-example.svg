@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" font-family="'Segoe UI', system-ui, sans-serif">
+  <rect width="760" height="280" fill="#0d1117" rx="12"/>
+
+  <text x="380" y="34" fill="#e6edf3" font-size="14" font-weight="700" text-anchor="middle">Mojibake: What happens when charsets collide</text>
+
+  <!-- Source -->
+  <rect x="30" y="56" width="150" height="80" rx="8" fill="#161b22" stroke="#1f6feb" stroke-width="1.5"/>
+  <text x="105" y="78"  fill="#58a6ff" font-size="11" font-weight="700" text-anchor="middle">Original text</text>
+  <text x="105" y="98"  fill="#e6edf3" font-size="16" text-anchor="middle">こんにちは</text>
+  <text x="105" y="116" fill="#8b949e" font-size="9"  text-anchor="middle">Japanese "Hello"</text>
+  <text x="105" y="130" fill="#8b949e" font-size="9"  text-anchor="middle">UTF-8 · 15 bytes</text>
+
+  <!-- Server 1 -->
+  <text x="218" y="97" fill="#6e7681" font-size="20" text-anchor="middle">→</text>
+  <rect x="50" y="155" width="110" height="36" rx="6" fill="#0d2620" stroke="#3fb950" stroke-width="1"/>
+  <text x="105" y="170" fill="#3fb950" font-size="10" text-anchor="middle">Server 1</text>
+  <text x="105" y="183" fill="#8b949e" font-size="9"  text-anchor="middle">UTF-8 ✓ passes through</text>
+
+  <!-- Server 2 -->
+  <rect x="238" y="56" width="150" height="80" rx="8" fill="#161b22" stroke="#ff6600" stroke-width="1.5"/>
+  <text x="313" y="78"  fill="#ff6600" font-size="11" font-weight="700" text-anchor="middle">Server 2 (ISO-8859-1)</text>
+  <text x="313" y="98"  fill="#e6edf3" font-size="16" text-anchor="middle">??????????</text>
+  <text x="313" y="116" fill="#8b949e" font-size="9"  text-anchor="middle">Can't decode kanji</text>
+  <text x="313" y="130" fill="#8b949e" font-size="9"  text-anchor="middle">replaces with ?</text>
+
+  <text x="406" y="97" fill="#6e7681" font-size="20" text-anchor="middle">→</text>
+
+  <!-- Server 3 -->
+  <rect x="238" y="155" width="150" height="36" rx="6" fill="#2d1a00" stroke="#ff6600" stroke-width="1"/>
+  <text x="313" y="170" fill="#ff6600" font-size="10" text-anchor="middle">Damage done</text>
+  <text x="313" y="183" fill="#8b949e" font-size="9"  text-anchor="middle">? chars stored as "correct"</text>
+
+  <!-- Server 3 re-encode -->
+  <rect x="426" y="56" width="150" height="80" rx="8" fill="#161b22" stroke="#ff4444" stroke-width="1.5"/>
+  <text x="501" y="78"  fill="#ff4444" font-size="11" font-weight="700" text-anchor="middle">Server 3 (UTF-8)</text>
+  <text x="501" y="98"  fill="#e6edf3" font-size="16" text-anchor="middle">??????????</text>
+  <text x="501" y="116" fill="#8b949e" font-size="9"  text-anchor="middle">Sees ? — assumes valid</text>
+  <text x="501" y="130" fill="#8b949e" font-size="9"  text-anchor="middle">passes it along</text>
+
+  <text x="594" y="97" fill="#6e7681" font-size="20" text-anchor="middle">→</text>
+
+  <!-- Recipient -->
+  <rect x="614" y="56" width="116" height="80" rx="8" fill="#1a0000" stroke="#f85149" stroke-width="1.5"/>
+  <text x="672" y="78"  fill="#f85149" font-size="11" font-weight="700" text-anchor="middle">Recipient</text>
+  <text x="672" y="101" fill="#e6edf3" font-size="14" text-anchor="middle">??????????</text>
+  <text x="672" y="116" fill="#8b949e" font-size="9"  text-anchor="middle">Data permanently</text>
+  <text x="672" y="128" fill="#8b949e" font-size="9"  text-anchor="middle">lost 😢</text>
+
+  <!-- Fix banner -->
+  <rect x="30" y="218" width="700" height="44" rx="8" fill="#0d2218" stroke="#3fb950" stroke-width="1"/>
+  <text x="380" y="237" fill="#3fb950" font-size="11" font-weight="700" text-anchor="middle">Fix: declare charset explicitly at every boundary</text>
+  <text x="380" y="253" fill="#8b949e" font-size="10" font-family="monospace" text-anchor="middle">Content-Type: text/html; charset=UTF-8   ·   Accept-Charset: UTF-8   ·   Database: utf8mb4</text>
+</svg>

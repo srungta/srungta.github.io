@@ -1,0 +1,236 @@
+<div class="content-slider" id="{{ include.id | default: 'md-slider' }}">
+  <button class="slider-fullscreen-btn" onclick="toggleMDSliderFullscreen('{{ include.id | default: 'md-slider' }}')" aria-label="Enter Fullscreen">&#x26F6;</button>
+  <!-- Touch target area for swiping -->
+  <div class="slider-touch-zone">
+    <div class="slider-stages">
+      <div class="slide-raw-data" style="display: none;">
+  {{ include.content | markdownify }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Large, mobile-friendly bottom controls -->
+  <div class="slider-controls">
+    <button class="slider-nav prev" onclick="moveMDSlide('{{ include.id | default: 'md-slider' }}', -1)" aria-label="Previous Slide">&#10094;</button>
+    <span class="slide-counter"><span class="current-idx">1</span> / <span class="total-idx">1</span></span>
+    <button class="slider-nav next" onclick="moveMDSlide('{{ include.id | default: 'md-slider' }}', 1)" aria-label="Next Slide">&#10095;</button>
+  </div>
+</div>
+
+<style>
+  .content-slider { 
+    border: 1px solid #e1e4e8; 
+    border-radius: 12px; /* Smoother corners for mobile cards */
+    padding: 16px; 
+    margin: 16px 0; 
+    background: #f6f8fa; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    touch-action: pan-y; /* Prevents vertical scroll locking while swiping horizontally */
+  }
+  
+  /* Prevent images or tables from blowing out the mobile layout width */
+  .slide-panel { display: none; min-height: 180px; }
+  .slide-panel.active { display: block; }
+  .slide-panel img { max-width: 100%; height: auto; border-radius: 6px; }
+  .slide-panel table { display: block; overflow-x: auto; max-width: 100%; }
+  .slide-panel pre { max-width: 100%; overflow-x: auto; }
+
+  /* Mobile-first touch-friendly control bar */
+  .slider-controls { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-top: 16px; 
+    border-top: 1px solid #e1e4e8; 
+    padding-top: 12px; 
+  }
+  
+  /* Large 44x44px minimum touch targets for fingers */
+  .slider-nav { 
+    background: #0366d6; 
+    color: white; 
+    border: none; 
+    width: 44px;
+    height: 44px;
+    border-radius: 50%; 
+    cursor: pointer; 
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .slider-nav:active { background: #0056b3; }
+  .slide-counter { font-family: -apple-system, BlinkMacSystemFont, monospace; color: #586069; font-weight: 600; }
+  @keyframes pageFoldForwardOut {
+    from { transform: perspective(1200px) rotateY(0deg); }
+    to   { transform: perspective(1200px) rotateY(-90deg); }
+  }
+  @keyframes pageFoldForwardIn {
+    from { transform: perspective(1200px) rotateY(-90deg); }
+    to   { transform: perspective(1200px) rotateY(0deg); }
+  }
+  @keyframes pageFoldBackwardOut {
+    from { transform: perspective(1200px) rotateY(0deg); }
+    to   { transform: perspective(1200px) rotateY(90deg); }
+  }
+  @keyframes pageFoldBackwardIn {
+    from { transform: perspective(1200px) rotateY(90deg); }
+    to   { transform: perspective(1200px) rotateY(0deg); }
+  }
+
+  /* Fullscreen toggle button — absolute top-right corner */
+  .slider-fullscreen-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(246, 248, 250, 0.9);
+    border: 1px solid #d1d5da;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    color: #586069;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+    z-index: 1;
+  }
+  .slider-fullscreen-btn:hover { background: #e1e4e8; }
+
+  /* Fullscreen overlay */
+  .content-slider.fullscreen {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .content-slider.fullscreen .slider-touch-zone {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+  }
+  .content-slider.fullscreen .slide-panel {
+    min-height: unset;
+    height: 100%;
+  }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const sliderId = "{{ include.id | default: 'md-slider' }}";
+  const slider = document.getElementById(sliderId);
+  const rawData = slider.querySelector('.slide-raw-data');
+  const stages = slider.querySelector('.slider-stages');
+  
+  // Split raw HTML content by horizontal rules
+  const slideContents = rawData.innerHTML.split(/<hr\s*\/?>/i);
+  stages.innerHTML = ''; 
+  
+  slideContents.forEach((content, index) => {
+    if(content.trim() === '') return;
+    const panel = document.createElement('div');
+    panel.className = 'slide-panel' + (index === 0 ? ' active' : '');
+    panel.innerHTML = content;
+    stages.appendChild(panel);
+  });
+
+  const panels = stages.querySelectorAll('.slide-panel');
+  slider.querySelector('.total-idx').textContent = panels.length;
+
+  // Close fullscreen on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const fsSlider = document.querySelector('.content-slider.fullscreen');
+      if (fsSlider) toggleMDSliderFullscreen(fsSlider.id);
+    }
+  });
+
+  // Add Touch Gesture Tracking (Swipe)
+  const touchZone = slider.querySelector('.slider-touch-zone');
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  touchZone.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  touchZone.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const swipeThreshold = 50; // Minimum drag distance in pixels to trigger slide swap
+    if (touchStartX - touchEndX > swipeThreshold) {
+      // Swiped Left -> Show Next Slide
+      moveMDSlide(sliderId, 1);
+    } else if (touchEndX - touchStartX > swipeThreshold) {
+      // Swiped Right -> Show Previous Slide
+      moveMDSlide(sliderId, -1);
+    }
+  }
+});
+
+function toggleMDSliderFullscreen(sliderId) {
+  const slider = document.getElementById(sliderId);
+  const isFullscreen = slider.classList.toggle('fullscreen');
+  const btn = slider.querySelector('.slider-fullscreen-btn');
+  btn.innerHTML = isFullscreen ? '&#10005;' : '&#x26F6;';
+  btn.setAttribute('aria-label', isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen');
+  document.body.style.overflow = isFullscreen ? 'hidden' : '';
+}
+
+function moveMDSlide(sliderId, direction) {
+  const slider = document.getElementById(sliderId);
+  const panels = slider.querySelectorAll('.slide-panel');
+  if (panels.length <= 1) return;
+  if (slider.dataset.animating) return;
+  slider.dataset.animating = 'true';
+
+  let activeIndex = Array.from(panels).findIndex(p => p.classList.contains('active'));
+  const outPanel = panels[activeIndex];
+  activeIndex = (activeIndex + direction + panels.length) % panels.length;
+  const inPanel = panels[activeIndex];
+
+  slider.querySelector('.current-idx').textContent = activeIndex + 1;
+
+  const DURATION = 240;
+  const isForward = direction > 0;
+
+  // Phase 1: current slide folds away
+  outPanel.style.transformOrigin = isForward ? 'left center' : 'right center';
+  outPanel.style.willChange = 'transform';
+  outPanel.style.animation = `${isForward ? 'pageFoldForwardOut' : 'pageFoldBackwardOut'} ${DURATION}ms ease-in forwards`;
+
+  outPanel.addEventListener('animationend', function() {
+    outPanel.style.cssText = '';
+    outPanel.classList.remove('active');
+
+    // Phase 2: new slide unfolds in
+    inPanel.style.transformOrigin = isForward ? 'left center' : 'right center';
+    inPanel.style.willChange = 'transform';
+    inPanel.classList.add('active');
+    inPanel.style.animation = `${isForward ? 'pageFoldForwardIn' : 'pageFoldBackwardIn'} ${DURATION}ms ease-out forwards`;
+
+    inPanel.addEventListener('animationend', function() {
+      inPanel.style.cssText = '';
+      delete slider.dataset.animating;
+    }, { once: true });
+  }, { once: true });
+}
+</script>
