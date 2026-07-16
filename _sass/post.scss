@@ -31,6 +31,94 @@
     font-weight: 600;
 }
 
+.worktree-diagram {
+    margin: 30px 0;
+
+    .worktree-store,
+    .worktree-node {
+        border: 1px solid #0089e0;
+        border-radius: 6px;
+        background: #f4fbff;
+        padding: 14px;
+        text-align: center;
+    }
+
+    .worktree-store {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    .worktree-nodes {
+        display: grid;
+        grid-template-columns: repeat(var(--worktree-node-count), minmax(0, 1fr));
+        gap: 16px;
+        position: relative;
+        margin-top: 38px;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: calc(100% / 6);
+            right: calc(100% / 6);
+            border-top: 2px solid #9babb3;
+        }
+    }
+
+    .worktree-node {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        position: relative;
+        min-width: 0;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            height: 20px;
+            border-left: 2px solid #9babb3;
+        }
+
+        code {
+            overflow-wrap: anywhere;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .worktree-diagram {
+        .worktree-store {
+            max-width: none;
+        }
+
+        .worktree-nodes {
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 24px;
+
+            &::before {
+                top: -24px;
+                bottom: 0;
+                left: 50%;
+                right: auto;
+                border-top: 0;
+                border-left: 2px solid #9babb3;
+            }
+        }
+
+        .worktree-node {
+            &::before {
+                display: none;
+            }
+        }
+    }
+}
+
 // New SCSS added on top of minima
 
 // Post related styles

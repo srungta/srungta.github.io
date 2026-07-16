@@ -75,17 +75,12 @@ repository's history: the objects, refs, and packfiles are shared through the re
 Git directory. Creating a worktree does **not** re-download or duplicate that history, so it is
 typically fast even for a large repository.
 
-```text
-                 ┌──────────────────────────────┐
-                 │   shared object store (.git) │
-                 │   commits · trees · blobs     │
-                 └───────────────┬──────────────┘
-             ┌───────────────────┼───────────────────┐
-             ▼                   ▼                   ▼
-     worktree: agent-a    worktree: agent-b    worktree: agent-c
-     feature/search       bugfix/crash         chore/deps
-     own files + index    own files + index    own files + index
-```
+{% capture worktree_nodes %}
+agent-a|feature/search|own files + index;
+agent-b|bugfix/crash|own files + index;
+agent-c|chore/deps|own files + index
+{% endcapture %}
+{% include worktree-diagram.html nodes=worktree_nodes aria_label="Three independent worktrees connected to one shared Git object store" %}
 
 The result is the useful combination: shared history, independent files. That is exactly the
 isolation parallel agents need.
@@ -130,50 +125,6 @@ stashing, no branch swapping, no rebuild-from-scratch.
 commits without separate downloads. Dependency directories remain independent, but package-manager
 caches can also be shared across worktrees. Together, those two choices keep new agent workspaces
 cheap to start.
-
----
-
-## A minimal agent-orchestration pattern
-
-The Git commands are small enough to wrap in an orchestration script. The following example creates
-one worktree and branch per task, returns the path to the caller, and removes the worktree when the
-task is done.
-
-```bash
-#!/usr/bin/env bash
-set -euo pipefail
-
-REPO_ROOT="$(git rev-parse --show-toplevel)"
-WORKTREE_ROOT="${REPO_ROOT}/../agents"     # keep agent worktrees beside the main clone
-
-# Create an isolated worktree + branch for a task, echo its path.
-spawn_worktree() {
-  local task_id="$1"
-  local slug; slug="$(printf '%s' "$task_id" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g')"
-  local dir="${WORKTREE_ROOT}/${slug}"
-  local branch="agent/${slug}"
-
-  git -C "$REPO_ROOT" worktree add --quiet -b "$branch" "$dir" origin/main
-  printf '%s\n' "$dir"
-}
-
-# Reap a finished task's worktree (branch is preserved for its PR).
-reap_worktree() {
-  local task_id="$1"
-  local slug; slug="$(printf '%s' "$task_id" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g')"
-  git -C "$REPO_ROOT" worktree remove --force "${WORKTREE_ROOT}/${slug}"
-}
-
-# --- usage ---
-dir="$(spawn_worktree 'TASK-1234 fix null ref')"
-echo "Agent workspace: $dir"
-# hand $dir to the agent; it edits, commits, and opens a PR from branch agent/task-1234
-# later:
-# reap_worktree 'TASK-1234 fix null ref'
-```
-
-The agent is handed a **path** and told "this is your world." It can commit to its assigned branch
-without coordinating checkouts or stashes with the other agents running beside it.
 
 ---
 

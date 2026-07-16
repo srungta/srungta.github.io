@@ -1,0 +1,23 @@
+{% comment %}
+Reusable worktree diagram.
+
+Pass nodes as semicolon-separated entries with label, branch, and detail fields:
+  label|branch|detail;label|branch|detail
+{% endcomment %}
+{% assign worktree_nodes = include.nodes | split: ';' %}
+<div class="worktree-diagram" role="img" aria-label="{{ include.aria_label | default: 'Independent worktrees connected to one shared Git object store' }}">
+  <div class="worktree-store">
+    <strong>{{ include.store_title | default: 'Shared object store' }} <code>{{ include.store_code | default: '.git' }}</code></strong>
+    <span>{{ include.store_detail | default: 'commits · trees · blobs' }}</span>
+  </div>
+  <div class="worktree-nodes" style="--worktree-node-count: {{ worktree_nodes.size }}">
+    {% for node in worktree_nodes %}
+      {% assign fields = node | split: '|' %}
+      <div class="worktree-node">
+        <strong>{{ fields[0] | strip }}</strong>
+        <code>{{ fields[1] | strip }}</code>
+        <span>{{ fields[2] | strip }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</div>
