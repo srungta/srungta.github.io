@@ -66,15 +66,11 @@ cache.set('user:123', userData, { ttl: 300 }); // 5 minutes
 
 **Personality:** "I'll trust this data for 5 minutes. What could go wrong?"
 
-**Strengths:**
-- Simple
-- Predictable
-- Doesn't overthink things
-
-**Weaknesses:**
-- Serves stale data for up to 5 minutes
-- Doesn't know when data actually changed
-- Lives in blissful ignorance
+| Strengths | Weaknesses |
+| --- | --- |
+| Simple | Serves stale data for up to 5 minutes |
+| Predictable | Doesn't know when data actually changed |
+| Doesn't overthink things | Lives in blissful ignorance |
 
 **When it breaks down:**
 ```javascript
@@ -112,15 +108,11 @@ return fresh;
 
 **Personality:** "Trust but verify. Actually, mostly verify."
 
-**Strengths:**
-- Never serves truly stale data
-- Knows exactly when data changes
-- Catches problems early
-
-**Weaknesses:**
-- Still hits the database to check versions
-- If version checking is expensive, you've defeated the purpose
-- Constant anxiety about being wrong
+| Strengths | Weaknesses |
+| --- | --- |
+| Never serves truly stale data | Still hits the database to check versions |
+| Knows exactly when data changes | If version checking is expensive, you've defeated the purpose |
+| Catches problems early | Constant anxiety about being wrong |
 
 **Therapy session:**
 
@@ -150,15 +142,11 @@ function updateUser(userId, newData) {
 
 **Personality:** "I control everything. If data changes, I'll know because *I'm* the one changing it."
 
-**Strengths:**
-- Cache is always consistent with writes
-- No stale data for writes you control
-- Clear ownership
-
-**Weaknesses:**
-- What about writes from other servers?
-- What about manual database updates?
-- What about data that changes from external systems?
+| Strengths | Weaknesses |
+| --- | --- |
+| Cache is always consistent with writes | What about writes from other servers? |
+| No stale data for writes you control | What about manual database updates? |
+| Clear ownership | What about data that changes from external systems? |
 
 **Therapy session:**
 
@@ -186,16 +174,12 @@ eventBus.subscribe('user.updated', (event) => {
 
 **Personality:** "I need to know the moment ANYTHING changes ANYWHERE."
 
-**Strengths:**
-- Invalidates immediately when data changes
-- No TTL guessing
-- Proactive, not reactive
-
-**Weaknesses:**
-- What if the event gets lost?
-- What if events arrive out of order?
-- What if the event system is down?
-- Constant monitoring of event streams
+| Strengths | Weaknesses |
+| --- | --- |
+| Invalidates immediately when data changes | What if the event gets lost? |
+| No TTL guessing | What if events arrive out of order? |
+| Proactive, not reactive | What if the event system is down? |
+| | Constant monitoring of event streams |
 
 **Therapy session:**
 
