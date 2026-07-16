@@ -15,9 +15,6 @@ tags:
 series:
   id: WEB
   index: 2
-  
-featured: true
-isNew: true
 ---
 
 

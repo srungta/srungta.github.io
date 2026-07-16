@@ -16,9 +16,7 @@ tags:
 series:
   id: WEB
   index: 3
-  
-featured: true
-isNew: true
+
 image: /assets/images/web/cache/cover.png
 ---
 

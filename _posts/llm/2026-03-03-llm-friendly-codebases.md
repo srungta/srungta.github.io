@@ -17,9 +17,6 @@ series:
   id: LLM
   index: 2
 
-featured: true
-isNew: true
-
 ---
 
 ## What Does "LLM Friendly" Really Mean?
