@@ -1,11 +1,27 @@
-# Running Many Copies of Your App at Once: Git Worktrees + Caddy for Isolated Local Dev
+---
+layout: post
+unique_id: LLMSLOT01
+title: "Running Many Copies of Your App at Once: Git Worktrees + Caddy"
+subtitle: A hands-on guide to running isolated local app instances with stable URLs and separate data.
+tldr: Give each Git worktree a predictable local URL and isolated database while sharing Caddy and the Cosmos DB emulator.
+permalink: /blog/llm/multi-slot-local-dev-with-worktrees-and-caddy
+author: srungta
+tags:
+  - LLM
+  - Git
+  - Local Development
+  - Caddy
 
-*A hands-on guide to running multiple isolated instances of a React + .NET + Cosmos DB app on one
-machine — one per feature branch — each on its own local URL, sharing a single database emulator.*
+series:
+  id: LLM
+  index: 4
+
+isNew: true
+---
 
 > **Companion post:** for the source-control side of this story — why worktrees are the right
 > primitive for running fleets of AI agents — see
-> [Git Worktrees for Agentic Development](./git-worktrees-for-agentic-development.md).
+> [Git Worktrees for Agentic Development](/blog/llm/git-worktrees-for-agentic-development).
 
 ---
 

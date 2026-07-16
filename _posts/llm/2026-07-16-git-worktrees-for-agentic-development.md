@@ -13,7 +13,7 @@ tags:
 
 series:
   id: LLM
-  index: 4
+  index: 3
 
 featured: true
 isNew: true
@@ -204,28 +204,18 @@ git worktree prune          # clean up records for manually-deleted worktrees
 git worktree remove <path>  # the correct way to delete a worktree
 ```
 
+{% assign companion_post = site.posts | where_exp: "post", "post.path contains 'multi-slot-local-dev-with-worktrees-and-caddy.md'" | first %}
+{% if companion_post %}
 ---
 
 ## Where this leads: worktrees + running apps
 
-Worktrees solve the **source-code** side of parallel agentic development: many isolated checkouts,
-one shared history, cheap to spawn and reap. But agents rarely just edit files — they need to *run*
-what they built: start the frontend, hit the API, read and write the database, click through the UI.
+Worktrees isolate source code, but running several copies of an app introduces a second set of
+collisions: ports, databases, and configuration. The companion post covers that runtime layer by
+giving each worktree its own running instance:
+[**Running Many Copies of Your App at Once: Git Worktrees + Caddy**]({{ companion_post.url | relative_url }}).
 
-The moment two agents try to run the app at the same time, you hit a second collision problem —
-ports, databases, and config all clash — that worktrees alone don't solve. That's the runtime layer:
-giving each worktree its own **running instance** at its own URL, sharing heavy infrastructure.
-
-That is exactly what the companion post builds:
-[**Running Many Copies of Your App at Once: Git Worktrees + Caddy**](/blog/llm/multi-slot-local-dev-with-worktrees-and-caddy).
-
-Together they form the full picture for agentic development:
-
-| Layer | Primitive | What it isolates |
-| --- | --- | --- |
-| Source code | `git worktree` | Working files, index, branch per agent |
-| Runtime | Dev slots + Caddy | Ports, URLs, and database per running instance |
-
+{% endif %}
 ---
 
 ## Wrapping up
@@ -239,5 +229,4 @@ For agentic development, `git worktree` is the quiet workhorse:
 
 The important shift is simple: stop treating the repository checkout as shared agent
 infrastructure. Give every agent its own worktree, and parallel development becomes a set of
-independent, reproducible workspaces. Add dev slots on top, and each workspace gets an isolated
-running app as well.
+independent, reproducible workspaces.
