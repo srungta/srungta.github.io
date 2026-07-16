@@ -18,8 +18,6 @@ series:
   index: 2
 ---
 
-* TOC
-{:toc}
 
 ## Welcome to Server Speed Dating
 

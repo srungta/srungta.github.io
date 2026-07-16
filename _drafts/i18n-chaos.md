@@ -18,8 +18,6 @@ series:
   index: 8
 ---
 
-* TOC
-{:toc}
 
 ## The Setup: "Let's Just Add a Language Dropdown"
 

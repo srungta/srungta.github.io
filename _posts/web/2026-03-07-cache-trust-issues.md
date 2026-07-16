@@ -27,8 +27,6 @@ image: /assets/images/web/cache/cover.png
   <img alt="Cache at therapy" src ="/assets/images/web/cache/cover.png" class="centered-image" />
 </div>
 
-* TOC
-{:toc}
 
 ## Session 1: Meeting Your Cache
 

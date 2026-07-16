@@ -18,8 +18,6 @@ series:
   index: 4
 ---
 
-* TOC
-{:toc}
 
 ## The Setup: One Ticket, Two Buyers
 

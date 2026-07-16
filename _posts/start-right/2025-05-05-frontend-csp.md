@@ -18,8 +18,6 @@ series:
   index: 2
 ---
 
-* TOC
-{:toc}
 
 ### Understanding Content Security Policy (CSP)
 

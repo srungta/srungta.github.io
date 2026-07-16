@@ -16,8 +16,6 @@ series:
   id: REDIS
   index: 5
 ---
-* TOC
-{:toc}
 
 **DISCLAIMER:**  
 **This is a long-ish post as it also covers some aspects of docker networking and docker compose**  

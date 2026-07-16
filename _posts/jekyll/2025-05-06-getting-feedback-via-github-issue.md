@@ -16,8 +16,6 @@ series:
   id: JEKYLL
   index: 1
 ---
-* TOC
-{:toc}
 
 ## Context
 

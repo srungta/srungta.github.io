@@ -18,8 +18,6 @@ series:
   index: 10
 ---
 
-* TOC
-{:toc}
 
 ## The Incident: 💩 Breaks Production
 

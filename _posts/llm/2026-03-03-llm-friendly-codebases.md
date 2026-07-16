@@ -21,8 +21,6 @@ featured: true
 isNew: true
 
 ---
-* TOC
-{:toc}
 
 ## What Does "LLM Friendly" Really Mean?
 

@@ -18,8 +18,6 @@ series:
   index: 3
 ---
 
-* TOC
-{:toc}
 
 ## Security is Just Games We Played as Kids
 

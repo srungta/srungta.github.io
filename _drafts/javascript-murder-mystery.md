@@ -18,8 +18,6 @@ series:
   index: 9
 ---
 
-* TOC
-{:toc}
 
 ## The Crime Scene
 

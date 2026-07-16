@@ -18,8 +18,6 @@ series:
   index: 5
 ---
 
-* TOC
-{:toc}
 
 ## The Challenge: 100 Bytes or Less
 

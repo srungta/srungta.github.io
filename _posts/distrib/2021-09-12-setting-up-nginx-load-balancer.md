@@ -15,8 +15,6 @@ series:
   id: DISTRIB
   index: 1
 ---
-* TOC
-{:toc}
 
 ## Why a load balancer?
 - Your website is hosted on a VM.

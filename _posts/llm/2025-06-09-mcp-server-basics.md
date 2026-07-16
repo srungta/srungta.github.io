@@ -16,8 +16,6 @@ series:
 
 image: /assets/images/llm/LLMMCP01/inspector-1.png
 ---
-* TOC
-{:toc}
 
 ## Introduction to MCP Servers
 

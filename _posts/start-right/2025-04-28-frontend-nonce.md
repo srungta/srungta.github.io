@@ -18,8 +18,6 @@ series:
   index: 1
 ---
 
-* TOC
-{:toc}
 
 ### What is a Nonce? A Simple Explanation
 

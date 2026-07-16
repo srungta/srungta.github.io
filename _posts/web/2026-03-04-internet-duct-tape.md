@@ -20,8 +20,6 @@ featured: true
 isNew: true
 ---
 
-* TOC
-{:toc}
 
 ## The tech debt of the Internet
 

@@ -18,8 +18,6 @@ series:
   index: 3
 ---
 
-* TOC
-{:toc}
 
 ## The Premise: Tuesday-Only Website
 
