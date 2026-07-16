@@ -11,11 +11,11 @@
 set -euo pipefail
 
 cmd_build() {
-    docker build . -t srungtagithub:debug
+    docker build --platform linux/amd64 . -t srungtagithub:debug
 }
 
 cmd_run() {
-    docker run --rm -v "${PWD}:/srv/jekyll" -p 8080:4000 -e JEKYLL_ENV=production -it jekyll/minimal:3.8 jekyll serve --force_polling
+    docker run --rm --platform linux/amd64 -v "${PWD}:/srv/jekyll" -p 8080:4000 -e JEKYLL_ENV=production -it jekyll/minimal:3.8 jekyll serve --force_polling
 }
 
 cmd_draft() {
