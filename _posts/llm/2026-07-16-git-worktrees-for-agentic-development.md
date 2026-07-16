@@ -2,8 +2,8 @@
 layout: post
 unique_id: LLMWT01
 title: Git Worktrees for Agentic Development
-subtitle: How git worktree turns a single repository into many isolated, parallel workspaces — and why that's the missing primitive for running AI coding agents.
-tldr: Use git worktrees to give every AI agent its own isolated working directory without duplicating the repository history.
+subtitle: Give every coding agent an isolated workspace without cloning the repository.
+tldr: Use Git worktrees to run agents in parallel without sharing working files or duplicating history.
 permalink: /blog/llm/git-worktrees-for-agentic-development
 author: srungta
 tags:
