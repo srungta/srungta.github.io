@@ -19,41 +19,33 @@ featured: true
 isNew: true
 ---
 
-# Git Worktrees for Agentic Development: Give Every Agent Its Own Reality
-
-*How `git worktree` turns a single repository into many isolated, parallel workspaces — and why
-that's the missing primitive for running fleets of AI coding agents without them stepping on each
-other.*
-
-> **Companion post:** once you can run many worktrees, you'll want many *running apps* too. See
-> [Running Many Copies of Your App at Once: Git Worktrees + Caddy](./multi-slot-local-dev-with-worktrees-and-caddy.md)
-> for the runtime side of this story.
-
----
-
 ## The problem agents create
 
-A single human developer works on one thing at a time. They check out a branch, make changes, run
-tests, commit, and move on. One working directory is plenty.
+Most development workflows assume that one developer is doing one thing at a time: check out a
+branch, make changes, run tests, commit, and move on. In that model, one working directory is
+plenty.
 
 AI coding agents break that assumption. The whole point of an agent is that you can run **many at
 once**: one fixing a bug, one writing tests, one refactoring a module, one exploring a risky idea
-you're not sure about. Suddenly "one working directory" is a bottleneck, and the naive workarounds
-all hurt:
+you're not sure about. Suddenly, the working directory becomes a shared resource, and the obvious
+workarounds start to break down:
 
 - **Sharing one checkout** — agents overwrite each other's uncommitted files. Agent A's
   half-finished refactor corrupts Agent B's test run. `git checkout` by one agent yanks the ground
   out from under another.
 - **Full `git clone` per agent** — every clone re-downloads the entire history. For a large repo
-  that's gigabytes and minutes *per agent*, plus N copies of `.git` eating disk.
+  that can mean gigabytes and minutes *per agent*, plus multiple copies of `.git` consuming disk.
 - **Stash juggling** — `git stash` to swap contexts is fragile, serial, and impossible to
-  parallelize. It's a single-lane road when you need a highway.
+  parallelize.
 
 What agents actually need is **isolation without duplication**: many independent working
 directories that don't interfere, but that share one history so branches, commits, and fetches are
 instant and cheap.
 
-That primitive already ships with Git. It's called a **worktree**.
+Branches alone do not solve this. A branch identifies an independent line of history, but creating
+one does not create another working directory. For that, each agent needs a worktree of its own.
+
+That primitive already ships with Git. It is called a **worktree**.
 
 ---
 
@@ -64,9 +56,9 @@ time**, each on its own branch, all backed by a **single shared `.git` object st
 
 ```bash
 # In your main clone (on `main`):
-git worktree add ../repo-agent-a feature/search
-git worktree add ../repo-agent-b bugfix/crash
-git worktree add ../repo-agent-c chore/deps
+git worktree add -b feature/search ../repo-agent-a main
+git worktree add -b bugfix/crash ../repo-agent-b main
+git worktree add -b chore/deps ../repo-agent-c main
 ```
 
 You now have four directories on disk:
@@ -78,10 +70,10 @@ You now have four directories on disk:
 ~/code/repo-agent-c      (chore/deps)
 ```
 
-Each directory has its own working files, its own index, its own `HEAD`. But there is only **one**
-copy of the repository's history — the objects, refs, and packfiles live in the original `.git` and
-are shared. Creating a worktree does **not** re-download or duplicate history; it's essentially
-instant even on a huge repo.
+Each directory has its own working files, index, and `HEAD`. But there is only **one** copy of the
+repository's history: the objects, refs, and packfiles are shared through the repository's common
+Git directory. Creating a worktree does **not** re-download or duplicate that history, so it is
+typically fast even for a large repository.
 
 ```text
                  ┌──────────────────────────────┐
@@ -95,7 +87,8 @@ instant even on a huge repo.
      own files + index    own files + index    own files + index
 ```
 
-That shared-history-plus-independent-files model is exactly the isolation agents need.
+The result is the useful combination: shared history, independent files. That is exactly the
+isolation parallel agents need.
 
 ---
 
@@ -131,18 +124,20 @@ A supervising process (or a human reviewing agent output) can `cd` between workt
 agent's in-progress state, run its tests, or diff its changes — without disturbing any agent. No
 stashing, no branch swapping, no rebuild-from-scratch.
 
-### 5. Shared fetches, shared cache
+### 5. Shared fetches and reusable caches
 
 `git fetch` in any worktree updates the shared object store, so every worktree sees new upstream
-commits without N separate downloads. Combine that with a shared dependency cache and each new agent
-starts fast.
+commits without separate downloads. Dependency directories remain independent, but package-manager
+caches can also be shared across worktrees. Together, those two choices keep new agent workspaces
+cheap to start.
 
 ---
 
 ## A minimal agent-orchestration pattern
 
-Here's the shape of a script an orchestrator uses to give each agent task its own worktree, then
-clean up afterward.
+The Git commands are small enough to wrap in an orchestration script. The following example creates
+one worktree and branch per task, returns the path to the caller, and removes the worktree when the
+task is done.
 
 ```bash
 #!/usr/bin/env bash
@@ -177,8 +172,8 @@ echo "Agent workspace: $dir"
 # reap_worktree 'TASK-1234 fix null ref'
 ```
 
-The agent is handed a **path** and told "this is your world." It never needs to know about branches,
-stashes, or the other agents running beside it.
+The agent is handed a **path** and told "this is your world." It can commit to its assigned branch
+without coordinating checkouts or stashes with the other agents running beside it.
 
 ---
 
@@ -193,7 +188,8 @@ Worktrees are powerful but a few things surprise newcomers:
 - **Untracked files are NOT shared.** `node_modules`, build outputs, `.env` files, and other
   gitignored artifacts exist independently in each worktree. Each agent must install dependencies
   and generate build artifacts in its own directory — or you point them at a shared cache
-  (`node_modules` via a package-manager store, NuGet/Go/pip caches, etc.) to avoid N full installs.
+  (package-manager stores, NuGet, Go, or pip caches, for example) to avoid downloading everything
+  again.
 - **Reap orphaned worktrees.** If a directory is deleted without `git worktree remove`, Git keeps a
   dangling administrative record. Run `git worktree prune` (or `git worktree remove --force`)
   periodically. `git worktree list` shows everything currently registered.
@@ -220,8 +216,8 @@ The moment two agents try to run the app at the same time, you hit a second coll
 ports, databases, and config all clash — that worktrees alone don't solve. That's the runtime layer:
 giving each worktree its own **running instance** at its own URL, sharing heavy infrastructure.
 
-That's exactly what the companion post builds:
-[**Running Many Copies of Your App at Once: Git Worktrees + Caddy**](./multi-slot-local-dev-with-worktrees-and-caddy.md).
+That is exactly what the companion post builds:
+[**Running Many Copies of Your App at Once: Git Worktrees + Caddy**](/blog/llm/multi-slot-local-dev-with-worktrees-and-caddy).
 
 Together they form the full picture for agentic development:
 
@@ -241,6 +237,7 @@ For agentic development, `git worktree` is the quiet workhorse:
 3. **Safe by construction** — one branch per worktree keeps agents from corrupting each other.
 4. **Orchestrator-friendly** — inspect, test, and diff any agent's state without disturbing it.
 
-Give every agent its own worktree, and "run ten agents in parallel" stops being chaos and becomes a
-tidy fan-out of independent, reproducible workspaces. Layer dev slots on top, and each of those
-workspaces gets a live, isolated app to go with it.
+The important shift is simple: stop treating the repository checkout as shared agent
+infrastructure. Give every agent its own worktree, and parallel development becomes a set of
+independent, reproducible workspaces. Add dev slots on top, and each workspace gets an isolated
+running app as well.
