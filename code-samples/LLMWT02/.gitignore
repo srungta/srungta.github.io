@@ -1,0 +1,8 @@
+.DS_Store
+api/bin/
+api/obj/
+frontend/.env.local
+frontend/dist/
+frontend/node_modules/obj
+bin
+node_modules

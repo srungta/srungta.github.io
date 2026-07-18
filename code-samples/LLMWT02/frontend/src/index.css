@@ -1,0 +1,33 @@
+:root {
+  --ink: #17211b;
+  --muted: #5f6963;
+  --accent: #b83b1e;
+  --highlight: #f4c95d;
+  --surface: #fffef9;
+  --canvas: #edf1e7;
+  --border: #ccd2c9;
+  --border-strong: #8d978f;
+  --focus: rgba(184, 59, 30, 0.22);
+  --shadow: #c9d7c8;
+  --display: Georgia, 'Times New Roman', serif;
+  font-family: 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
+  color: var(--ink);
+  background:
+    linear-gradient(rgba(23, 33, 27, 0.035) 1px, transparent 1px),
+    var(--canvas);
+  background-size: 100% 24px;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+button,
+input {
+  letter-spacing: 0;
+}
