@@ -17,6 +17,7 @@ series:
   id: LLM
   index: 4
 
+featured: true
 isNew: true
 mermaid: true
 ---
