@@ -12,17 +12,21 @@ layout: default
       {% assign featured_posts = site.posts | where: "featured", true %}
       {%- for post in featured_posts limit:2 -%}
       <div class="lp-item">
-        <div>
-          <a class="lp-item-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        {%- if post.image -%}
+        <a class="post-thumbnail" href="{{ post.url | relative_url }}" aria-label="{{ post.title | escape }}">
+          <img src="{{ post.image | relative_url }}" alt="" loading="lazy">
+        </a>
+        {%- endif -%}
+        <div class="lp-item-content">
+          <div>
+            <a class="lp-item-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </div>
           <span class="lp-item-author">
-            &nbsp;•&nbsp; {{ post.date | date: "%B %d, %Y"}}
+            {{ post.date | date: "%B %d, %Y"}}
           </span>
-        </div>
-        <div>
-          {{post.subtitle}}
-        </div>
-        <div class="lp-item-tldr">
-          {{post.tldr}}
+          <div>
+            {{post.subtitle}}
+          </div> 
         </div>
       </div>
       {%- endfor -%}
