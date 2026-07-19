@@ -501,15 +501,20 @@ blockquote {
 
     .intro-dialog-container {
         position: relative;
-        padding: 10px 5px;
-        width: 116px;
+        flex: 1;
+        padding: 16px 20px;
         background-color: #d7ffaf;
         border-radius: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        @include relative-font-size(1.2);
+        @include relative-font-size(1.05);
         box-shadow: 2px 5px 7px -3px rgba(0, 0, 0, 0.75);
+
+        p {
+            margin: 0;
+
+            & + p {
+                margin-top: 8px;
+            }
+        }
 
         &::after {
             content: "";
@@ -520,12 +525,112 @@ blockquote {
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent;
             position: absolute;
+            top: 50%;
             right: 100%;
+            transform: translateY(-50%);
+        }
+    }
+
+    @include media-query($on-palm) {
+        margin-top: 12px;
+
+        .intro-image {
+            width: 76px;
+            height: 76px;
+        }
+
+        .intro-dialog-container {
+            padding: 12px 14px;
+            @include relative-font-size(0.9);
         }
     }
 }
-.site-header{
+.site-header {
+    position: relative;
+    z-index: 10;
+    background-color: #fff;
     border: none;
+
+    .site-title {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .site-logo {
+        display: block;
+        width: 42px;
+        height: 42px;
+        object-fit: contain;
+    }
+
+    .site-nav {
+        .trigger {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .page-link {
+            margin: 0;
+            padding: 6px 12px;
+            border: 1px solid #d8d8d8;
+            border-radius: 999px;
+            background-color: #f7f7f7;
+            color: #343434;
+            line-height: 1.2;
+            text-decoration: none;
+            white-space: nowrap;
+
+            &:hover,
+            &:focus-visible {
+                border-color: #343434;
+                background-color: #fff;
+            }
+        }
+    }
+
+    @include media-query($on-palm) {
+        .wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .site-title {
+            min-width: 0;
+            gap: 8px;
+            @include relative-font-size(1);
+        }
+
+        .site-logo {
+            flex: 0 0 34px;
+            width: 34px;
+            height: 34px;
+        }
+
+        .site-nav {
+            position: static;
+            flex: 0 0 auto;
+            float: none;
+            margin-left: auto;
+            background-color: transparent;
+            border: 0;
+            line-height: 54px;
+
+            .trigger {
+                gap: 8px;
+            }
+
+            .page-link {
+                display: block;
+                padding: 5px 10px;
+                line-height: 1.2;
+            }
+        }
+    }
 }
 .page-content {
     padding-top: 0;

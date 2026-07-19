@@ -8,9 +8,9 @@ layout: home
 <div class="intro">
     <img alt='' src="{{'/assets/images/about/Shaswat-Mini.png'|relative_url}}" class="intro-image"/>
     <div class="intro-dialog-container">
-        Hi there...
+        <p>👋 Hi there...</p>
+        <p>Welcome to the blog. This is an attempt to document what interests me. Most articles will be software engineering related.</p>
+        <p>If you have any feedback or suggestions, please <a href="https://github.com/srungta/srungta.github.io/issues/new?labels=feedback&amp;title=">open an issue here</a>.</p>
     </div>
 </div>
-Welcome to the blog. This is an attempt to document what interests me. Most articles would be software engineering related.
-If you have any feedback or suggestion, please [open an issue here](https://github.com/srungta/srungta.github.io/issues/new?labels=feedback&title=)
 <br />
