@@ -1,9 +1,9 @@
 ---
 layout: post
 unique_id: LLMSLOT01
-title: "Run Multiple App Copies Locally with Git Worktrees and Caddy"
-subtitle: Give every worktree a stable URL and isolated database without duplicating heavy infrastructure.
-tldr: Run one frontend and API per worktree, route stable local hostnames through Caddy, and isolate data with one Cosmos database per slot.
+title: "Running Multiple App Copies Locally with Git Worktrees and Caddy"
+subtitle: Stable URLs and isolated databases for apps running from several worktrees.
+tldr: Each worktree runs its own frontend and API, Caddy routes stable local hostnames to them, and a separate Cosmos database keeps each slot's data isolated.
 permalink: /blog/llm/multi-slot-local-dev-with-worktrees-and-caddy
 author: srungta
 tags:
@@ -128,7 +128,33 @@ Now both copies run at the same time:
 
 Adding a note in one frontend does not make it appear in the other.
 
-## 🧭 The simple mental model
+## 🧭 How the pieces fit together
+
+At a high level, Caddy sends each hostname to the matching slot. Each slot has its own frontend,
+API, and database name, while the proxy and database server are shared.
+
+```mermaid
+flowchart TB
+  Browser[Browser] --> Caddy[Caddy reverse proxy<br/>shared entry point on port 8088]
+  Caddy -->|main hostname| Main[main slot<br/>Vite + .NET API]
+  Caddy -->|feature hostname| Feature[feature slot<br/>Vite + .NET API]
+  Main -->|multi-agent-wt-main| Cosmos[(Shared Cosmos emulator)]
+  Feature -->|multi-agent-wt-feature-search| Cosmos
+
+  classDef client fill:#e8f1fb,stroke:#2463a2,color:#102a43,stroke-width:2px
+  classDef proxy fill:#fff3cd,stroke:#9a6700,color:#4d3500,stroke-width:2px
+  classDef mainSlot fill:#e6f4ea,stroke:#287d3c,color:#163d22,stroke-width:2px
+  classDef featureSlot fill:#fce8e6,stroke:#b4473a,color:#5f2019,stroke-width:2px
+  classDef data fill:#f3e8ff,stroke:#7b3fa1,color:#3d2053,stroke-width:2px
+
+  class Browser client
+  class Caddy proxy
+  class Main mainSlot
+  class Feature featureSlot
+  class Cosmos data
+```
+
+Here are the request routes in more detail:
 
 ```mermaid
 flowchart LR
@@ -159,9 +185,25 @@ flowchart LR
   Caddy --> FeatureAPI
   MainAPI -->|database: multi-agent-wt-main| Cosmos
   FeatureAPI -->|database: multi-agent-wt-feature-search| Cosmos
+
+  classDef client fill:#e8f1fb,stroke:#2463a2,color:#102a43,stroke-width:2px
+  classDef proxy fill:#fff3cd,stroke:#9a6700,color:#4d3500,stroke-width:2px
+  classDef mainSlot fill:#e6f4ea,stroke:#287d3c,color:#163d22,stroke-width:2px
+  classDef featureSlot fill:#fce8e6,stroke:#b4473a,color:#5f2019,stroke-width:2px
+  classDef data fill:#f3e8ff,stroke:#7b3fa1,color:#3d2053,stroke-width:2px
+
+  class Browser client
+  class Caddy proxy
+  class MainUI,MainAPI mainSlot
+  class FeatureUI,FeatureAPI featureSlot
+  class Cosmos data
+
+  style Docker fill:#fffaf0,stroke:#9a6700,stroke-width:2px
+  style Main fill:#f3faf5,stroke:#287d3c,stroke-width:2px
+  style Feature fill:#fff5f3,stroke:#b4473a,stroke-width:2px
 ```
 
-There are only two kinds of resources:
+There are two kinds of resources:
 
 **🏗️ Shared infrastructure, started once:**
 
@@ -186,8 +228,8 @@ Caddy reads the HTTP `Host` header, matches it against a route, and forwards the
 corresponding process running on a high-numbered host port. The response returns through Caddy to
 the browser.
 
-This is routing, not process isolation. The worktree isolates source files, the slot script starts
-separate processes and chooses a database name, and Caddy only gives those processes stable names.
+Caddy only handles routing. The worktree isolates source files, while the slot script starts the
+processes and chooses a database name.
 
 ## 🌐 Why the local hostnames work
 
@@ -291,6 +333,17 @@ from the sample.
 
 ## 🚀 What happens when a slot starts
 
+Starting a slot does five things:
+
+1. Pick a name and two free ports for the slot.
+2. Start the API and create the slot's database if needed.
+3. Start the frontend and point it to the slot's API.
+4. Tell Caddy which URLs belong to the new slot.
+5. Check that the frontend and API work. If they do not, stop the slot and remove its Caddy routes.
+
+Caddy and the Cosmos emulator are already running. A new slot adds only a frontend, an API, a
+database name, and two Caddy routes.
+
 ```mermaid
 sequenceDiagram
     actor Developer
@@ -300,16 +353,22 @@ sequenceDiagram
     participant Caddy
     participant Cosmos as Cosmos emulator
 
+    rect rgb(232, 241, 251)
     Developer->>Script: up feature-search
-    Script->>Script: sanitize name and calculate ports
-    Script->>API: start with Cosmos__Database
-    API->>Cosmos: create database and notes container if needed
-    Script->>UI: start with VITE_API_BASE
-    Script->>Caddy: combine route fragments and reload config
-    Script->>Caddy: check API and frontend URLs
-    Caddy->>API: proxy API health request
-    Caddy->>UI: proxy frontend request
-    Script-->>Developer: print stable URLs and database name
+    Script->>Script: clean name and pick ports
+    end
+    rect rgb(230, 244, 234)
+    Script->>API: start with its database name
+    API->>Cosmos: create database if needed
+    Script->>UI: start with the matching API URL
+    end
+    rect rgb(255, 243, 205)
+    Script->>Caddy: add routes and reload
+    Script->>Caddy: open API and frontend URLs
+    Caddy->>API: check API health
+    Caddy->>UI: check frontend
+    Script-->>Developer: show URLs and database name
+    end
 ```
 
 ## 🛑 Stop and inspect slots
