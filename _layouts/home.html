@@ -11,24 +11,7 @@ layout: default
     <div class="lp-list">
       {% assign featured_posts = site.posts | where: "featured", true %}
       {%- for post in featured_posts limit:2 -%}
-      <div class="lp-item">
-        {%- if post.image -%}
-        <a class="post-thumbnail" href="{{ post.url | relative_url }}" aria-label="{{ post.title | escape }}">
-          <img src="{{ post.image | relative_url }}" alt="" loading="lazy">
-        </a>
-        {%- endif -%}
-        <div class="lp-item-content">
-          <div>
-            <a class="lp-item-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          </div>
-          <span class="lp-item-author">
-            {{ post.date | date: "%B %d, %Y"}}
-          </span>
-          <div>
-            {{post.subtitle}}
-          </div> 
-        </div>
-      </div>
+      {%- include post-list-item.html post=post -%}
       {%- endfor -%}
     </div>
   </fieldset>

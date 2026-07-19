@@ -1,0 +1,26 @@
+{%- assign post = include.post -%}
+{%- assign post_author = site.data.authors[post.author] -%}
+<article class="post-list-item">
+    <div class="post-list-content">
+        <h3 class="post-list-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+            {%- if post.isNew -%}
+            <span class="post-list-new">NEW</span>
+            {%- endif -%}
+        </h3>
+        {%- assign summary = post.subtitle | default: post.tldr -%}
+        {%- if summary -%}
+        <p class="post-list-summary">{{ summary | strip_html | escape }}</p>
+        {%- endif -%}
+        <p class="post-list-meta">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+            <span aria-hidden="true">•</span>
+            <span>{{ post_author.name | default: post.author | default: site.title }}</span>
+        </p>
+    </div>
+    {%- if post.image -%}
+    <a class="post-list-thumbnail" href="{{ post.url | relative_url }}" aria-label="Read {{ post.title | escape }}">
+        <img src="{{ post.image | relative_url }}" alt="" loading="lazy">
+    </a>
+    {%- endif -%}
+</article>

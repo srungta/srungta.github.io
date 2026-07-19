@@ -166,114 +166,109 @@
 // Latest post related styles
 .latest-post {
     margin: 10px 0;
-    padding: 10px 20px;
+    padding: 12px 20px 4px;
     background-color: #ffecff;
-    border-radius: 10px;
+    border: 1px solid #d8d8d8;
+    border-radius: 8px;
 
     .lp-legend {
         background-color: white;
-        padding: 2px 4px;
-        border-radius: 10px;
+        padding: 0 8px;
+        font-weight: 700;
     }
 
     .lp-list {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-
-        .lp-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 5px 0;
-
-            .lp-item-content {
-                display: flex;
-                flex: 1;
-                flex-direction: column;
-                gap: 2px;
-                min-width: 0;
-            }
-
-            .lp-item-title {
-                @include relative-font-size(1.2);
-                text-decoration: none;
-                margin: 5px 0;
-            }
-
-            .lp-item-author {
-                @include relative-font-size(0.8);
-            }
-
-            .lp-item-tldr {
-
-@include media-query($on-palm) {
-    .latest-post {
-        .lp-item-title {
-            @include relative-font-size(1.05);
-        }
-
-        .lp-item-author {
-            @include relative-font-size(0.75);
-        }
-
-        .lp-item-tldr {
-            @include relative-font-size(0.85);
-        }
+        display: block;
     }
-}
-                @include relative-font-size(0.9);
-                color: #6a6a6a;
-            }
-        }
-    }
-
-
 }
 
 // Series details related styles
 .series-details {
     background-color: #e4f4ff;
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 12px 20px 4px;
+    border: 1px solid #d8d8d8;
+    border-radius: 8px;
     margin: 10px 0;
-
-    ol li {
-        margin-bottom: 1em;
-        /* Adjust the value as needed (e.g., px, rem) */
-    }
 
     legend {
         background-color: white;
-        padding: 2px 4px;
-        border-radius: 10px;
+        padding: 0 8px;
     }
 
-    .sd-post {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .sd-tldr {
-        @include relative-font-size(0.9);
-        color: #6a6a6a;
-    }
-
-    .sd-post-new {
-        @include relative-font-size(0.7);
-        color: #e70000;
-        font-weight: 700;
+    .series-post-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
     }
 }
 
-.post-thumbnail {
-    display: block;
-    flex: 0 0 120px;
-    width: 120px;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border-radius: 6px;
+.post-list-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 0;
+    border-bottom: 1px solid #e5e5e5;
+
+    .post-list-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .post-list-title {
+        margin: 0 0 6px;
+        @include relative-font-size(1.45);
+        font-weight: 700;
+        line-height: 1.35;
+
+        a {
+            color: #343434;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .post-list-new {
+        display: inline-block;
+        margin-left: 6px;
+        color: #b70606;
+        font-size: 0.55em;
+        vertical-align: middle;
+    }
+
+    .post-list-summary {
+        display: -webkit-box;
+        overflow: hidden;
+        margin: 0 0 8px;
+        color: #3e3e3e;
+        @include relative-font-size(1.05);
+        line-height: 1.4;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+
+    .post-list-meta {
+        display: flex;
+        gap: 8px;
+        margin: 0;
+        color: #888;
+        @include relative-font-size(0.78);
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    .post-list-thumbnail {
+        display: block;
+        flex: 0 0 146px;
+        width: 146px;
+        aspect-ratio: 16 / 12;
+        overflow: hidden;
+        border-radius: 4px;
+    }
 
     img {
         display: block;
@@ -284,9 +279,32 @@
 }
 
 @include media-query($on-palm) {
-    .post-thumbnail {
-        flex-basis: 88px;
-        width: 88px;
+    .latest-post,
+    .series-details {
+        padding-right: 14px;
+        padding-left: 14px;
+    }
+
+    .post-list-item {
+        gap: 4px;
+        padding: 16px 0;
+
+        .post-list-title {
+            @include relative-font-size(1.08);
+        }
+
+        .post-list-summary {
+            @include relative-font-size(0.9);
+        }
+
+        .post-list-meta {
+            @include relative-font-size(0.68);
+        }
+
+        .post-list-thumbnail {
+            flex-basis: 84px;
+            width: 84px;
+        }
     }
 }
 
@@ -508,4 +526,7 @@ blockquote {
 }
 .site-header{
     border: none;
+}
+.page-content {
+    padding-top: 0;
 }
