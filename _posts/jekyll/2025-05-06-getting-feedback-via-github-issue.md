@@ -6,6 +6,7 @@ title: Getting Feedback via GitHub Issues
 subtitle: If your code and content are on GitHub, your feedback can be too.
 tldr: Integrate creation of GitHub Issues directly with prefilled values from your Jekyll site.
 permalink: /blog/jekyll/getting-feedback-via-github-issue
+image: /assets/images/jekyll/JEKYLL01/cover.svg
 author: srungta
 tags:
   - Jekyll

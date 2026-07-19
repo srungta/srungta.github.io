@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Metrics with INFO</title>
+  <desc id="desc">Editorial cover illustration for Metrics with INFO</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ddd7cd" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#f4f0e8"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#191817" stroke-width="8"/>
+  <rect x="84" y="88" width="290" height="38" fill="#62cbc9"/>
+  <text x="100" y="115" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="2">REDIS</text>
+  <text x="84" y="242" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="700" letter-spacing="0"><tspan x="84" dy="0">Metrics with</tspan><tspan x="84" dy="82">INFO</tspan></text>
+  <path d="M84 500h540" stroke="#191817" stroke-width="8"/>
+  <circle cx="104" cy="540" r="12" fill="#62cbc9" stroke="#191817" stroke-width="5"/>
+  <path d="M136 540h190" stroke="#191817" stroke-width="6"/>
+  <g transform="translate(200 20) scale(0.9)">
+    <path d="M728 420V154M728 420h304" fill="none" stroke="#191817" stroke-width="10"/><path d="m758 360 62-70 58 36 88-118 50 42" fill="none" stroke="#62cbc9" stroke-width="16"/><circle cx="820" cy="290" r="12"/><circle cx="878" cy="326" r="12"/><circle cx="966" cy="208" r="12"/>
+  </g>
+</svg>

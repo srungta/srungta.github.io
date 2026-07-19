@@ -2,6 +2,12 @@
 layout: default
 ---
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  {%- if page.image -%}
+
+<div class="centered-image-container">
+  <img alt="" src="{{ page.image | relative_url }}" class="centered-image no-shadow" />
+</div>
+  {%- endif -%}
   {%- include series.html -%}
 
   <!-- Try to set subtitle -->
@@ -58,12 +64,12 @@ layout: default
       {%- endif -%}
     </p>
   </header>
-  {%- if page.tldr -%}
+  <!-- {%- if page.tldr -%}
   <div class="p-tldr">
-    <h2 class="p-tldr-title">tl;dr;</h2>
+    <h2 class="p-tldr-title">TL;DR</h2>
     <span class="p-tldr-content">{{page.tldr}}</span>
   </div>
-  {%- endif -%}
+  {%- endif -%} -->
   <div class="post-content e-content" itemprop="articleBody">
     {{ content }}
   </div>

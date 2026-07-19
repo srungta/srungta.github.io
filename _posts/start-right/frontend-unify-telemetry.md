@@ -6,6 +6,7 @@ title: Frontend - Unify telemetry
 subtitle: Javascript was a prototype language. We can do better in production.
 tldr: Suggestions on why having a type system like TS can help you in the long run.
 # permalink: /blog/start-right/ui-using-strong-types
+image: /assets/images/start-right/telemetry/cover.svg
 author: srungta
 tags: 
 - Start Right

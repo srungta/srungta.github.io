@@ -22,8 +22,6 @@ isNew: true
 mermaid: true
 ---
 
-![Three local development slots routed through Caddy like a software pit lane]({{ page.image | relative_url }})
-
 > 📚 **Companion post:** [Git Worktrees for Agentic Development](/blog/llm/git-worktrees-for-agentic-development)
 > explains why worktrees are useful when people or coding agents work on several branches at once.
 

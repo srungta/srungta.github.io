@@ -5,6 +5,7 @@ unique_id: REDIS1
 title: Introduction to Redis
 tldr: Introduces redis as a distributed key value store using analogies.
 permalink: /blog/redis/introduction-to-redis
+image: /assets/images/redis/REDIS1/cover.svg
 author: srungta
 tags: 
 - Redis

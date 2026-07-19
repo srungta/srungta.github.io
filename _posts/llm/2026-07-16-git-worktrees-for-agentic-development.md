@@ -20,8 +20,6 @@ featured: true
 isNew: true
 ---
 
-![Git branching into three isolated agent worktrees]({{ page.image | relative_url }})
-
 ## The problem agents create
 
 Most development workflows assume that one developer is doing one thing at a time: check out a

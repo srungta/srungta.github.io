@@ -6,6 +6,7 @@ title: What/Why/How of 'nonce'
 subtitle: Securing websites from attacks using nonce tokens
 tldr: Using nonce tokens in your website provides strong protection against CSRF and XSS attacks.
 permalink: /blog/start-right/ui-nonce
+image: /assets/images/start-right/STARTRIGHT-01/cover.svg
 author: srungta
 tags:
   - Start Right

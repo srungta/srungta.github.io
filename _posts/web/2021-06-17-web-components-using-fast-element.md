@@ -6,6 +6,7 @@ title: Creating web components using Microsoft FAST elements
 subtitle: Setup a project with webpack, add a custom web component with stories.
 tldr: FAST is a web component library and framework from Microsoft.
 permalink: /blog/web/creating-web-components-using-microsoft-FAST-element
+image: /assets/images/web/WEB01/cover.svg
 author: srungta
 tags: 
 - Web-Component

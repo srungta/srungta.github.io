@@ -6,6 +6,7 @@ title: Setting up a load balancer from scratch
 subtitle: Setup a set of VMs with one load balancer and multiple worker nodes.
 tldr: NGINX is OSS for web serving, reverse proxying, caching, load balancing etc.A load balancer is the “traffic cop” sitting in front of your servers and routing client requests.
 permalink: /blog/distrib/setting-up-nginx-load-balancer
+image: /assets/images/distrib/DISTRIB01/cover.svg
 author: srungta
 tags: 
 - Nginx

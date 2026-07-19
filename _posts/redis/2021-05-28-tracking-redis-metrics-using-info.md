@@ -5,6 +5,7 @@ unique_id: REDIS4
 title: Tracking Redis Metrics using INFO
 tldr: Tracking Redis metrics using Redis INFO command.
 permalink: /blog/redis/tracking-redis-metrics-using-info
+image: /assets/images/redis/REDIS4/cover.svg
 author: srungta
 tags: 
 - Redis

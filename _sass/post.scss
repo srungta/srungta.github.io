@@ -123,6 +123,16 @@
 
 // Post related styles
 .post {
+    .post-cover {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1200 / 630;
+        object-fit: cover;
+        margin: 0 0 24px;
+        border: 1px solid #d8d8d8;
+        border-radius: 6px;
+    }
+
     .p-previous {
         margin: 10px 0;
     }
@@ -135,12 +145,15 @@
 
     .p-tldr {
         background: #e4f8ff;
-        padding: 15px 20px;
+        padding: 10px 20px;
         border-radius: 20px;
         margin: 10px 0;
 
         .p-tldr-title {
-            @include relative-font-size(1.4);
+            @include relative-font-size(1);
+            font-weight: 800;
+            text-decoration: uppercase;
+            margin-bottom: 0px;
         }
 
         .p-tldr-content {
@@ -183,16 +196,32 @@
             }
 
             .lp-item-title {
-                font-size: 1.2em;
+                @include relative-font-size(1.2);
                 text-decoration: none;
                 margin: 5px 0;
             }
 
             .lp-item-author {
-                font-size: 0.8em;
+                @include relative-font-size(0.8);
             }
 
             .lp-item-tldr {
+
+@include media-query($on-palm) {
+    .latest-post {
+        .lp-item-title {
+            @include relative-font-size(1.05);
+        }
+
+        .lp-item-author {
+            @include relative-font-size(0.75);
+        }
+
+        .lp-item-tldr {
+            @include relative-font-size(0.85);
+        }
+    }
+}
                 @include relative-font-size(0.9);
                 color: #6a6a6a;
             }
@@ -390,7 +419,7 @@ body main div article div.post-content.e-content pre {
     justify-content: center;
     border-radius: 10px;
     margin: 0 auto;
-    padding: 10px 10px;
+    padding: 10px 0;
     height: fit-content;
 
     /* Or block, depending on your layout */
@@ -400,6 +429,10 @@ body main div article div.post-content.e-content pre {
         display: block;
         border-radius: 10px;
         max-width: 750px;
+
+        &.no-shadow {
+            box-shadow: none;
+        }
     }
 }
 
@@ -472,4 +505,7 @@ blockquote {
             right: 100%;
         }
     }
+}
+.site-header{
+    border: none;
 }

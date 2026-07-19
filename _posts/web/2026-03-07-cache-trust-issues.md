@@ -20,12 +20,6 @@ series:
 image: /assets/images/web/cache/cover.png
 ---
 
-
-<div class="centered-image-container">
-  <img alt="Cache at therapy" src ="/assets/images/web/cache/cover.png" class="centered-image" />
-</div>
-
-
 ## Session 1: Meeting Your Cache
 
 **Therapist:** Tell me about your cache.

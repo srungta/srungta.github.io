@@ -6,6 +6,7 @@ title: Setting up a VPN Gateway on Azure
 subtitle: Create a virtual network with multiple VMs and connect to them via a VPN gateway.
 tldr: VPNs are an excellent way to connect to proiate network of machines that you don't want to expose to the public internet.
 permalink: /blog/distrib/setting-up-azure-vpn-gateway
+image: /assets/images/distrib/DISTRIB02/cover.svg
 author: srungta
 tags: 
 - Azure
