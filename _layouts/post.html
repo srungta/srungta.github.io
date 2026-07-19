@@ -75,10 +75,13 @@ layout: default
   {%- endif -%}
   {%- include github-feedback.html -%}
 
-  {%- if site.disqus.shortname -%}
+  {%- if site.disqus and site.disqus.shortname -%}
   {%- include disqus_comments.html -%}
   {%- endif -%}
 
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
 <script src="/assets/scripts/copy-code.js"></script>
+{%- if page.mermaid -%}
+  {%- include mermaid.html -%}
+{%- endif -%}

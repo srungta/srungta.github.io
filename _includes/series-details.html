@@ -1,7 +1,9 @@
 {%- if include.item.sortInReverse -%}
-{%- assign seriesposts = site.posts | where: 'series.id', include.item.id | sort: 'series.index'|reverse -%}
+{%- assign postswithseries = site.posts | where_exp: 'post', 'post.series' -%}
+{%- assign seriesposts = postswithseries | where: 'series.id', include.item.id | sort: 'series.index'|reverse -%}
 {% else %}
-{%- assign seriesposts = site.posts | where: 'series.id', include.item.id | sort: 'series.index' -%}
+{%- assign postswithseries = site.posts | where_exp: 'post', 'post.series' -%}
+{%- assign seriesposts = postswithseries | where: 'series.id', include.item.id | sort: 'series.index' -%}
 {%- endif -%}
 
 {%- if seriesposts.size > 0 -%}
