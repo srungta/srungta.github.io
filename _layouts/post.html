@@ -82,3 +82,6 @@ layout: default
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
 <script src="/assets/scripts/copy-code.js"></script>
+{%- if page.mermaid -%}
+  {%- include mermaid.html -%}
+{%- endif -%}
