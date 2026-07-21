@@ -5,7 +5,8 @@ unique_id: REDIS2
 title: Running Redis locally using Docker
 tldr: Run a standalone redis instance using Docker.
 permalink: /blog/redis/running-redis-locally-using-docker
-image: /assets/images/redis/REDIS2/cover.svg
+cover: /assets/images/redis/REDIS2/cover.svg
+image: /assets/images/redis/REDIS2/cover.png
 author: srungta
 tags: 
 - Redis

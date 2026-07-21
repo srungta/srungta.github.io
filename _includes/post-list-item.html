@@ -18,9 +18,9 @@
             <span>{{ post_author.name | default: post.author | default: site.title }}</span>
         </p>
     </div>
-    {%- if post.image -%}
+    {%- if post.cover -%}
     <a class="post-list-thumbnail" href="{{ post.url | relative_url }}" aria-label="Read {{ post.title | escape }}">
-        <img src="{{ post.image | relative_url }}" alt="" loading="lazy">
+        <img src="{{ post.cover | relative_url }}" alt="" loading="lazy">
     </a>
     {%- endif -%}
 </article>

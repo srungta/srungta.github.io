@@ -6,7 +6,8 @@ title: Frontend - Add tests
 subtitle: Javascript was a prototype language. We can do better in production.
 tldr: Suggestions on why having a type system like TS can help you in the long run.
 # permalink: /blog/start-right/ui-using-strong-types
-image: /assets/images/start-right/tests/cover.svg
+cover: /assets/images/start-right/tests/cover.svg
+image: /assets/images/start-right/tests/cover.png
 author: srungta
 tags: 
 - Start Right

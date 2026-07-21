@@ -17,7 +17,8 @@ series:
   id: WEB
   index: 3
 
-image: /assets/images/web/WEB05/cover.svg
+cover: /assets/images/web/WEB05/cover.svg
+image: /assets/images/web/WEB05/cover.png
 banner: /assets/images/web/WEB05/banner.png
 ---
 

@@ -5,7 +5,8 @@ unique_id: REDIS3
 title: Using the Redis CLI
 tldr: Connecting to a Redis instance using CLI
 permalink: /blog/redis/using-the-redis-cli
-image: /assets/images/redis/REDIS3/cover.svg
+cover: /assets/images/redis/REDIS3/cover.svg
+image: /assets/images/redis/REDIS3/cover.png
 author: srungta
 tags: 
 - Redis

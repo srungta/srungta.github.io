@@ -5,7 +5,8 @@ unique_id: REDIS5
 title: Connecting Redis to Grafana
 tldr: Grafana is an open source visualization tool that can help us visualize redis metrics.
 permalink: /blog/redis/connecting-redis-to-grafana
-image: /assets/images/redis/REDIS5/cover.svg
+cover: /assets/images/redis/REDIS5/cover.svg
+image: /assets/images/redis/REDIS5/cover.png
 author: srungta
 tags: 
 - Redis
