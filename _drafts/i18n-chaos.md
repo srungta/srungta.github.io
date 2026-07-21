@@ -1,6 +1,6 @@
 ---
 layout: post
-unique_id: WEB09
+unique_id: WEB-09
 
 title: My Website Speaks 47 Languages But Still Says "Loading..." Wrong
 subtitle: The chaos of internationalization and localization

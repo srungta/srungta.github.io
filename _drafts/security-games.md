@@ -1,6 +1,6 @@
 ---
 layout: post
-unique_id: WEB08
+unique_id: WEB-08
 
 title: Playing Hide and Seek with Your API Keys
 subtitle: A children's game guide to security concepts

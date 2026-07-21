@@ -11,7 +11,7 @@ The standard visible artwork for a post. It appears in home-page and post-list t
 Use a 1200 x 630 SVG:
 
 ```yaml
-cover: /assets/images/web/WEB06/cover.svg
+cover: /assets/images/WEB/WEB-02/cover.svg
 ```
 
 ### `banner`
@@ -19,8 +19,8 @@ cover: /assets/images/web/WEB06/cover.svg
 An optional override shown only at the top of the post page. It exists for posts that need different artwork on listing pages and the post page. It does not affect social metadata.
 
 ```yaml
-cover: /assets/images/web/WEB05/cover.svg
-banner: /assets/images/web/WEB05/banner.png
+cover: /assets/images/WEB/WEB-03/cover.svg
+banner: /assets/images/WEB/WEB-03/banner.png
 ```
 
 ### `image`
@@ -28,14 +28,14 @@ banner: /assets/images/web/WEB05/banner.png
 The raster social-sharing image consumed by `jekyll-seo-tag`. It supplies Open Graph and Twitter card metadata. LinkedIn and other crawlers do not reliably support SVG social images, so use a 1200 x 630 PNG.
 
 ```yaml
-image: /assets/images/web/WEB06/cover.png
+image: /assets/images/WEB/WEB-02/cover.png
 ```
 
 The normal declaration is:
 
 ```yaml
-cover: /assets/images/topic/POST-ID/cover.svg
-image: /assets/images/topic/POST-ID/cover.png
+cover: /assets/images/TOPIC/POST-ID/cover.svg
+image: /assets/images/TOPIC/POST-ID/cover.png
 ```
 
 | Surface | Image selection |
@@ -65,7 +65,7 @@ node scripts/render-social-images.mjs
 Render one or more posts while editing:
 
 ```shell
-node scripts/render-social-images.mjs _posts/web/2026-03-04-internet-duct-tape.md
+node scripts/render-social-images.mjs _posts/WEB/2026-03-04-WEB-02-internet-duct-tape.md
 ```
 
 The script uses headless Google Chrome or Microsoft Edge at a device scale factor of 1. This produces the same text layout and SVG rendering as a browser at exactly 1200 x 630 pixels. Do not use macOS `sips` for SVG conversion; it does not render SVG `<tspan>` line positioning correctly.

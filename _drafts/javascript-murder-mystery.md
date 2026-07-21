@@ -1,6 +1,6 @@
 ---
 layout: post
-unique_id: WEB10
+unique_id: WEB-10
 
 title: I Turned Off JavaScript and the Internet Died
 subtitle: A murder mystery investigating what breaks without JS

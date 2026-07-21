@@ -1,6 +1,6 @@
 ---
 layout: post
-unique_id: WEB04
+unique_id: WEB-06
 
 title: Building a Website in 100 Bytes - The Ridiculous Art of Code Golf for Production
 subtitle: How small can you make a functional website? Let's find out.
