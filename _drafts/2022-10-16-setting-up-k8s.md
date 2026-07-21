@@ -5,7 +5,7 @@ unique_id: K8S01
 title: Setting up a 2 node Kubernetes cluster
 subtitle: Create a  2 node k8s cluster using Azure VMs.
 tldr: Set up the k8s control plane and worker node on azure VMs from scratch.
-permalink: /blog/k8s/setup-2-node-k8s-cluster
+permalink: /p/setup-2-node-k8s-cluster
 author: srungta
 tags: 
 - Kubernetes

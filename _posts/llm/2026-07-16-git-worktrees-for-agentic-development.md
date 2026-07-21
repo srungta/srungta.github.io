@@ -4,7 +4,7 @@ unique_id: LLMWT01
 title: Git Worktrees for Agentic Development
 subtitle: Give every coding agent an isolated workspace without cloning the repository.
 tldr: Use Git worktrees to run agents in parallel without sharing working files or duplicating history.
-permalink: /blog/llm/git-worktrees-for-agentic-development
+permalink: /p/git-worktrees-for-agentic-development
 author: srungta
 cover: /assets/images/llm/LLMWT01/cover.svg
 image: /assets/images/llm/LLMWT01/cover.png

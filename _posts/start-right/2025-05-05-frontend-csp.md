@@ -5,7 +5,7 @@ unique_id: STARTRIGHT-02
 title: CSP - Block Everything You Don't Need
 subtitle: Securing Websites from Attacks Using CSP Headers
 tldr: Using CSP headers can drastically reduce the attack surface for your website by disallowing anything you don't expect.
-permalink: /blog/start-right/ui-csp
+permalink: /p/ui-csp
 cover: /assets/images/start-right/STARTRIGHT-02/cover.svg
 image: /assets/images/start-right/STARTRIGHT-02/cover.png
 author: srungta

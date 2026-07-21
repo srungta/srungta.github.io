@@ -5,7 +5,7 @@ unique_id: WEB05
 title: My Cache Has Trust Issues - A Therapist's Guide to Cache Invalidation
 subtitle: Is this data fresh? Can I trust it? What if it changed?
 tldr: Caches are paranoid creatures with anxiety about staleness. Let's explore cache invalidation, TTL panic attacks, and why your cache needs therapy more than optimization.
-permalink: /blog/web/cache-trust-issues
+permalink: /p/cache-trust-issues
 author: srungta
 tags:
   - Web

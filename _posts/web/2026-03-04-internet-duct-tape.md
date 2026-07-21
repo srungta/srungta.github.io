@@ -5,7 +5,7 @@ unique_id: WEB06
 title: The Internet is Held Together by Duct Tape
 subtitle: A tour of terrible but working solutions that power the web
 tldr: JSONP, CORS preflight, HTTP polling before WebSockets, base64 images in CSS - explore the ugly hacks that were supposed to be temporary but lasted decades. The internet is a beautiful disaster.
-permalink: /blog/web/internet-duct-tape
+permalink: /p/internet-duct-tape
 cover: /assets/images/web/WEB06/cover.svg
 image: /assets/images/web/WEB06/cover.png
 author: srungta

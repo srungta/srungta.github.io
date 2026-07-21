@@ -1,10 +1,10 @@
 ---
 layout: post
-unique_id: JEKYLL01
+unique_id: JEKYLL02
 title: Creating a Series of Articles In Jekyll
 subtitle: Linked articles within a series should be easily navigable.
 tldr: Easily group and link related blog posts in Jekyll using front matter and data files for sequential navigation.
-permalink: /blog/jekyll/series-of-posts
+permalink: /p/series-of-posts
 cover: /assets/images/jekyll/JEKYLL02/cover.svg
 image: /assets/images/jekyll/JEKYLL02/cover.png
 author: srungta

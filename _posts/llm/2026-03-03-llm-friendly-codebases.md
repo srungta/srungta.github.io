@@ -5,7 +5,7 @@ unique_id: LLMCODE01
 title: Making Your Codebase LLM Friendly
 subtitle: Simple practices to help AI assistants understand and work with your code effectively
 tldr: Treat LLMs like new hires on your team. The same things that help human developers also help AI - clear patterns, good documentation, and consistent conventions.
-permalink: /blog/llm/llm-friendly-codebases
+permalink: /p/llm-friendly-codebases
 cover: /assets/images/llm/LLMCODE01/cover.svg
 image: /assets/images/llm/LLMCODE01/cover.png
 author: srungta

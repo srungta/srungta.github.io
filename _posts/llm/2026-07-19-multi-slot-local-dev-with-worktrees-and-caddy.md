@@ -4,7 +4,7 @@ unique_id: LLMSLOT01
 title: "Running Multiple App Copies Locally with Git Worktrees and Caddy"
 subtitle: Stable URLs and isolated databases for apps running from several worktrees.
 tldr: Each worktree runs its own frontend and API, Caddy routes stable local hostnames to them, and a separate Cosmos database keeps each slot's data isolated.
-permalink: /blog/llm/multi-slot-local-dev-with-worktrees-and-caddy
+permalink: /p/multi-slot-local-dev-with-worktrees-and-caddy
 author: srungta
 cover: /assets/images/llm/LLMSLOT01/cover.svg
 image: /assets/images/llm/LLMSLOT01/cover.png
@@ -23,7 +23,7 @@ isNew: true
 mermaid: true
 ---
 
-> 📚 **Companion post:** [Git Worktrees for Agentic Development](/blog/llm/git-worktrees-for-agentic-development)
+> 📚 **Companion post:** [Git Worktrees for Agentic Development](/p/git-worktrees-for-agentic-development)
 > explains why worktrees are useful when people or coding agents work on several branches at once.
 
 Most local development setups assume that only one copy of the application is running. The frontend

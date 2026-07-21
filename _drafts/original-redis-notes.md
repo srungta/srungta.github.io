@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Redis cluster with docker - Part 1
-permalink: /redis/redis-cluster-with-docker-part-1
+permalink: /p/redis-cluster-with-docker-part-1
 author: srungta
 tags: 
 - Redis

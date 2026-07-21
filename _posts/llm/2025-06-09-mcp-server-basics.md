@@ -4,7 +4,7 @@ unique_id: LLMMCP01
 title: MCP server basics - Building an MCP server for reminders
 subtitle: Step by step instructions to enable seamless interaction between AI assistants and your applications.
 tldr: Create an MCP server to handle reminders to understand how data flows between the MCP client and the server
-permalink: /blog/llm/mcp/mcp-server-basics
+permalink: /p/mcp-server-basics
 author: srungta
 tags:
   - LLM

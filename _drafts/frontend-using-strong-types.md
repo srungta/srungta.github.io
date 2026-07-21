@@ -1,6 +1,6 @@
 ---
 layout: post
-unique_id: STARTRIGHT-FRONTEND-01
+unique_id: STARTRIGHT-FRONTEND-06
 
 title: Frontend - Using strong types
 subtitle: Javascript was a prototype language. We can do better in production.

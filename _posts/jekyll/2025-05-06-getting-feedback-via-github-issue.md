@@ -5,7 +5,7 @@ unique_id: JEKYLL01
 title: Getting Feedback via GitHub Issues
 subtitle: If your code and content are on GitHub, your feedback can be too.
 tldr: Integrate creation of GitHub Issues directly with prefilled values from your Jekyll site.
-permalink: /blog/jekyll/getting-feedback-via-github-issue
+permalink: /p/getting-feedback-via-github-issue
 cover: /assets/images/jekyll/JEKYLL01/cover.svg
 image: /assets/images/jekyll/JEKYLL01/cover.png
 author: srungta
@@ -57,7 +57,7 @@ On clicking the feedback button, you should be navigated to Github and see a scr
 ### Breaking Down the Feedback Link
 
 GitHub provides a URL to create a new issue with prefilled values directly.  
-For example, the GitHub URL for this page is [here](https://github.com/srungta/srungta.github.io/issues/new?labels=feedback&title=&body=%0A%0A%5BAdd%20details%20here%5D%0A%0A---%0A%23%23%23%23%20Document%20Details%0A%E2%9A%A0%20%2ADo%20not%20edit%20this%20section.%20It%20helps%20me%20track%20the%20feedback.%2A%0A%2A%20%2A%2APost%20link%2A%2A%20%3A%20/blog/jekyll/getting-feedback-via-github-issue%0A%2A%20%2A%2APost%20Id%2A%2A%20%3A%20JEKYLL01)
+For example, the GitHub URL for this page is [here](https://github.com/srungta/srungta.github.io/issues/new?labels=feedback&title=&body=%0A%0A%5BAdd%20details%20here%5D%0A%0A---%0A%23%23%23%23%20Document%20Details%0A%E2%9A%A0%20%2ADo%20not%20edit%20this%20section.%20It%20helps%20me%20track%20the%20feedback.%2A%0A%2A%20%2A%2APost%20link%2A%2A%20%3A%20/p/getting-feedback-via-github-issue%0A%2A%20%2A%2APost%20Id%2A%2A%20%3A%20JEKYLL01)
 
 Breaking down the URL:
 
