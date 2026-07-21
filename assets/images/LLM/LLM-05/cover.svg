@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Measuring LLM Capability vs Reliability</title>
+  <desc id="desc">Editorial cover illustration for Measuring LLM Capability vs Reliability</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ddd7cd" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#f4f0e8"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#191817" stroke-width="8"/>
+  <rect x="84" y="88" width="290" height="38" fill="#f9cc55"/>
+  <text x="100" y="115" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="2">LLM EVALUATION</text>
+  <text x="84" y="242" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="700" letter-spacing="0"><tspan x="84" dy="0">Measuring LLM</tspan><tspan x="84" dy="82">Capability vs</tspan><tspan x="84" dy="82">Reliability</tspan></text>
+  <path d="M84 500h540" stroke="#191817" stroke-width="8"/>
+  <circle cx="104" cy="540" r="12" fill="#f9cc55" stroke="#191817" stroke-width="5"/>
+  <path d="M136 540h190" stroke="#191817" stroke-width="6"/>
+  <g transform="translate(200 20) scale(0.9)">
+    <rect x="700" y="132" width="350" height="144" fill="#f4f0e8" stroke="#191817" stroke-width="10"/><rect x="700" y="310" width="350" height="144" fill="#f9cc55" stroke="#191817" stroke-width="10"/><text x="742" y="226" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700">@</text><text x="742" y="404" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700">^</text><circle cx="860" cy="204" r="29" fill="#ff705d" stroke="#191817" stroke-width="7"/><path d="m845 204 11 12 22-27" fill="none" stroke="#f4f0e8" stroke-width="8"/><circle cx="934" cy="204" r="29" fill="#f4f0e8" stroke="#191817" stroke-width="7"/><path d="m921 191 26 26M947 191l-26 26" stroke="#191817" stroke-width="8"/><circle cx="860" cy="382" r="29" fill="#62cbc9" stroke="#191817" stroke-width="7"/><path d="m845 382 11 12 22-27" fill="none" stroke="#191817" stroke-width="8"/><circle cx="934" cy="382" r="29" fill="#62cbc9" stroke="#191817" stroke-width="7"/><path d="m919 382 11 12 22-27" fill="none" stroke="#191817" stroke-width="8"/>
+  </g>
+</svg>
