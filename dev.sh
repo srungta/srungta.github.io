@@ -6,6 +6,8 @@
 #   ./dev.sh run
 #   ./dev.sh draft _drafts/my-post.md
 #   ./dev.sh draft _drafts --remove
+#   ./dev.sh covers
+#   ./dev.sh social-images [_posts/path/to/post.md ...]
 #   ./dev.sh git-setup
 
 set -euo pipefail
@@ -65,6 +67,14 @@ cmd_git_setup() {
     echo "Git user config updated."
 }
 
+cmd_covers() {
+    node scripts/generate-covers.mjs
+}
+
+cmd_social_images() {
+    node scripts/render-social-images.mjs "$@"
+}
+
 cmd_init() {
     local script_path
     script_path="$(cd "$(dirname "$0")" && pwd)/dev.sh"
@@ -84,7 +94,7 @@ cmd_init() {
 cmd_completion() {
     cat <<'EOF'
 _dev_sh_completion() {
-    local commands=(build run draft git-setup)
+    local commands=(build run draft covers social-images git-setup)
     local cur="${words[CURRENT]}"
     if (( CURRENT == 2 )); then
         compadd -a commands
@@ -107,11 +117,13 @@ case "$command" in
     build)      cmd_build ;;
     run)        cmd_run ;;
     draft)      cmd_draft "$@" ;;
+    covers)     cmd_covers ;;
+    social-images) cmd_social_images "$@" ;;
     git-setup)  cmd_git_setup ;;
     init)       cmd_init ;;
     completion) cmd_completion ;;
     *)
-        echo "Unknown command '${command}'. Available: build, run, draft, git-setup"
+        echo "Unknown command '${command}'. Available: build, run, draft, covers, social-images, git-setup"
         exit 1
         ;;
 esac

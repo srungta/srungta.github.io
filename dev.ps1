@@ -6,11 +6,13 @@ Dev helper script. Usage: .\dev.ps1 <command> [options]
 .EXAMPLE  .\dev.ps1 run
 .EXAMPLE  .\dev.ps1 draft -Path "_drafts/my-post.md"
 .EXAMPLE  .\dev.ps1 draft -Path "_drafts" -Remove
+.EXAMPLE  .\dev.ps1 covers
+.EXAMPLE  .\dev.ps1 social-images -Path "_posts/web/example.md"
 .EXAMPLE  .\dev.ps1 git-setup
 #>
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('build', 'run', 'draft', 'git-setup')]
+    [ValidateSet('build', 'run', 'draft', 'covers', 'social-images', 'git-setup')]
     [string]$Command,
 
     # Options forwarded to 'draft'
@@ -65,11 +67,25 @@ function Invoke-GitSetup {
     Write-Host "Git user config updated."
 }
 
+function Invoke-Covers {
+    node scripts/generate-covers.mjs
+}
+
+function Invoke-SocialImages {
+    if ($Path) {
+        node scripts/render-social-images.mjs $Path
+    } else {
+        node scripts/render-social-images.mjs
+    }
+}
+
 # --- dispatch ---
 switch ($Command.ToLower()) {
     "build"     { Invoke-Build }
     "run"       { Invoke-Run }
     "draft"     { Invoke-Draft }
+    "covers"    { Invoke-Covers }
+    "social-images" { Invoke-SocialImages }
     "git-setup" { Invoke-GitSetup }
-    default     { Write-Error "Unknown command '$Command'. Available: build, run, draft, git-setup" }
+    default     { Write-Error "Unknown command '$Command'. Available: build, run, draft, covers, social-images, git-setup" }
 }
