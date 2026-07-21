@@ -16,7 +16,7 @@ tags:
 
 series:
   id: STARTRIGHT
-  index: 1
+  index: 3
 ---
 
 

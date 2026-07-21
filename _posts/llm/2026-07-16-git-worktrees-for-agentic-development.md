@@ -16,7 +16,6 @@ series:
   id: LLM
   index: 3
 
-featured: true
 isNew: true
 ---
 

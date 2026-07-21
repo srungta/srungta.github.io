@@ -7,7 +7,7 @@ layout: default
 
   {%- if site.posts.size > 0 -%}
   <fieldset class="latest-post">
-    <legend class="lp-legend">Featured Posts</legend>
+    <legend class="lp-legend">⭐️ Featured Posts</legend>
     <div class="lp-list">
       {% assign featured_posts = site.posts | where: "featured", true %}
       {%- for post in featured_posts limit:2 -%}
@@ -15,9 +15,23 @@ layout: default
       {%- endfor -%}
     </div>
   </fieldset>
+
+  <h2 class="line"><span>New Articles</span></h2>
+  <section class="new-articles" aria-label="New articles">
+    <div class="lp-list">
+      {%- assign new_post_count = 0 -%}
+      {%- for post in site.posts -%}
+      {%- unless post.featured -%}
+      {%- include post-list-item.html post=post -%}
+      {%- assign new_post_count = new_post_count | plus: 1 -%}
+      {%- if new_post_count == 4 -%}{%- break -%}{%- endif -%}
+      {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  </section>
   {%- endif -%}
 
-  <h2 class="line"><span>Other Articles</span></h2>
+  <h2 class="line"><span>More Stuff</span></h2>
   {%- if site.data.series.size > 0 -%}
   <section>
     {%- for series in site.data.series -%}

@@ -177,6 +177,7 @@
     border-radius: 8px;
 
     .lp-legend {
+        margin: 0 auto;
         background-color: white;
         padding: 0 8px;
         font-weight: 700;
@@ -184,6 +185,57 @@
 
     .lp-list {
         display: block;
+    }
+}
+
+.new-articles {
+    margin-bottom: 28px;
+
+    .lp-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        padding: 2px;
+    }
+
+    .post-list-item {
+        box-sizing: border-box;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: white;
+        border: 1px solid #d8d8d8;
+        border-radius: 8px;
+
+        .post-list-content {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            padding: 16px;
+        }
+
+        .post-list-title {
+            display: -webkit-box;
+            overflow: hidden;
+            @include relative-font-size(1.15);
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+        }
+
+        .post-list-meta {
+            margin-top: auto;
+        }
+
+        .post-list-thumbnail {
+            order: -1;
+            flex-basis: auto;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 0;
+        }
     }
 }
 
@@ -288,6 +340,10 @@
     .series-details {
         padding-right: 14px;
         padding-left: 14px;
+    }
+
+    .new-articles .lp-list {
+        grid-template-columns: 1fr;
     }
 
     .post-list-item {
@@ -919,6 +975,11 @@ blockquote {
         .lp-legend {
             background-color: #121619;
         }
+    }
+
+    .new-articles .post-list-item {
+        background-color: #1a2024;
+        border-color: #3a464d;
     }
 
     .series-details {
