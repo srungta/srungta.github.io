@@ -1,6 +1,6 @@
 ---
 layout: post
-unique_id: K8S01
+unique_id: K8S-01
 
 title: Setting up a 2 node Kubernetes cluster
 subtitle: Create a  2 node k8s cluster using Azure VMs.

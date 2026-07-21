@@ -7,7 +7,7 @@ Dev helper script. Usage: .\dev.ps1 <command> [options]
 .EXAMPLE  .\dev.ps1 draft -Path "_drafts/my-post.md"
 .EXAMPLE  .\dev.ps1 draft -Path "_drafts" -Remove
 .EXAMPLE  .\dev.ps1 covers
-.EXAMPLE  .\dev.ps1 social-images -Path "_posts/web/example.md"
+.EXAMPLE  .\dev.ps1 social-images -Path "_posts/WEB/example.md"
 .EXAMPLE  .\dev.ps1 git-setup
 #>
 param(

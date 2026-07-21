@@ -1,6 +1,6 @@
 ---
 layout: post
-unique_id: WEB07
+unique_id: WEB-07
 
 title: I Asked 1000 Servers the Same Question - Load Balancer Speed Dating
 subtitle: Sticky sessions (clingy exes), health checks (compatibility tests), and server affinity (finding "the one")

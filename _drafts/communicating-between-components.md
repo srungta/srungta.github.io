@@ -1,6 +1,6 @@
 ---
 layout: post
-unique_id: WEB11
+unique_id: WEB-11
 
 title: communicating-between-components
 subtitle: Setup a project with webpack, add a custom web component with stories.

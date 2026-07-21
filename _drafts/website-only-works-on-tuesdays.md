@@ -1,6 +1,6 @@
 ---
 layout: post
-unique_id: WEB02
+unique_id: WEB-02
 
 title: I Built a Website That Only Works on Tuesdays
 subtitle: A love letter to temporal logic and all the ways time will betray you
