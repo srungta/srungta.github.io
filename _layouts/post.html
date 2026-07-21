@@ -84,6 +84,10 @@ layout: default
   {%- if site.disqus and site.disqus.shortname -%}
   {%- include disqus_comments.html -%}
   {%- endif -%}
+  <h2 class="line"><span>🖖🏻 Fin.</span></h2>
+  <footer class="post-footer">
+    {%- include subscribe-actions.html -%}
+  </footer>
 
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>

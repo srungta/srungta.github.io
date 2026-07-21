@@ -422,55 +422,73 @@
 .subscribe-actions {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin: 32px auto 8px;
+    padding: 8px 12px;
+    max-width: 640px;
+    text-align: center;
+}
+
+.subscribe-actions__prompt {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: inherit;
+}
+
+.subscribe-actions__emoji {
+    white-space: nowrap;
+}
+
+.subscribe-actions__buttons {
+    display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.subscribe-actions .subscribe-button {
+    display: inline-flex;
+    align-items: center;
     gap: 8px;
-    margin-top: 20px;
-    width: fit-content;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background-color: var(--subscribe-button-background);
+    color: var(--subscribe-button-color);
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none !important;
 
-    .subscribe-button {
-        display: inline-flex;
-        align-self: flex-start;
-        align-items: center;
-        gap: 7px;
-        width: fit-content;
-        padding: 7px 12px;
-        border-radius: 6px;
-        background-color: var(--subscribe-button-background);
+    &:visited {
         color: var(--subscribe-button-color);
-        font-weight: 600;
-        line-height: 1.2;
-        text-decoration: none !important;
-
-        &:visited {
-            color: var(--subscribe-button-color);
-        }
-
-        &:hover,
-        &:focus-visible {
-            filter: brightness(1.12);
-        }
     }
 
-    .subscribe-icon {
-        flex: 0 0 18px;
-        width: 18px;
-        height: 18px;
+    &:hover,
+    &:focus-visible {
+        filter: brightness(0.97);
     }
+}
 
-    .substack-subscribe-button {
-        --subscribe-button-background: #af3b00;
-        --subscribe-button-color: white;
-    }
+.subscribe-actions .subscribe-icon {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+}
 
-    .linkedin-follow-button {
-        --subscribe-button-background: #0a66c2;
-        --subscribe-button-color: white;
-    }
+.subscribe-actions .substack-subscribe-button {
+    --subscribe-button-background: #ffe3d1;
+    --subscribe-button-color: #af3b00;
+}
 
-    .rss-subscribe-button {
-        --subscribe-button-background: #a54500;
-        --subscribe-button-color: white;
-    }
+.subscribe-actions .linkedin-follow-button {
+    --subscribe-button-background: #d9e8f7;
+    --subscribe-button-color: #0a66c2;
+}
+
+.subscribe-actions .rss-subscribe-button {
+    --subscribe-button-background: #fbe4cf;
+    --subscribe-button-color: #a54500;
 }
 
 .highlight {
