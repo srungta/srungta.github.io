@@ -8,6 +8,7 @@
 #   ./dev.sh draft _drafts --remove
 #   ./dev.sh covers
 #   ./dev.sh social-images [_posts/path/to/post.md ...]
+#   ./dev.sh check-assets
 #   ./dev.sh git-setup
 
 set -euo pipefail
@@ -75,6 +76,10 @@ cmd_social_images() {
     node scripts/render-social-images.mjs "$@"
 }
 
+cmd_check_assets() {
+    node scripts/check-assets.mjs "$@"
+}
+
 cmd_init() {
     local script_path
     script_path="$(cd "$(dirname "$0")" && pwd)/dev.sh"
@@ -94,7 +99,7 @@ cmd_init() {
 cmd_completion() {
     cat <<'EOF'
 _dev_sh_completion() {
-    local commands=(build run draft covers social-images git-setup)
+    local commands=(build run draft covers social-images check-assets git-setup)
     local cur="${words[CURRENT]}"
     if (( CURRENT == 2 )); then
         compadd -a commands
@@ -119,11 +124,12 @@ case "$command" in
     draft)      cmd_draft "$@" ;;
     covers)     cmd_covers ;;
     social-images) cmd_social_images "$@" ;;
+    check-assets) cmd_check_assets "$@" ;;
     git-setup)  cmd_git_setup ;;
     init)       cmd_init ;;
     completion) cmd_completion ;;
     *)
-        echo "Unknown command '${command}'. Available: build, run, draft, covers, social-images, git-setup"
+        echo "Unknown command '${command}'. Available: build, run, draft, covers, social-images, check-assets, git-setup"
         exit 1
         ;;
 esac

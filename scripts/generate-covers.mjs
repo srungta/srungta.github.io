@@ -29,7 +29,7 @@ const covers = [
   { path: "assets/images/STARTRIGHT/components/cover.svg", eyebrow: "FRONTEND FOUNDATIONS", title: ["Use", "components"], accent: "#f9cc55", motif: "components" },
   { path: "assets/images/STARTRIGHT/types/cover.svg", eyebrow: "FRONTEND FOUNDATIONS", title: ["Use strong", "types"], accent: "#ff705d", motif: "types" },
   { path: "assets/images/WEB/WEB-01/cover.svg", eyebrow: "WEB COMPONENTS", title: ["Building with", "FAST Element"], accent: "#62cbc9", motif: "browser" },
-  { path: "assets/images/WEB/WEB-06/cover.svg", eyebrow: "THE WEB", title: ["Internet", "duct tape"], accent: "#f9cc55", motif: "protocol" },
+  { path: "assets/images/WEB/WEB-02/cover.svg", eyebrow: "THE WEB", title: ["Internet", "duct tape"], accent: "#f9cc55", motif: "protocol" },
 ];
 
 const escapeXml = (value) =>

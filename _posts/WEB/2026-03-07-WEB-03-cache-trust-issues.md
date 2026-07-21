@@ -1,6 +1,6 @@
 ---
 layout: post
-unique_id: WEB-05
+unique_id: WEB-03
 
 title: My Cache Has Trust Issues - A Therapist's Guide to Cache Invalidation
 subtitle: Is this data fresh? Can I trust it? What if it changed?
@@ -17,9 +17,9 @@ series:
   id: WEB
   index: 3
 
-cover: /assets/images/WEB/WEB-05/cover.svg
-image: /assets/images/WEB/WEB-05/cover.png
-banner: /assets/images/WEB/WEB-05/banner.png
+cover: /assets/images/WEB/WEB-03/cover.svg
+image: /assets/images/WEB/WEB-03/cover.png
+banner: /assets/images/WEB/WEB-03/banner.png
 ---
 
 ## Session 1: Meeting Your Cache
