@@ -10,13 +10,13 @@ layout: default
     <legend class="lp-legend">⭐️ Featured Posts</legend>
     <div class="lp-list">
       {% assign featured_posts = site.posts | where: "featured", true %}
-      {%- for post in featured_posts limit:2 -%}
+      {%- for post in featured_posts -%}
       {%- include post-list-item.html post=post -%}
       {%- endfor -%}
     </div>
   </fieldset>
 
-  <h2 class="line"><span>New Articles</span></h2>
+  <h2 class="line"><span>Recent Articles</span></h2>
   <section class="new-articles" aria-label="New articles">
     <div class="lp-list">
       {%- assign new_post_count = 0 -%}
