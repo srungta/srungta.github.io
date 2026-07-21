@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 260" role="img" aria-labelledby="nf-title nf-desc">
+  <title id="nf-title">Page not found</title>
+  <desc id="nf-desc">A magnifying glass hovers over a blank document. Inside the lens is a big question mark.</desc>
+  <style>
+    @media (prefers-reduced-motion: no-preference) {
+      .nf-glass { animation: nf-glass 3.6s ease-in-out infinite alternate; transform-origin: 190px 130px; }
+      .nf-q-1  { animation: nf-bob 2.6s ease-in-out infinite alternate; transform-origin: 42px 62px; }
+      .nf-q-2  { animation: nf-bob 3.2s ease-in-out infinite alternate; transform-origin: 300px 205px; animation-delay: -1s; }
+    }
+    @keyframes nf-glass {
+      from { transform: translate(0, 0) rotate(-2deg); }
+      to   { transform: translate(-8px, 6px) rotate(4deg); }
+    }
+    @keyframes nf-bob {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-6px); }
+    }
+  </style>
+
+  <!-- Sparkle dots -->
+  <circle cx="20" cy="30" r="3" fill="#f9cc55"/>
+  <circle cx="340" cy="40" r="2.5" fill="#62cbc9"/>
+  <circle cx="30" cy="230" r="2.5" fill="#ff705d"/>
+  <circle cx="345" cy="180" r="3" fill="#f9cc55"/>
+  <circle cx="12" cy="140" r="2" fill="#62cbc9"/>
+  <circle cx="352" cy="120" r="2" fill="#ff705d"/>
+
+  <!-- Paper document -->
+  <g>
+    <!-- soft shadow -->
+    <path d="M76 56 L226 56 L256 86 L256 218 L76 218 Z"
+      fill="#191817" opacity="0.10" transform="translate(6, 6)"/>
+    <!-- paper body -->
+    <path d="M70 50 L220 50 L250 80 L250 212 L70 212 Z"
+      fill="#f4f0e8" stroke="#191817" stroke-width="6" stroke-linejoin="round"/>
+    <!-- folded corner triangle -->
+    <path d="M220 50 L220 80 L250 80 Z"
+      fill="#ddd7cd" stroke="#191817" stroke-width="6" stroke-linejoin="round"/>
+
+    <!-- faint text lines suggesting missing content -->
+    <path d="M90 100 h108 M90 118 h94 M90 136 h104 M90 174 h108 M90 192 h72"
+      stroke="#ddd7cd" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Magnifying glass -->
+  <g class="nf-glass">
+    <!-- lens drop shadow -->
+    <circle cx="194" cy="134" r="52" fill="#191817" opacity="0.10"/>
+
+    <!-- handle: dark base with a colored highlight -->
+    <line x1="226" y1="166" x2="286" y2="228"
+      stroke="#191817" stroke-width="18" stroke-linecap="round"/>
+    <line x1="230" y1="170" x2="280" y2="222"
+      stroke="#f9cc55" stroke-width="6" stroke-linecap="round"/>
+
+    <!-- lens: tinted glass -->
+    <circle cx="190" cy="130" r="50" fill="#62cbc9" opacity="0.28"/>
+
+    <!-- lens outer ring -->
+    <circle cx="190" cy="130" r="50" fill="none" stroke="#191817" stroke-width="8"/>
+
+    <!-- magnified question mark inside the lens -->
+    <text x="190" y="160" text-anchor="middle"
+      font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="700"
+      fill="#ff705d">?</text>
+
+    <!-- lens highlight arc -->
+    <path d="M160 106 A30 30 0 0 1 184 92"
+      fill="none" stroke="#f4f0e8" stroke-width="6" stroke-linecap="round"/>
+  </g>
+
+  <!-- Floating question marks outside -->
+  <g class="nf-q-1">
+    <text x="42" y="62" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700"
+      fill="#62cbc9" transform="rotate(-16 42 62)">?</text>
+  </g>
+  <g class="nf-q-2">
+    <text x="300" y="205" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="700"
+      fill="#f9cc55" transform="rotate(18 300 205)">?</text>
+  </g>
+</svg>

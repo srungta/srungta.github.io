@@ -4,60 +4,199 @@ layout: default
 ---
 
 <style type="text/css" media="screen">
-  .container {
+  .not-found {
     margin: 10px auto;
     max-width: 720px;
     text-align: center;
   }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
+  .not-found-illustration {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    margin: 20px auto 0;
   }
+
+  /* Big playful 404 number */
+  .not-found-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin: 24px 0 8px;
+    font-size: 6.5em;
+    line-height: 1;
+    letter-spacing: -3px;
+    font-weight: 800;
+  }
+  .not-found-number span {
+    display: inline-block;
+    transform-origin: center;
+  }
+  .not-found-number span:nth-child(1) { color: #ff705d; transform: rotate(-6deg); }
+  .not-found-number span:nth-child(2) { color: #62cbc9; transform: translateY(-8px) rotate(2deg); }
+  .not-found-number span:nth-child(3) { color: #f9cc55; transform: rotate(7deg); }
+  @media (prefers-reduced-motion: no-preference) {
+    .not-found-number span:nth-child(1) { animation: nf-digit-1 3.6s ease-in-out infinite alternate; }
+    .not-found-number span:nth-child(2) { animation: nf-digit-2 4.0s ease-in-out infinite alternate; }
+    .not-found-number span:nth-child(3) { animation: nf-digit-3 3.8s ease-in-out infinite alternate; }
+  }
+  @keyframes nf-digit-1 {
+    from { transform: rotate(-8deg) translateY(0); }
+    to   { transform: rotate(-3deg) translateY(-6px); }
+  }
+  @keyframes nf-digit-2 {
+    from { transform: rotate(3deg)  translateY(-4px); }
+    to   { transform: rotate(-3deg) translateY(3px); }
+  }
+  @keyframes nf-digit-3 {
+    from { transform: rotate(6deg)  translateY(0); }
+    to   { transform: rotate(10deg) translateY(-5px); }
+  }
+
+  .not-found-lede {
+    margin: 6px 0 2px;
+    font-weight: 700;
+    font-size: 1.15em;
+  }
+  .not-found-tagline {
+    margin: 4px auto 20px;
+    max-width: 520px;
+    color: #555;
+  }
+
+  /* Decorative palette divider */
+  .not-found-divider {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 8px 0 20px;
+  }
+  .not-found-divider span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .not-found-divider span:nth-child(1) { background: #ff705d; }
+  .not-found-divider span:nth-child(2) { background: #62cbc9; }
+  .not-found-divider span:nth-child(3) { background: #f9cc55; }
+
+  /* Post list */
   .not-found-posts {
-    margin: 24px auto 0;
+    margin: 8px auto 0;
     padding: 0;
     list-style: none;
     text-align: left;
   }
   .not-found-posts li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px;
+    padding: 10px 4px;
+    border-bottom: 1px dashed #e2ddd3;
+    transition: transform 0.15s ease, background 0.15s ease;
   }
   .not-found-posts li:last-child {
     border-bottom: none;
   }
-  .not-found-posts .not-found-new {
-    display: inline-block;
-    margin-right: 6px;
-    padding: 1px 6px;
-    border-radius: 3px;
-    background: #b70606;
-    color: #fff;
-    font-size: 0.7em;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    vertical-align: middle;
-    text-transform: uppercase;
+  .not-found-posts li:hover {
+    transform: translateX(4px);
+    background: #faf7f1;
+  }
+  .not-found-posts a {
+    font-weight: 600;
   }
   .not-found-posts time {
-    display: inline-block;
-    margin-left: 8px;
+    margin-left: auto;
     color: #6a6a6a;
     font-size: 0.85em;
+    white-space: nowrap;
+  }
+
+  /* NEW badge */
+  .not-found-new {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #b70606;
+    color: #fff;
+    font-size: 0.68em;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .not-found-new {
+      animation: nf-wiggle 2.4s ease-in-out infinite;
+      transform-origin: center;
+    }
+  }
+  @keyframes nf-wiggle {
+    0%, 100% { transform: rotate(-3deg); }
+    50%      { transform: rotate(3deg); }
+  }
+
+  /* Footer actions */
+  .not-found-actions {
+    margin: 28px 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  .not-found-actions a {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 2px solid #191817;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .not-found-actions a.primary {
+    background: #ff705d;
+    color: #fff;
+  }
+  .not-found-actions a.secondary {
+    background: #f4f0e8;
+    color: #191817;
+  }
+  .not-found-actions a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 0 #191817;
+  }
+
+  .not-found-see-all {
+    display: block;
+    margin: 16px 4px 0;
+    font-size: 0.95em;
+    text-align: right;
+    font-weight: 600;
   }
 </style>
 
-<div class="container">
-  <h1>404</h1>
+<div class="not-found">
+  <img class="not-found-illustration"
+    src="{{ '/assets/images/404/illustration.svg' | relative_url }}"
+    alt="A magnifying glass hovering over a blank page with a big question mark inside the lens">
 
-  <p><strong>Page not found :(</strong></p>
-  <p>Maybe I renamed a URL. Were you looking for one of the posts below?</p>
+  <h1 class="not-found-number" aria-label="404">
+    <span>4</span><span>0</span><span>4</span>
+  </h1>
+
+  <p class="not-found-lede">Page not found.</p>
+  <p class="not-found-tagline" id="nf-tagline">Maybe I renamed a URL by mistake. Were you looking for one of the posts below?</p>
+
+  <div class="not-found-divider" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
 
   {%- if site.posts.size > 0 -%}
+  {%- assign recent_posts = site.posts | slice: 0, 8 -%}
   <ul class="not-found-posts">
-    {%- for post in site.posts -%}
+    {%- for post in recent_posts -%}
     <li>
       {%- if post.isNew -%}
       <span class="not-found-new">new</span>
@@ -67,5 +206,30 @@ layout: default
     </li>
     {%- endfor -%}
   </ul>
+
+  {%- if site.posts.size > 8 -%}
+  <a class="not-found-see-all" href="{{ '/all-posts' | relative_url }}">See all {{ site.posts.size }} posts &rarr;</a>
   {%- endif -%}
+  {%- endif -%}
+
+  <div class="not-found-actions">
+    <a class="primary" href="{{ '/' | relative_url }}">&larr; Take me home</a>
+  </div>
 </div>
+
+<script>
+  (function () {
+    var el = document.getElementById('nf-tagline');
+    if (!el) return;
+    var lines = [
+      "Maybe I renamed a URL by mistake. Were you looking for one of the posts below?",
+      "This page is playing hide and seek \u2014 and winning. Try one of these instead?",
+      "You've wandered off the trail. There's a lot to read while you're here.",
+      "Nothing lives at this URL. Everything below does, though.",
+      "The internet is a big place. You found the one empty room. Grab a post?",
+      "Well, this is awkward. Try one of these while I pretend that didn't happen.",
+      "404: the post you were looking for has been abducted by aliens. Here are its friends."
+    ];
+    el.textContent = lines[Math.floor(Math.random() * lines.length)];
+  })();
+</script>
