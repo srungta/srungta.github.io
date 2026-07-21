@@ -6,7 +6,7 @@ layout: default
 <style type="text/css" media="screen">
   .container {
     margin: 10px auto;
-    max-width: 600px;
+    max-width: 720px;
     text-align: center;
   }
   h1 {
@@ -15,11 +15,57 @@ layout: default
     line-height: 1;
     letter-spacing: -1px;
   }
+  .not-found-posts {
+    margin: 24px auto 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+  }
+  .not-found-posts li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .not-found-posts li:last-child {
+    border-bottom: none;
+  }
+  .not-found-posts .not-found-new {
+    display: inline-block;
+    margin-right: 6px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: #b70606;
+    color: #fff;
+    font-size: 0.7em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+  .not-found-posts time {
+    display: inline-block;
+    margin-left: 8px;
+    color: #6a6a6a;
+    font-size: 0.85em;
+  }
 </style>
 
 <div class="container">
   <h1>404</h1>
 
   <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
+  <p>Maybe I renamed a URL. Were you looking for one of the posts below?</p>
+
+  {%- if site.posts.size > 0 -%}
+  <ul class="not-found-posts">
+    {%- for post in site.posts -%}
+    <li>
+      {%- if post.isNew -%}
+      <span class="not-found-new">new</span>
+      {%- endif -%}
+      <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+    </li>
+    {%- endfor -%}
+  </ul>
+  {%- endif -%}
 </div>
