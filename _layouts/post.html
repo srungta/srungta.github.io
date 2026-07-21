@@ -2,10 +2,10 @@
 layout: default
 ---
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
-  {%- if page.image -%}
-
+  {%- assign postimage = page.banner | default: page.image -%}
+  {%- if postimage -%}
 <div class="centered-image-container">
-  <img alt="" src="{{ page.image | relative_url }}" class="centered-image no-shadow" />
+  <img alt="" src="{{ postimage | relative_url }}" class="centered-image no-shadow" />
 </div>
   {%- endif -%}
   {%- include series.html -%}

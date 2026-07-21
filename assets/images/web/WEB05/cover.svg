@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">My Cache Has Trust Issues</title>
+  <desc id="desc">A worried cache talks to a therapist while stale data and a ticking TTL clock loom nearby.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ddd7cd" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#f4f0e8"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#191817" stroke-width="8"/>
+
+  <rect x="84" y="88" width="290" height="38" fill="#f9cc55"/>
+  <text x="100" y="115" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="2">THE WEB</text>
+  <text x="84" y="230" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="700">
+    <tspan x="84">My cache has</tspan>
+    <tspan x="84" dy="76">trust issues</tspan>
+  </text>
+  <path d="M84 500h430" stroke="#191817" stroke-width="8"/>
+  <circle cx="104" cy="540" r="12" fill="#f9cc55" stroke="#191817" stroke-width="5"/>
+  <path d="M136 540h190" stroke="#191817" stroke-width="6"/>
+
+  <!-- Therapist chair -->
+  <path d="M625 351h150v116H607v-91c0-14 8-25 18-25z" fill="#62cbc9" stroke="#191817" stroke-width="7"/>
+  <path d="M607 467h185M630 467l-16 58M770 467l16 58" stroke="#191817" stroke-width="8"/>
+  <circle cx="685" cy="315" r="34" fill="#f9cc55" stroke="#191817" stroke-width="7"/>
+  <path d="M650 315c12-39 59-40 70 0M674 320h7M696 320h7M678 336c9 7 17 7 25 0" fill="none" stroke="#191817" stroke-width="6"/>
+  <path d="M653 360c13-29 55-29 68 0" fill="#ff705d" stroke="#191817" stroke-width="7"/>
+  <rect x="725" y="374" width="86" height="111" fill="#f4f0e8" stroke="#191817" stroke-width="6" transform="rotate(7 768 430)"/>
+  <path d="M743 400h48M743 421h48M743 442h34" stroke="#191817" stroke-width="5" transform="rotate(7 768 430)"/>
+
+  <!-- Cache on the couch -->
+  <path d="M851 388h210c19 0 34 15 34 34v68H817v-68c0-19 15-34 34-34z" fill="#ff705d" stroke="#191817" stroke-width="7"/>
+  <path d="M817 490h278M842 490l-12 37M1070 490l12 37" stroke="#191817" stroke-width="8"/>
+  <rect x="863" y="318" width="142" height="122" rx="12" fill="#f9cc55" stroke="#191817" stroke-width="7"/>
+  <path d="M880 300h108M880 284h108M880 268h108" stroke="#191817" stroke-width="7"/>
+  <circle cx="902" cy="358" r="7" fill="#191817"/>
+  <circle cx="966" cy="358" r="7" fill="#191817"/>
+  <path d="M917 394c11-14 24-14 35 0" fill="none" stroke="#191817" stroke-width="7"/>
+  <path d="M863 337h142" stroke="#191817" stroke-width="6"/>
+
+  <!-- Thought bubble and TTL clock -->
+  <circle cx="1039" cy="240" r="13" fill="#f4f0e8" stroke="#191817" stroke-width="5"/>
+  <circle cx="1070" cy="207" r="20" fill="#f4f0e8" stroke="#191817" stroke-width="5"/>
+  <path d="M1008 96h112v79H1008z" fill="#f4f0e8" stroke="#191817" stroke-width="6"/>
+  <text x="1064" y="127" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" text-anchor="middle">STALE?</text>
+  <text x="1064" y="153" fill="#ff705d" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" text-anchor="middle">TTL 00:01</text>
+
+  <!-- Session note -->
+  <path d="M571 173h258" stroke="#191817" stroke-width="7"/>
+  <text x="700" y="205" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" text-anchor="middle" letter-spacing="2">CACHE THERAPY</text>
+</svg>

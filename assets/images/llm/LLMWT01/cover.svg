@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Git Worktrees for Agentic Development</title>
+  <desc id="desc">A Git repository branches into isolated worktrees where multiple coding agents work in parallel.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ddd7cd" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#f4f0e8"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#191817" stroke-width="8"/>
+
+  <rect x="84" y="88" width="320" height="38" fill="#ff705d"/>
+  <text x="100" y="115" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="2">AGENTIC DEVELOPMENT</text>
+  <text x="84" y="238" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="700">
+    <tspan x="84">Git</tspan>
+    <tspan x="84" dy="82">worktrees</tspan>
+  </text>
+  <path d="M84 500h430" stroke="#191817" stroke-width="8"/>
+  <circle cx="104" cy="540" r="12" fill="#ff705d" stroke="#191817" stroke-width="5"/>
+  <path d="M136 540h190" stroke="#191817" stroke-width="6"/>
+
+  <!-- Shared repository -->
+  <path d="M626 119h170l35 38v101H626z" fill="#191817" transform="translate(9 10)"/>
+  <path d="M626 119h170l35 38v101H626z" fill="#f9cc55" stroke="#191817" stroke-width="7"/>
+  <path d="M796 119v38h35" fill="none" stroke="#191817" stroke-width="7"/>
+  <circle cx="677" cy="196" r="13" fill="#ff705d" stroke="#191817" stroke-width="5"/>
+  <circle cx="738" cy="164" r="13" fill="#62cbc9" stroke="#191817" stroke-width="5"/>
+  <circle cx="778" cy="218" r="13" fill="#f4f0e8" stroke="#191817" stroke-width="5"/>
+  <path d="M690 190l35-19M748 175l23 31" fill="none" stroke="#191817" stroke-width="7"/>
+  <text x="728" y="93" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" text-anchor="middle" letter-spacing="2">ONE REPOSITORY</text>
+
+  <!-- Branch fan-out -->
+  <path d="M728 258v51M728 309H599v54M728 309v54M728 309h129v54" fill="none" stroke="#191817" stroke-width="8"/>
+  <circle cx="728" cy="309" r="13" fill="#f4f0e8" stroke="#191817" stroke-width="6"/>
+
+  <!-- Isolated worktrees -->
+  <g>
+    <rect x="529" y="363" width="140" height="143" fill="#62cbc9" stroke="#191817" stroke-width="7"/>
+    <rect x="549" y="384" width="100" height="68" fill="#f4f0e8" stroke="#191817" stroke-width="5"/>
+    <path d="M549 402h100M566 425l13 12 25-27M615 425h20" fill="none" stroke="#191817" stroke-width="5"/>
+    <circle cx="599" cy="478" r="13" fill="#ff705d" stroke="#191817" stroke-width="5"/>
+    <path d="M578 499c7-17 35-17 42 0" fill="#191817"/>
+    <text x="599" y="537" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" text-anchor="middle">AGENT 1</text>
+  </g>
+  <g>
+    <rect x="658" y="363" width="140" height="143" fill="#ff705d" stroke="#191817" stroke-width="7"/>
+    <rect x="678" y="384" width="100" height="68" fill="#f4f0e8" stroke="#191817" stroke-width="5"/>
+    <path d="M678 402h100M695 425l13 12 25-27M744 425h20" fill="none" stroke="#191817" stroke-width="5"/>
+    <circle cx="728" cy="478" r="13" fill="#f9cc55" stroke="#191817" stroke-width="5"/>
+    <path d="M707 499c7-17 35-17 42 0" fill="#191817"/>
+    <text x="728" y="537" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" text-anchor="middle">AGENT 2</text>
+  </g>
+  <g>
+    <rect x="787" y="363" width="140" height="143" fill="#f9cc55" stroke="#191817" stroke-width="7"/>
+    <rect x="807" y="384" width="100" height="68" fill="#f4f0e8" stroke="#191817" stroke-width="5"/>
+    <path d="M807 402h100M824 425l13 12 25-27M873 425h20" fill="none" stroke="#191817" stroke-width="5"/>
+    <circle cx="857" cy="478" r="13" fill="#62cbc9" stroke="#191817" stroke-width="5"/>
+    <path d="M836 499c7-17 35-17 42 0" fill="#191817"/>
+    <text x="857" y="537" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" text-anchor="middle">AGENT 3</text>
+  </g>
+
+  <rect x="968" y="180" width="104" height="243" fill="none" stroke="#191817" stroke-width="6" stroke-dasharray="13 10"/>
+  <text x="1020" y="301" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" text-anchor="middle" transform="rotate(90 1020 301)" letter-spacing="3">ISOLATED FILES</text>
+</svg>

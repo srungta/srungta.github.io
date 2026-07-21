@@ -14,7 +14,7 @@ series:
   id: LLM
   index: 1
 
-image: /assets/images/llm/LLMMCP01/inspector-1.png
+image: /assets/images/llm/LLMMCP01/cover.svg
 ---
 
 ## Introduction to MCP Servers

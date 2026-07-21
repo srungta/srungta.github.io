@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">MCP server basics</title>
+  <desc id="desc">An AI client connects through an MCP server to a reminder tool.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ddd7cd" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#f4f0e8"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#191817" stroke-width="8"/>
+
+  <rect x="84" y="88" width="290" height="38" fill="#62cbc9"/>
+  <text x="100" y="115" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="2">LLM ENGINEERING</text>
+  <text x="84" y="238" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="700">
+    <tspan x="84">MCP server</tspan>
+    <tspan x="84" dy="82">basics</tspan>
+  </text>
+  <path d="M84 500h430" stroke="#191817" stroke-width="8"/>
+  <circle cx="104" cy="540" r="12" fill="#62cbc9" stroke="#191817" stroke-width="5"/>
+  <path d="M136 540h190" stroke="#191817" stroke-width="6"/>
+
+  <!-- Client -->
+  <rect x="625" y="132" width="168" height="150" fill="#f4f0e8" stroke="#191817" stroke-width="7"/>
+  <rect x="625" y="132" width="168" height="34" fill="#191817"/>
+  <circle cx="647" cy="149" r="6" fill="#ff705d"/>
+  <circle cx="668" cy="149" r="6" fill="#f9cc55"/>
+  <circle cx="689" cy="149" r="6" fill="#62cbc9"/>
+  <path d="M651 197h116M651 222h77M651 247h98" stroke="#191817" stroke-width="7"/>
+  <text x="709" y="111" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" text-anchor="middle" letter-spacing="2">AI CLIENT</text>
+
+  <!-- MCP server -->
+  <rect x="830" y="198" width="190" height="190" fill="#191817" transform="translate(10 11)"/>
+  <rect x="830" y="198" width="190" height="190" rx="18" fill="#62cbc9" stroke="#191817" stroke-width="7"/>
+  <circle cx="925" cy="293" r="55" fill="#f4f0e8" stroke="#191817" stroke-width="7"/>
+  <circle cx="925" cy="293" r="16" fill="#ff705d" stroke="#191817" stroke-width="6"/>
+  <path d="M925 237v40M925 309v40M869 293h40M941 293h40" stroke="#191817" stroke-width="9"/>
+  <text x="925" y="424" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle" letter-spacing="3">MCP SERVER</text>
+
+  <!-- Reminder tool -->
+  <rect x="650" y="364" width="170" height="142" fill="#f9cc55" stroke="#191817" stroke-width="7"/>
+  <path d="M680 397h110M680 428h110M680 459h73" stroke="#191817" stroke-width="7"/>
+  <path d="m756 468 15 15 28-35" fill="none" stroke="#191817" stroke-width="8"/>
+  <circle cx="680" cy="397" r="7" fill="#ff705d"/>
+  <circle cx="680" cy="428" r="7" fill="#62cbc9"/>
+  <text x="735" y="542" fill="#191817" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" text-anchor="middle" letter-spacing="2">REMINDER</text>
+
+  <!-- Protocol connections -->
+  <path d="M793 220h52M818 220l20-16M818 220l20 16" fill="none" stroke="#191817" stroke-width="7"/>
+  <path d="M858 374l-47 34M829 380l-18 28 32 2" fill="none" stroke="#191817" stroke-width="7"/>
+  <rect x="1029" y="250" width="78" height="85" fill="#ff705d" stroke="#191817" stroke-width="6"/>
+  <path d="M1047 273h42M1047 293h42M1047 313h29" stroke="#191817" stroke-width="5"/>
+</svg>

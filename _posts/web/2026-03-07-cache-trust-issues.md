@@ -17,7 +17,8 @@ series:
   id: WEB
   index: 3
 
-image: /assets/images/web/cache/cover.png
+image: /assets/images/web/WEB05/cover.svg
+banner: /assets/images/web/WEB05/banner.png
 ---
 
 ## Session 1: Meeting Your Cache

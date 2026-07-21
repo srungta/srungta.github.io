@@ -6,7 +6,7 @@ subtitle: Stable URLs and isolated databases for apps running from several workt
 tldr: Each worktree runs its own frontend and API, Caddy routes stable local hostnames to them, and a separate Cosmos database keeps each slot's data isolated.
 permalink: /blog/llm/multi-slot-local-dev-with-worktrees-and-caddy
 author: srungta
-image: /assets/images/llm/LLMSLOT01/cover.png
+image: /assets/images/llm/LLMSLOT01/cover.svg
 tags:
   - LLM
   - Git
