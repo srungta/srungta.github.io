@@ -18,7 +18,7 @@ series:
 
 What is Kubernetes?
 #### Create servers
-FOllow the instructions in [this post]({% post_url ../distrib/2022-10-16-setting-up-vpn-gateway-on-azure %}) to create a virtual network with 2 VMs.  
+FOllow the instructions in [this post]({% post_url ../DISTRIB/2022-10-16-DISTRIB-setting-up-vpn-gateway-on-azure %}) to create a virtual network with 2 VMs.  
 I am using these names for the VMs.  
 `sr-k8s-node-1`  
 `sr-k8s-node-2`  
