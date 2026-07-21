@@ -6,7 +6,7 @@ layout: home
 ---
 
 <div class="intro">
-    <img alt='' src="{{'/assets/images/about/Shaswat-Mini.png'|relative_url}}" class="intro-image"/>
+    <img alt="" src="{{ '/assets/images/about/Shaswat-Index.webp' | relative_url }}" class="intro-image"/>
     <div class="intro-dialog-container">
         <p>👋 Hi there...</p>
         <p>Welcome to the blog. This is an attempt to document what interests me. Most articles will be software engineering related.</p>
