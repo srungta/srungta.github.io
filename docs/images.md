@@ -65,7 +65,7 @@ node scripts/render-social-images.mjs
 Render one or more posts while editing:
 
 ```shell
-node scripts/render-social-images.mjs _posts/WEB/2026-03-04-WEB-internet-duct-tape.md
+node scripts/render-social-images.mjs _posts/WEB/2026-03-04-WEB-06-internet-duct-tape.md
 ```
 
 The script uses headless Google Chrome or Microsoft Edge at a device scale factor of 1. This produces the same text layout and SVG rendering as a browser at exactly 1200 x 630 pixels. Do not use macOS `sips` for SVG conversion; it does not render SVG `<tspan>` line positioning correctly.
