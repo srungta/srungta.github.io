@@ -35,7 +35,7 @@ layout: default
 
 
     <h1 class="post-title" itemprop="name headline">{{ page.title | escape }}</h1>
-    <h3 class="post-subtitle" itemprop="name sub-headline">{{pagesubtitle | escape}}</h3>
+    <p class="post-subtitle" itemprop="name sub-headline">{{pagesubtitle | escape}}</p>
     <p class="post-meta">
       {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
       <time class="p-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">

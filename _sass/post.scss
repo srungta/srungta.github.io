@@ -12,6 +12,11 @@
 }
 
 .post-content {
+    a {
+        text-decoration: underline;
+        text-underline-offset: 0.15em;
+    }
+
     h2 {
         @include relative-font-size(2);
         margin: 32px 0 15px;
@@ -254,7 +259,7 @@
         display: flex;
         gap: 8px;
         margin: 0;
-        color: #888;
+        color: #666;
         @include relative-font-size(0.78);
         font-weight: 500;
         letter-spacing: 0.04em;
@@ -315,18 +320,24 @@
     margin-top: 20px;
 
     &-button {
+        display: inline-block;
         cursor: pointer;
-        background-color: #01475185;
+        background-color: #345f66;
         padding: 4px 5px;
         border: none;
         border-radius: 5px;
         color: white;
+        text-decoration: none;
+
+        &:visited {
+            color: white;
+        }
     }
 }
 
 // Common styles for all pages
 .tag {
-    background-color: #0089e0;
+    background-color: #0069a8;
     padding: 0.1rem 0.4rem;
     border-radius: 0.2rem;
     color: white;
@@ -354,13 +365,54 @@
 
 .rss-subscribe-button {
     padding: 2px 5px;
-    background-color: #e27326;
+    background-color: #a54500;
     color: white;
     text-decoration: none !important;
     border-radius: 2px;
 
     &:visited {
         color: white;
+    }
+}
+
+.highlight {
+    .c,
+    .cm,
+    .cp,
+    .c1,
+    .cs,
+    .gh,
+    .go,
+    .gu,
+    .w {
+        color: #595959;
+    }
+
+    .m,
+    .mf,
+    .mh,
+    .mi,
+    .mo,
+    .na,
+    .nb,
+    .no,
+    .nv {
+        color: #005a75;
+    }
+
+    .s,
+    .sb,
+    .sc,
+    .sd,
+    .s1,
+    .s2,
+    .se,
+    .sh,
+    .si,
+    .sr,
+    .ss,
+    .sx {
+        color: #b00030;
     }
 }
 
@@ -634,4 +686,9 @@ blockquote {
 }
 .page-content {
     padding-top: 0;
+
+    p a {
+        text-decoration: underline;
+        text-underline-offset: 0.15em;
+    }
 }
