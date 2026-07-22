@@ -46,7 +46,13 @@ In its simplest form, for an agent that repeats a task `k` times,
 
 - `pass@k` measures **capability**. Can repeated sampling uncover a correct answer?
 - `pass^k` measures **reliability**. Can the model produce a correct answer consistently?
-
+<br />
+<br />
+{% capture core_insight %}
+Pass@K and PassˆK must **NOT** be the only metrics you use for evals.  
+These are only introductory heuristics.
+{% endcapture %}
+{% include highlight.html type="error" title="🚨 Super important point 🚨" content=core_insight %}
 
 ## The model solved it. Eventually.
 

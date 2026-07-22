@@ -257,6 +257,23 @@
         padding: 0;
         list-style: none;
     }
+
+    &.highlight {
+        &.info {
+            border-color: #5bc0de;
+            background-color: #d9edf7;
+        }
+
+        &.warning {
+            border-color: #f0ad4e;
+            background-color: #fcf8e3;
+        }
+
+        &.error {
+            border-color: #d9534f;
+            background-color: #f2dede;
+        }
+    }
 }
 
 .post-list-item {
@@ -1006,6 +1023,20 @@ blockquote {
 
         legend {
             background-color: #121619;
+        }
+
+        &.highlight {
+            &.info {
+                background-color: #162a33;
+            }
+
+            &.warning {
+                background-color: #302617;
+            }
+
+            &.error {
+                background-color: #321d1e;
+            }
         }
     }
 

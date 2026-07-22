@@ -1,5 +1,5 @@
-<!-- Reusable highlight component. Takes a title (displayed in the legend) and content (supports markdown via markdownify). -->
-<fieldset class="series-details">
+<!-- Reusable highlight component. Takes a title, content, and an optional info, warning, or error type. -->
+<fieldset class="series-details highlight {{ include.type | default: 'info' }}">
     <legend>
         <b>{{ include.title }}</b>
     </legend>
